@@ -29,8 +29,6 @@ public class ModItems
     public static final RegistryObject<ArmorItem> WOOD_BOOTS = ITEMS.register("wood_boots",
             () -> new ArmorItem(ModArmorMaterials.WOOD, EquipmentSlotType.FEET, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
 
-
-
     // Tool Upgrades
     public static final RegistryObject<Item> TO_STONE = ITEMS.register("to_stone",
             () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
