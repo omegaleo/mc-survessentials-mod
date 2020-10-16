@@ -1,0 +1,3 @@
+to run client for testing do: gradlew.bat runClient
+
+based on: https://github.com/TechnoVisionDev/Forge-Modding-Tutorial-1.16

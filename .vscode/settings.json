@@ -1,0 +1,14 @@
+{
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "cSpell.words": [
+        "forge",
+        "minecraft",
+        "minecraft forge"
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic"
+}
