@@ -1,0 +1,56 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "xxx",
+        "x x",
+        "   "
+    ],
+    "key":
+    {
+        "x":
+        [
+            {
+                "item": "minecraft:birch_log"
+            },
+            {
+                "item": "minecraft:birch_wood"
+            },
+            {
+                "item": "minecraft:oak_wood"
+            },
+            {
+                "item": "minecraft:oak_log"
+            },
+            {
+                "item": "minecraft:dark_oak_log"
+            },
+            {
+                "item": "minecraft:acacia_log"
+            },
+            {
+                "item": "minecraft:spruce_wood"
+            },
+            {
+                "item": "minecraft:dark_oak_wood"
+            },
+            {
+                "item": "minecraft:acacia_wood"
+            },
+            {
+                "item": "minecraft:jungle_wood"
+            },
+            {
+                "item": "minecraft:jungle_log"
+            },
+            {
+                "item": "minecraft:spruce_log"
+            }
+        ]
+    },
+    "result":
+    {
+        "item": "survivalessentials:wood_helmet",
+        "count": 1
+    }
+}
