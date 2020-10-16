@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients":
+    [
+        {
+            "item": "minecraft:stone_shovel"
+        },
+        {
+            "item": "survivalessentials:to_iron"
+        }
+    ],
+    "result":
+    {
+        "item": "minecraft:iron_shovel",
+        "count": 1
+    }
+}

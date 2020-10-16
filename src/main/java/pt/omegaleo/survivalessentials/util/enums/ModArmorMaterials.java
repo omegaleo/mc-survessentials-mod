@@ -8,8 +8,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import pt.omegaleo.survivalessentials.ModItems;
 import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 
 import java.util.function.Supplier;
@@ -75,7 +73,6 @@ public class ModArmorMaterials implements IArmorMaterial
 
     @Override
     public float func_230304_f_() {
-        // TODO Auto-generated method stub
         return 0;
     }
 }

@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients":
+    [
+        {
+            "item": "minecraft:wooden_pickaxe"
+        },
+        {
+            "item": "survivalessentials:to_stone"
+        }
+    ],
+    "result":
+    {
+        "item": "minecraft:stone_pickaxe",
+        "count": 1
+    }
+}

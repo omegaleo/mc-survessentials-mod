@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients":
+    [
+        {
+            "item": "minecraft:wooden_axe"
+        },
+        {
+            "item": "survivalessentials:to_stone"
+        }
+    ],
+    "result":
+    {
+        "item": "minecraft:stone_axe",
+        "count": 1
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients":
+    [
+        {
+            "item": "minecraft:diamond_sword"
+        },
+        {
+            "item": "survivalessentials:to_netherite"
+        }
+    ],
+    "result":
+    {
+        "item": "minecraft:netherite_sword",
+        "count": 1
+    }
+}

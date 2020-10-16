@@ -33,16 +33,20 @@ public class SurvivalEssentialsMod
     private void doClientStuff(final FMLClientSetupEvent event) { }
 
     // Custom ItemGroup TAB
-    public static final ItemGroup ITEMS_TAB = new ItemGroup("survivalessentials_items") {
+    public static final ItemGroup ITEMS_TAB = new ItemGroup("survivalessentials_items") 
+    {
         @Override
-        public ItemStack createIcon() {
+        public ItemStack createIcon() 
+        {
             return new ItemStack(ModItems.RUBY.get());
         }
     };
 
-    public static final ItemGroup ARMOR_TAB = new ItemGroup("survivalessentials_armor") {
+    public static final ItemGroup ARMOR_TAB = new ItemGroup("survivalessentials_armor") 
+    {
         @Override
-        public ItemStack createIcon() {
+        public ItemStack createIcon() 
+        {
             return new ItemStack(ModItems.WOOD_CHESTPLATE.get());
         }
     };

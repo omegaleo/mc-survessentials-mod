@@ -7,7 +7,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 
-public class ModItems {
+public class ModItems 
+{
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,
             SurvivalEssentialsMod.MOD_ID);
 
@@ -27,4 +28,16 @@ public class ModItems {
 
     public static final RegistryObject<ArmorItem> WOOD_BOOTS = ITEMS.register("wood_boots",
             () -> new ArmorItem(ModArmorMaterials.WOOD, EquipmentSlotType.FEET, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
+
+
+    // Tool Upgrades
+    public static final RegistryObject<Item> TO_STONE = ITEMS.register("to_stone",
+            () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+    public static final RegistryObject<Item> TO_IRON = ITEMS.register("to_iron",
+            () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+    public static final RegistryObject<Item> TO_DIAMOND = ITEMS.register("to_diamond",
+            () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+    public static final RegistryObject<Item> TO_NETHERITE = ITEMS.register("to_netherite",
+            () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 }

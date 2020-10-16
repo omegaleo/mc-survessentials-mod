@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients":
+    [
+        {
+            "item": "minecraft:diamond_axe"
+        },
+        {
+            "item": "survivalessentials:to_netherite"
+        }
+    ],
+    "result":
+    {
+        "item": "minecraft:netherite_axe",
+        "count": 1
+    }
+}
