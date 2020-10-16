@@ -40,7 +40,7 @@ public class SurvivalEssentialsMod
         @Override
         public ItemStack createIcon() 
         {
-            return new ItemStack(ModItems.RUBY.get());
+            return new ItemStack(ModItems.TO_DIAMOND.get());
         }
     };
 
