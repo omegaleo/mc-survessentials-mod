@@ -14,5 +14,7 @@
     "item.survivalessentials.wood_chips": "Wood Chips",
     "item.survivalessentials.wood_pulp": "Wood Pulp",
     "item.survivalessentials.knife": "Knife",
-    "item.survivalessentials.redstone_pickaxe": "Redstone Pickaxe"
+    "item.survivalessentials.redstone_pickaxe": "Redstone Pickaxe",
+    "item.survivalessentials.redstone_ingot": "Redstone Ingot",
+    "item.survivalessentials.redstone_compound": "Redstone Compound"
 }
