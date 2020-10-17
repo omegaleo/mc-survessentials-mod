@@ -1,6 +1,7 @@
 {
     "itemGroup.survivalessentials_items": "Survival Essentials Items",
     "itemGroup.survivalessentials_armor": "Survival Essentials Armors",
+    "itemGroup.survivalessentials_upgrades": "Survival Essentials Tool Upgrades",
     "item.survivalessentials.wood_helmet": "Wooden Helmet",
     "item.survivalessentials.wood_chestplate": "Wooden Chestplate",
     "item.survivalessentials.wood_leggings": "Wooden Leggings",
@@ -11,5 +12,7 @@
     "item.survivalessentials.to_netherite": "Upgrade Tool to Netherite",
     "item.survivalessentials.flesh_chunk": "Chunk of Rotten Flesh",
     "item.survivalessentials.wood_chips": "Wood Chips",
-    "item.survivalessentials.wood_pulp": "Wood Pulp"
+    "item.survivalessentials.wood_pulp": "Wood Pulp",
+    "item.survivalessentials.knife": "Knife",
+    "item.survivalessentials.redstone_pickaxe": "Redstone Pickaxe"
 }

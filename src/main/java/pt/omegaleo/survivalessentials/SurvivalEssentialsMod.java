@@ -42,7 +42,7 @@ public class SurvivalEssentialsMod
         @Override
         public ItemStack createIcon() 
         {
-            return new ItemStack(ModItems.TO_DIAMOND.get());
+            return new ItemStack(ModItems.WOOD_PULP.get());
         }
     };
 
@@ -52,6 +52,25 @@ public class SurvivalEssentialsMod
         public ItemStack createIcon() 
         {
             return new ItemStack(ModItems.WOOD_CHESTPLATE.get());
+        }
+    };
+
+    public static final ItemGroup UPGRADES_TAB = new ItemGroup("survivalessentials_upgrades") 
+    {
+        @Override
+        public ItemStack createIcon() 
+        {
+            return new ItemStack(ModItems.TO_DIAMOND.get());
+        }
+    };
+
+
+    public static final ItemGroup TOOLS_TAB = new ItemGroup("survivalessentials_tools") 
+    {
+        @Override
+        public ItemStack createIcon() 
+        {
+            return new ItemStack(ModItems.REDSTONE_PICKAXE.get());
         }
     };
 }
