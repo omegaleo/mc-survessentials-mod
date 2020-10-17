@@ -5,6 +5,6 @@
         "item": "survivalessentials:wood_pulp"
     },
     "result": "minecraft:paper",
-    "experience": 0.0,
-    "cookingtime": 200
+    "experience": 10.0,
+    "cookingtime": 500
 }
