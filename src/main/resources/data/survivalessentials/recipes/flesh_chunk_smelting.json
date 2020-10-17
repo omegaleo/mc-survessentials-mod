@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": 
+    {
+        "item": "survivalessentials:flesh_chunk"
+    },
+    "result": "minecraft:leather",
+    "experience": 0.0,
+    "cookingtime": 200
+}

@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "xx",
+        "xx"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "survivalessentials:wood_chips"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:wood_pulp",
+        "count": 1
+    }
+}

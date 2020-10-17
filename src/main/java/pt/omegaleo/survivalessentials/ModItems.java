@@ -35,4 +35,16 @@ public class ModItems
             () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
     public static final RegistryObject<Item> TO_NETHERITE = ITEMS.register("to_netherite",
             () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+
+    public static final RegistryObject<Item> FLESH_CHUNK = ITEMS.register("flesh_chunk",
+            () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+
+    public static final RegistryObject<Item> WOOD_CHIPS = ITEMS.register("wood_chips",
+            () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+
+    public static final RegistryObject<Item> KNIFE = ITEMS.register("knife",
+            () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+    
+    public static final RegistryObject<Item> WOOD_PULP = ITEMS.register("wood_pulp",
+            () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 }

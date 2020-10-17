@@ -8,5 +8,8 @@
     "item.survivalessentials.to_stone": "Upgrade Tool to Stone",
     "item.survivalessentials.to_iron": "Upgrade Tool to Iron",
     "item.survivalessentials.to_diamond": "Upgrade Tool to Diamond",
-    "item.survivalessentials.to_netherite": "Upgrade Tool to Netherite"
+    "item.survivalessentials.to_netherite": "Upgrade Tool to Netherite",
+    "item.survivalessentials.flesh_chunk": "Chunk of Rotten Flesh",
+    "item.survivalessentials.wood_chips": "Wood Chips",
+    "item.survivalessentials.wood_pulp": "Wood Pulp"
 }
