@@ -26,6 +26,9 @@ public class ModItems
         public static final RegistryObject<Item> WOOD_PULP = ITEMS.register("wood_pulp",
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 
+        public static final RegistryObject<Item> REDSTONE_COMPOUND = ITEMS.register("redstone_compound",
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+
         public static final RegistryObject<Item> REDSTONE_INGOT = ITEMS.register("redstone_ingot",
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 

@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": 
+    {
+        "item": "survivalessentials:redstone_compound"
+    },
+    "result": "survivalessentials:redstone_ingot",
+    "experience": 0.0,
+    "cookingtime": 200
+}
