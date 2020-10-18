@@ -1,4 +1,4 @@
-![Survival Essentials](https://media.forgecdn.net/attachments/317/214/logo.jpg "Survival Essentials")
+![Survival Essentials](https://raw.githubusercontent.com/omegaleo/mc-survessentials-mod/main/src/main/resources/logo.jpg "Survival Essentials")
 
 Survival Essentials is a Minecraft mod that makes survival maps/servers a bit more easy for the player by giving a way to upgrade tools from wood to netherite, giving more ways to get leather and paper so the player can make books and bookshelves a bit faster and by giving a set of wood armor just so players can have a decent set of armor at the start of their adventure. 
 More features to be implemented soon, including a set of redstone tools and armor. 
