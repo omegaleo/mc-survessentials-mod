@@ -16,5 +16,8 @@
     "item.survivalessentials.knife": "Knife",
     "item.survivalessentials.redstone_pickaxe": "Redstone Pickaxe",
     "item.survivalessentials.redstone_ingot": "Redstone Ingot",
-    "item.survivalessentials.redstone_compound": "Redstone Compound"
+    "item.survivalessentials.redstone_compound": "Redstone Compound",
+    "item.survivalessentials.flour": "Flour",
+    "item.survivalessentials.vinegar": "Vinegar",
+    "item.survivalessentials.slime": "Slime"
 }

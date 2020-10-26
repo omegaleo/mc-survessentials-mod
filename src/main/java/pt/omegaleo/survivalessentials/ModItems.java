@@ -32,7 +32,15 @@ public class ModItems
         public static final RegistryObject<Item> REDSTONE_INGOT = ITEMS.register("redstone_ingot",
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 
+        public static final RegistryObject<Item> VINEGAR = ITEMS.register("vinegar",
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 
+        public static final RegistryObject<Item> FLOUR = ITEMS.register("flour",
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+
+        public static final RegistryObject<Item> SLIME = ITEMS.register("slime",
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));  
+                   
         // Armor
         public static final RegistryObject<ArmorItem> WOOD_HELMET = ITEMS.register("wood_helmet",
                 () -> new ArmorItem(ModArmorMaterials.WOOD, EquipmentSlotType.HEAD,
