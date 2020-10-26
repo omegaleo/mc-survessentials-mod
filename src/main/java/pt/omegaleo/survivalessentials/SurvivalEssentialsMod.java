@@ -1,14 +1,16 @@
 package pt.omegaleo.survivalessentials;
 
-
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.datafix.fixes.FurnaceRecipes;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import pt.omegaleo.survivalessentials.brewing.VinegarRecipe;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,8 +35,17 @@ public class SurvivalEssentialsMod
 
     }
 
-    private void setup(final FMLCommonSetupEvent event) {}
+    private void setup(final FMLCommonSetupEvent event) 
+    {
+        DeferredWorkQueue.runLater(this::registerPotions); 
+    }
+
     private void doClientStuff(final FMLClientSetupEvent event) { }
+
+    private void registerPotions()
+    {
+        BrewingRecipeRegistry.addRecipe(new VinegarRecipe());
+    }
 
     // Custom ItemGroup TAB
     public static final ItemGroup ITEMS_TAB = new ItemGroup("survivalessentials_items") 

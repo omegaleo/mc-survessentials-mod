@@ -30,37 +30,31 @@ public enum ModItemTier implements IItemTier {
 
     @Override
     public int getMaxUses() {
-        // TODO Auto-generated method stub
         return this.maxUses;
     }
 
     @Override
     public float getEfficiency() {
-        // TODO Auto-generated method stub
         return this.efficiency;
     }
 
     @Override
     public float getAttackDamage() {
-        // TODO Auto-generated method stub
         return this.attackDamage;
     }
 
     @Override
     public int getHarvestLevel() {
-        // TODO Auto-generated method stub
         return this.harvestLevel;
     }
 
     @Override
     public int getEnchantability() {
-        // TODO Auto-generated method stub
         return this.enchantability;
     }
 
     @Override
     public Ingredient getRepairMaterial() {
-        // TODO Auto-generated method stub
         return this.repairMaterial.get();
     }
     

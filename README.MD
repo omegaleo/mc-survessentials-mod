@@ -15,8 +15,17 @@ Note: Items names, textures and recipes are WIP(Work in Progress)
 #### Paper
 ![Paper Recipe](https://imgur.com/3W6zHVo.jpg "Paper Recipe")
 
+#### Slime
+![Slime Recipe](https://imgur.com/cpJJhsg.jpg "Slime Recipe")
+
+#### Redstone Ingot
+![Redstone Ingot](https://imgur.com/iZLq4lw.jpg "Redstone Ingot")
+
 #### Wood Armor
 ![Wood Armor Recipe](https://imgur.com/LPYCjKI.jpg "Wood Armor Recipe")
+
+#### Redstone Tools
+![Redstone Tools Recipes](https://imgur.com/MDLY8u7.jpg "Redstone Tools Recipes")
 
 ## Upgrades
 
