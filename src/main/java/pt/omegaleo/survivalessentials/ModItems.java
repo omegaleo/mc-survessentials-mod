@@ -59,6 +59,17 @@ public class ModItems
         public static final RegistryObject<PickaxeItem> REDSTONE_PICKAXE = ITEMS.register("redstone_pickaxe",
                 () -> new RedstonePickaxe(ModItemTier.REDSTONE, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
 
+        public static final RegistryObject<SwordItem> REDSTONE_SWORD = ITEMS.register("redstone_sword",
+                () -> new SwordItem(ModItemTier.REDSTONE, 0, 5.0F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+
+        public static final RegistryObject<AxeItem> REDSTONE_AXE = ITEMS.register("redstone_axe",
+                () -> new AxeItem(ModItemTier.REDSTONE, 0, 4.0F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+        
+        public static final RegistryObject<ShovelItem> REDSTONE_SHOVEL = ITEMS.register("redstone_shovel",
+                () -> new ShovelItem(ModItemTier.REDSTONE, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+
+        public static final RegistryObject<HoeItem> REDSTONE_HOE = ITEMS.register("redstone_hoe",
+                () -> new HoeItem(ModItemTier.REDSTONE, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
 
         // Tool Upgrades
         public static final RegistryObject<Item> TO_STONE = ITEMS.register("to_stone",
