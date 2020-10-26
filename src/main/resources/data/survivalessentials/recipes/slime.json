@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients":
+    [
+        {
+            "item": "minecraft:milk_bucket"
+        },
+        {
+            "item": "survivalessentials:vinegar"
+        },
+        {
+            "item": "survivalessentials:flour"
+        }
+    ],
+    "result":
+    {
+        "item": "survivalessentials:slime",
+        "count": 1
+    }
+}

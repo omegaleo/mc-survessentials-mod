@@ -32,7 +32,15 @@ public class ModItems
         public static final RegistryObject<Item> REDSTONE_INGOT = ITEMS.register("redstone_ingot",
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 
+        public static final RegistryObject<Item> VINEGAR = ITEMS.register("vinegar",
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 
+        public static final RegistryObject<Item> FLOUR = ITEMS.register("flour",
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+
+        public static final RegistryObject<Item> SLIME = ITEMS.register("slime",
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));  
+                   
         // Armor
         public static final RegistryObject<ArmorItem> WOOD_HELMET = ITEMS.register("wood_helmet",
                 () -> new ArmorItem(ModArmorMaterials.WOOD, EquipmentSlotType.HEAD,
@@ -51,6 +59,17 @@ public class ModItems
         public static final RegistryObject<PickaxeItem> REDSTONE_PICKAXE = ITEMS.register("redstone_pickaxe",
                 () -> new RedstonePickaxe(ModItemTier.REDSTONE, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
 
+        public static final RegistryObject<SwordItem> REDSTONE_SWORD = ITEMS.register("redstone_sword",
+                () -> new SwordItem(ModItemTier.REDSTONE, 0, 5.0F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+
+        public static final RegistryObject<AxeItem> REDSTONE_AXE = ITEMS.register("redstone_axe",
+                () -> new AxeItem(ModItemTier.REDSTONE, 0, 4.0F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+        
+        public static final RegistryObject<ShovelItem> REDSTONE_SHOVEL = ITEMS.register("redstone_shovel",
+                () -> new ShovelItem(ModItemTier.REDSTONE, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+
+        public static final RegistryObject<HoeItem> REDSTONE_HOE = ITEMS.register("redstone_hoe",
+                () -> new HoeItem(ModItemTier.REDSTONE, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
 
         // Tool Upgrades
         public static final RegistryObject<Item> TO_STONE = ITEMS.register("to_stone",

@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients":
+    [
+        {
+            "item": "minecraft:piston"
+        },
+        {
+            "item": "survivalessentials:slime"
+        }
+    ],
+    "result":
+    {
+        "item": "minecraft:sticky_piston",
+        "count": 1
+    }
+}
