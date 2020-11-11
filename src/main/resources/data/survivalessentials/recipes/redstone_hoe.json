@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "yy",
+        " x",
+        " x"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:stick"
+        },
+        "y":
+        {
+            "item": "survivalessentials:redstone_ingot"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:redstone_hoe",
+        "count": 1
+    }
+}
