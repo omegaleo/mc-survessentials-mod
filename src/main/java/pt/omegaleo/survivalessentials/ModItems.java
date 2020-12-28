@@ -39,7 +39,10 @@ public class ModItems
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 
         public static final RegistryObject<Item> SLIME = ITEMS.register("slime",
-                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));  
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+                
+        /*public static final RegistryObject<Item> MOB_ESSENCE = ITEMS.register("mob_essence", 
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));*/
                    
         // Armor
         public static final RegistryObject<ArmorItem> WOOD_HELMET = ITEMS.register("wood_helmet",
