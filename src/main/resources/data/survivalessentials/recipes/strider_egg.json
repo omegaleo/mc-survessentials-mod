@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#E#",
+        "E#E",
+        "#E#"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:lava_bucket"
+        },
+        "E": {
+            "item": "minecraft:egg"
+        }
+    },
+    "result": {
+        "item": "minecraft:strider_spawn_egg",
+        "count": 1
+    }
+}
