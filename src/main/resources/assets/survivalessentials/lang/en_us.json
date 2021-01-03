@@ -23,5 +23,9 @@
     "item.survivalessentials.redstone_compound": "Redstone Compound",
     "item.survivalessentials.flour": "Flour",
     "item.survivalessentials.vinegar": "Vinegar",
-    "item.survivalessentials.slime": "Slime"
+    "item.survivalessentials.slime": "Slime",
+    "item.survivalessentials.redstone_helmet": "Redstone Helmet",
+    "item.survivalessentials.redstone_chestplate": "Redstone Chestplate",
+    "item.survivalessentials.redstone_leggings": "Redstone Leggings",
+    "item.survivalessentials.redstone_boots": "Redstone Boots"
 }
