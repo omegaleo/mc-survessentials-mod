@@ -35,7 +35,6 @@ public class SurvivalEssentialsMod
         
         ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        ModRecipes.init();
 
         MinecraftForge.EVENT_BUS.register(this);
 

@@ -22,39 +22,30 @@ public class BackpackContainerScreen extends ContainerScreen<BackpackContainer> 
         this.inventoryRows = screenContainer.getInventoryRows();
     }
 
-    //Normally defined as render method
     @Override
-    public void func_230430_a_(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) 
-    {
-        this.func_231160_c_(); // Render Background?
-        super.func_230430_a_(matrix, mouseX, mouseY, partialTicks);
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
-
-    //drawGuiContainerBackgroundLayer?
     @Override
-    protected void func_230450_a_(MatrixStack stack, float partialTicks, int mouseX, int mouseY) 
-    {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.field_230706_i_.getTextureManager().bindTexture(TEXTURE);
-                    //this.width
-        int posX = (this.field_230708_k_ - this.xSize) / 2;
-                    //this.height
-        int posY = (this.field_230709_l_ - this.ySize) / 2;
-
-        //blit function
-        this.func_238474_b_(stack, posX, posY, 0, 0, this.xSize, this.inventoryRows * 18 + 17);
-        this.func_238474_b_(stack, posX, posY + this.inventoryRows * 18 + 17, 0, 126, this.xSize, 96);
-        
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+        this.font.drawString(matrixStack, title.getString(), 8, 6, 4210752);
+        this.font.drawString(matrixStack, playerInventory.getDisplayName().getString(), 8, this.ySize - 96 + 2, 4210752);
     }
 
-
-    //drawGuiContainerForegroundLayer
     @Override
-    protected void func_230451_b_(MatrixStack stack, int mouseX, int mouseY) 
-    {
-        //this.font
-        this.field_230712_o_.func_243248_b(stack,this.field_230704_d_, 8, 6, 4210752);
-        this.field_230712_o_.func_243248_b(stack, this.playerInventory.getDisplayName(), 8, this.ySize - 96 + 2, 4210752);
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        if (minecraft == null) return;
+
+        // Render the GUI texture
+        GlStateManager.color4f(1, 1, 1, 1);
+        minecraft.getTextureManager().bindTexture(TEXTURE);
+        int posX = (this.width - this.xSize) / 2;
+        int posY = (this.height - this.ySize) / 2;
+        // blit(posX, posY, minU, minV, maxU, maxV)
+        blit(matrixStack, posX, posY, 0, 0, this.xSize, this.inventoryRows * 18 + 17);
+        blit(matrixStack, posX, posY + this.inventoryRows * 18 + 17, 0, 126, this.xSize, 96);
     }
 }
