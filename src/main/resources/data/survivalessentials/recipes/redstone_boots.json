@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "x x",
+        "x x"
+    ],
+    "key":
+    {
+        "x":
+        [
+            {
+                "item": "survivalessentials:redstone_ingot"
+            }
+        ]
+    },
+    "result":
+    {
+        "item": "survivalessentials:redstone_boots",
+        "count": 1
+    }
+}

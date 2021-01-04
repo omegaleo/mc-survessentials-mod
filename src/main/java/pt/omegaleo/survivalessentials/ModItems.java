@@ -5,6 +5,7 @@ import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import pt.omegaleo.survivalessentials.items.BackpackItem;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 import pt.omegaleo.survivalessentials.util.enums.ModItemTier;
 import pt.omegaleo.survivalessentials.util.tools.RedstonePickaxe;
@@ -39,7 +40,13 @@ public class ModItems
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 
         public static final RegistryObject<Item> SLIME = ITEMS.register("slime",
-                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));  
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+                
+        public static final RegistryObject<Item> BACKPACK = ITEMS.register("backpack", 
+                () -> new BackpackItem().asItem());
+
+        /*public static final RegistryObject<Item> MOB_ESSENCE = ITEMS.register("mob_essence", 
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));*/
                    
         // Armor
         public static final RegistryObject<ArmorItem> WOOD_HELMET = ITEMS.register("wood_helmet",
@@ -54,6 +61,19 @@ public class ModItems
 
         public static final RegistryObject<ArmorItem> WOOD_BOOTS = ITEMS.register("wood_boots",
                 () -> new ArmorItem(ModArmorMaterials.WOOD, EquipmentSlotType.FEET, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
+        public static final RegistryObject<ArmorItem> REDSTONE_HELMET = ITEMS.register("redstone_helmet",
+                () -> new ArmorItem(ModArmorMaterials.REDSTONE, EquipmentSlotType.HEAD,
+                        new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
+        public static final RegistryObject<ArmorItem> REDSTONE_CHESTPLATE = ITEMS.register("redstone_chestplate",
+                () -> new ArmorItem(ModArmorMaterials.REDSTONE, EquipmentSlotType.CHEST, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
+        public static final RegistryObject<ArmorItem> REDSTONE_LEGGINGS = ITEMS.register("redstone_leggings",
+                () -> new ArmorItem(ModArmorMaterials.REDSTONE, EquipmentSlotType.LEGS, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
+        public static final RegistryObject<ArmorItem> REDSTONE_BOOTS = ITEMS.register("redstone_boots",
+                () -> new ArmorItem(ModArmorMaterials.REDSTONE, EquipmentSlotType.FEET, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
 
         // Tools
         public static final RegistryObject<PickaxeItem> REDSTONE_PICKAXE = ITEMS.register("redstone_pickaxe",

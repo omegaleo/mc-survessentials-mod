@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#E#",
+        "ENE",
+        "#E#"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:porkchop"
+        },
+        "N": {
+            "item": "minecraft:gold_nugget"
+        },
+        "E": {
+            "item": "minecraft:egg"
+        }
+    },
+    "result": {
+        "item": "minecraft:hoglin_spawn_egg",
+        "count": 1
+    }
+}
