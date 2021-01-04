@@ -1,5 +1,8 @@
 package pt.omegaleo.survivalessentials.items;
 
+import java.awt.Color;
+
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.DyeColor;
@@ -75,7 +78,7 @@ public class BackpackItem extends Item
         {
             return getBackpackColor(stack);
         }
-        return 0xFFFFFF;
+        return Color.WHITE.getRGB();
     }
 
     @Override
