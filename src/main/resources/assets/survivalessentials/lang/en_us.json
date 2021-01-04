@@ -30,5 +30,7 @@
     "item.survivalessentials.redstone_leggings": "Redstone Leggings",
     "item.survivalessentials.redstone_boots": "Redstone Boots",
     "item.survivalessentials.backpack": "Backpack",
-    "container.survivalessentials.backpack": "Backpack"
+    "container.survivalessentials.backpack": "Backpack",
+    "container.survivalessentials.modbook": "Survival Essential's Mod Book",
+    "item.survivalessentials.modbook": "Survival Essential's Mod Book"
 }

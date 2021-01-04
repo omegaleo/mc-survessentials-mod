@@ -1,0 +1,74 @@
+package pt.omegaleo.survivalessentials.client.gui;
+
+import java.util.List;
+
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
+import pt.omegaleo.survivalessentials.containers.BookContainer;
+import pt.omegaleo.survivalessentials.inventory.BackpackContainer;
+
+public class BookContainerScreen extends ContainerScreen<BookContainer> 
+{
+    private static final ResourceLocation TEXTURE = new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/book.png");
+    private int currentPage = 0;
+    private static final ResourceLocation[] PAGES = new ResourceLocation[]
+    {
+        new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/pages/page1.png")
+    };
+
+    public BookContainerScreen(BookContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) 
+    {
+        super(screenContainer, inv, titleIn);
+        this.xSize = 256;
+        this.ySize = 256;
+    }
+
+    @Override
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) 
+    {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+    }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) 
+    {
+        /*if (minecraft == null) return;
+
+        // Render the GUI texture
+        RenderSystem.enableBlend();
+        GlStateManager.color4f(1, 1, 1, 1);
+        minecraft.getTextureManager().bindTexture(PAGES[0]);
+        int posX = (this.width - 256) / 2;
+        int posY = (this.height - 256) / 2;
+        blit(matrixStack, posX, posY, 0, 0, 256, 256);*/
+    }
+
+    @Override
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) 
+    {
+        if (minecraft == null) return;
+
+        // Render the GUI texture
+        RenderSystem.enableBlend();
+        GlStateManager.color4f(1, 1, 1, 1);
+        minecraft.getTextureManager().bindTexture(TEXTURE);
+        int posX = (this.width - 256) / 2;
+        int posY = (this.height - 256) / 2;
+        // blit(posX, posY, minU, minV, maxU, maxV)
+        blit(matrixStack, posX, posY, 0, 0, 256, 256);
+        minecraft.getTextureManager().bindTexture(PAGES[0]);
+        blit(matrixStack, posX, posY, 0, 0, 256, 256);
+    }
+}

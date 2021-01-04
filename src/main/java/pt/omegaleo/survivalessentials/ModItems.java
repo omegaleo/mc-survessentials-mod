@@ -6,6 +6,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
+import pt.omegaleo.survivalessentials.items.ModBook;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 import pt.omegaleo.survivalessentials.util.enums.ModItemTier;
 import pt.omegaleo.survivalessentials.util.tools.RedstonePickaxe;
@@ -44,6 +45,9 @@ public class ModItems
                 
         public static final RegistryObject<Item> BACKPACK = ITEMS.register("backpack", 
                 () -> new BackpackItem().asItem());
+
+        public static final RegistryObject<Item> MODBOOK = ITEMS.register("modbook", 
+                () -> new ModBook().asItem());
 
         /*public static final RegistryObject<Item> MOB_ESSENCE = ITEMS.register("mob_essence", 
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));*/
