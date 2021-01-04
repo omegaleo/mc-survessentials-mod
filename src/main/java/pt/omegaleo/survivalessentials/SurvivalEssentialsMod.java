@@ -1,7 +1,9 @@
 package pt.omegaleo.survivalessentials;
 
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fml.DeferredWorkQueue;
@@ -10,6 +12,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import pt.omegaleo.survivalessentials.brewing.VinegarRecipe;
+import pt.omegaleo.survivalessentials.client.ColorHandlers;
+
+import javax.annotation.Nonnull;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,10 +29,10 @@ public class SurvivalEssentialsMod
     {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-
-        //ModContainerTypes.CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
-
-
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ColorHandlers::registerItemColor);
+        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(ContainerType.class, ModContainerTypes::registerContainerTypes);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModContainerTypes::registerScreens);
+        
         ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
@@ -40,7 +45,10 @@ public class SurvivalEssentialsMod
         DeferredWorkQueue.runLater(this::registerPotions); 
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event) { }
+    private void doClientStuff(final FMLClientSetupEvent event) 
+    { 
+        
+    }
 
     private void registerPotions()
     {
@@ -84,4 +92,10 @@ public class SurvivalEssentialsMod
             return new ItemStack(ModItems.REDSTONE_PICKAXE.get());
         }
     };
+
+    @Nonnull
+    public static ResourceLocation getId(String path) 
+    {
+        return new ResourceLocation(MOD_ID, path);
+    }
 }
