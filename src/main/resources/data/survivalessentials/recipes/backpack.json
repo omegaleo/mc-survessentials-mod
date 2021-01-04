@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "xxx",
+        "xyx",
+        "xxx"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:leather"
+        },
+        "y":
+        {
+            "item": "minecraft:chest"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:backpack",
+        "count": 1
+    }
+}

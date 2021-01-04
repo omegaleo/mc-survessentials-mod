@@ -1,3 +1,0 @@
-to run client for testing do: gradlew runClient
-to build package: gradlew build
-based on: https://github.com/TechnoVisionDev/Forge-Modding-Tutorial-1.16
