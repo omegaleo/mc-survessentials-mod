@@ -37,7 +37,8 @@ public class BookContainerScreen extends ContainerScreen<BookContainer>
         new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/pages/page9.png"),
         new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/pages/page10.png"),
         new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/pages/page11.png"),
-        new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/pages/page12.png")
+        new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/pages/page12.png"),
+        new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/pages/page13.png")
     };
 
     public BookContainerScreen(BookContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) 
