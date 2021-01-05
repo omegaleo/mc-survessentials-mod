@@ -20,7 +20,7 @@ import java.util.Collection;
 public class RecolorBackpackRecipe extends SpecialRecipe
 {
 
-    public static final ResourceLocation NAME = SurvivalEssentialsMod.getId("recolor_backpack");
+    public static final ResourceLocation NAME = SurvivalEssentialsMod.getId("recolorbackpack");
     public static final Serializer SERIALIZER = new Serializer();
 
     public RecolorBackpackRecipe(ResourceLocation idIn) 
