@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients":
+    [
+        {
+            "item": "minecraft:potion"
+        },
+        {
+            "item": "minecraft:nether_star"
+        }
+    ],
+    "result":
+    {
+        "item": "minecraft:experience_bottle",
+        "count": 1
+    }
+}
