@@ -18,6 +18,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import pt.omegaleo.survivalessentials.ModItems;
 import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 
 public class HouseTeleporter extends Item
@@ -32,6 +34,8 @@ public class HouseTeleporter extends Item
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) 
     {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+
         tooltip.add(new TranslationTextComponent("Position set: " + getSetCoordinates(stack)));
         tooltip.add(new TranslationTextComponent("Hold " + "\u00A76" + "Shift" + "\u00A76" + " while right-clicking to set position"));
     }
@@ -41,27 +45,32 @@ public class HouseTeleporter extends Item
     {
         if(!worldIn.isRemote)
         {
-            ItemStack stack = playerIn.getActiveItemStack();
-            if(playerIn.isSneaking())
+            ItemStack stack = playerIn.getHeldItemMainhand();
+            if(playerIn.getHeldItem(handIn).getItem() == ModItems.HOME_TELEPORTER.get())
             {
-                String position = round(playerIn.getPosX(),2) + ";" + round(playerIn.getPosY(),2) + ";" + round(playerIn.getPosZ(),2);
-                setCoordinates(stack, position);
-                System.out.println("Set position to:" + position);
-            }
-            else
-            {
-                String[] homePosition = getSetCoordinates(stack).split(";");
-                double posX = Double.valueOf(homePosition[0]);
-                double posY = Double.valueOf(homePosition[1]);
-                double posZ = Double.valueOf(homePosition[2]);
-                System.out.println("Attempting to teleport to: " + posX + ";" + posY + ";" + posZ);
-                
-                playerIn.setPositionAndUpdate(posX, posY, posZ);
+                if(playerIn.isSneaking())
+                {
+                    String position = round(playerIn.getPosX(),2) + ";" + round(playerIn.getPosY(),2) + ";" + round(playerIn.getPosZ(),2);
+                    setCoordinates(stack, position);
+                    //System.out.println("Set position to:" + position);
+                }
+                else
+                {
+                    //System.out.println(getSetCoordinates(stack));
+                    String[] homePosition = getSetCoordinates(stack).split(";");
+                    double posX = Double.valueOf(homePosition[0]);
+                    double posY = Double.valueOf(homePosition[1]);
+                    double posZ = Double.valueOf(homePosition[2]);
+                    //System.out.println("Attempting to teleport to: " + posX + ";" + posY + ";" + posZ);
+                    
+                    playerIn.setPositionAndUpdate(posX, posY, posZ);
+                }
             }
         }
 
         return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
     }
+
 
     public static String getSetCoordinates(ItemStack stack) 
     {

@@ -34,5 +34,6 @@
     "container.survivalessentials.modbook": "Survival Essential's Mod Book",
     "item.survivalessentials.modbook": "Survival Essential's Mod Book",
     "gui.book.prev" : "<",
-    "gui.book.next" : ">"
+    "gui.book.next" : ">",
+    "item.survivalessentials.home_teleporter": "Home Teleporter"
 }
