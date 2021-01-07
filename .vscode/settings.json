@@ -11,7 +11,8 @@
         "enchantability",
         "forge",
         "minecraft",
-        "minecraft forge"
+        "minecraft forge",
+        "recolorbackpack"
     ],
     "java.configuration.updateBuildConfiguration": "automatic"
 }

@@ -13,6 +13,6 @@ public class ModRecipes
                 .create(ForgeRegistries.RECIPE_SERIALIZERS, SurvivalEssentialsMod.MOD_ID);
 
     public static final RegistryObject<IRecipeSerializer<RecolorBackpackRecipe>> recolorBackpackRecipe = RECIPES
-                .register(RecolorBackpackRecipe.NAME.toString(), 
+                .register("recolorbackpack", 
                 () -> RecolorBackpackRecipe.SERIALIZER);
 }
