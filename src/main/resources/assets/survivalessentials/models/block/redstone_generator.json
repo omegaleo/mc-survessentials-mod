@@ -1,0 +1,12 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "particle": "survivalessentials:blocks/redstone_generator_side",
+        "up": "survivalessentials:blocks/redstone_generator_side",
+        "down": "survivalessentials:blocks/redstone_generator_side",
+        "north": "survivalessentials:blocks/redstone_generator_side",
+        "east": "survivalessentials:blocks/redstone_generator_side",
+        "south": "survivalessentials:blocks/redstone_generator_side",
+        "west": "survivalessentials:blocks/redstone_generator_side"
+    }
+}

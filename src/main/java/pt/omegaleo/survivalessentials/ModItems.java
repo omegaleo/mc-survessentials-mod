@@ -5,6 +5,7 @@ import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import pt.omegaleo.survivalessentials.blocks.energy.RedstoneGenerator;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
 import pt.omegaleo.survivalessentials.items.HouseTeleporter;
 import pt.omegaleo.survivalessentials.items.ModBook;
@@ -108,4 +109,8 @@ public class ModItems
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.UPGRADES_TAB)));
         public static final RegistryObject<Item> TO_NETHERITE = ITEMS.register("to_netherite",
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.UPGRADES_TAB)));
+
+        // Blocks
+        public static final RegistryObject<Item> REDSTONE_GENERATOR = ITEMS.register("redstone_generator_block",
+                () -> new BlockItem(ModBlocks.redstoneGenerator.get(), new Item.Properties().group(SurvivalEssentialsMod.MACHINES_TAB)));
 }

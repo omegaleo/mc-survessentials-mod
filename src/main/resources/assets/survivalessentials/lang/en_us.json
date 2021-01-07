@@ -35,5 +35,6 @@
     "item.survivalessentials.modbook": "Survival Essential's Mod Book",
     "gui.book.prev" : "<",
     "gui.book.next" : ">",
-    "item.survivalessentials.home_teleporter": "Home Teleporter"
+    "item.survivalessentials.home_teleporter": "Home Teleporter",
+    "container.survivalessentials.redstonegenerator": "Redstone Generator"
 }

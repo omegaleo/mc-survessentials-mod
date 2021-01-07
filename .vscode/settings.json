@@ -13,7 +13,8 @@
         "forge",
         "minecraft",
         "minecraft forge",
-        "recolorbackpack"
+        "recolorbackpack",
+        "tileentity"
     ],
     "java.configuration.updateBuildConfiguration": "automatic"
 }

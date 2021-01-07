@@ -17,8 +17,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.client.gui.BackpackContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.BookContainerScreen;
+import pt.omegaleo.survivalessentials.client.gui.RedstoneGeneratorContainerScreen;
 import pt.omegaleo.survivalessentials.inventory.BackpackContainer;
 import pt.omegaleo.survivalessentials.containers.BookContainer;
+import pt.omegaleo.survivalessentials.containers.ContainerRedstoneGenerator;
 
 /**
  * Mod {@link ContainerType}s and {@link net.minecraft.client.gui.screen.Screen} registration.
@@ -36,18 +38,21 @@ import pt.omegaleo.survivalessentials.containers.BookContainer;
 public final class ModContainerTypes {
     public static ContainerType<BackpackContainer> backpack;
     public static ContainerType<BookContainer> book;
+    public static ContainerType<ContainerRedstoneGenerator> redstone_generator;
     
     private ModContainerTypes() {}
 
     public static void registerContainerTypes(RegistryEvent.Register<ContainerType<?>> event) {
         backpack = register("backpack", new ContainerType<>(BackpackContainer::new));
         book = register("book", new ContainerType<>(BookContainer::new));
+        redstone_generator = register("redstone_generator", new ContainerType<>(ContainerRedstoneGenerator::new));
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void registerScreens(FMLClientSetupEvent event) {
         ScreenManager.registerFactory(backpack, BackpackContainerScreen::new);
         ScreenManager.registerFactory(book, BookContainerScreen::new);
+        ScreenManager.registerFactory(redstone_generator, RedstoneGeneratorContainerScreen::new);
     }
 
     private static <T extends Container> ContainerType<T> register(String name, ContainerType<T> type) {
