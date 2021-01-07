@@ -13,6 +13,7 @@
         "forge",
         "minecraft",
         "minecraft forge",
+        "raytraceresult",
         "recolorbackpack"
     ],
     "java.configuration.updateBuildConfiguration": "automatic"
