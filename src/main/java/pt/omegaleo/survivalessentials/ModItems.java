@@ -6,9 +6,11 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
+import pt.omegaleo.survivalessentials.items.HouseTeleporter;
 import pt.omegaleo.survivalessentials.items.ModBook;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 import pt.omegaleo.survivalessentials.util.enums.ModItemTier;
+import pt.omegaleo.survivalessentials.util.tools.RedstoneHammer;
 import pt.omegaleo.survivalessentials.util.tools.RedstonePickaxe;
 
 public class ModItems 
@@ -48,6 +50,9 @@ public class ModItems
 
         public static final RegistryObject<Item> MODBOOK = ITEMS.register("modbook", 
                 () -> new ModBook().asItem());
+
+        public static final RegistryObject<Item> HOME_TELEPORTER = ITEMS.register("home_teleporter", 
+                () -> new HouseTeleporter().asItem());
 
         /*public static final RegistryObject<Item> MOB_ESSENCE = ITEMS.register("mob_essence", 
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));*/
@@ -94,6 +99,9 @@ public class ModItems
 
         public static final RegistryObject<HoeItem> REDSTONE_HOE = ITEMS.register("redstone_hoe",
                 () -> new HoeItem(ModItemTier.REDSTONE, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+        
+        public static final RegistryObject<PickaxeItem> REDSTONE_HAMMER = ITEMS.register("redstone_hammer",
+                () -> new RedstoneHammer(ModItemTier.REDSTONE, 0, -2.8F));
 
         // Tool Upgrades
         public static final RegistryObject<Item> TO_STONE = ITEMS.register("to_stone",

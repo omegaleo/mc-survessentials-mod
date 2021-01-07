@@ -6,12 +6,14 @@
         "**/.factorypath": true
     },
     "cSpell.words": [
+        "Teleporter",
         "Tessellator",
         "bufferbuilder",
         "enchantability",
         "forge",
         "minecraft",
         "minecraft forge",
+        "raytraceresult",
         "recolorbackpack"
     ],
     "java.configuration.updateBuildConfiguration": "automatic"
