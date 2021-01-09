@@ -39,7 +39,7 @@ public class HammerTool extends PickaxeItem
 
     public HammerTool(IItemTier tier, int attackDamageIn, float attackSpeedIn, int damagePerUse) 
     {
-        super(tier, attackDamageIn, attackSpeedIn, new Properties().group(SurvivalEssentialsMod.ITEMS_TAB));
+        super(tier, attackDamageIn, attackSpeedIn, new Properties().group(SurvivalEssentialsMod.TOOLS_TAB));
         this.damagePerUse = damagePerUse;
     }
 

@@ -36,5 +36,15 @@
     "gui.book.prev" : "<",
     "gui.book.next" : ">",
     "item.survivalessentials.home_teleporter": "Home Teleporter",
-    "item.survivalessentials.redstone_hammer": "Redstone Hammer"
+    "item.survivalessentials.redstone_hammer": "Redstone Hammer",
+    "container.survivalessentials.drill": "Mining Drill",
+    "item.survivalessentials.drill": "Mining Drill",
+    "gui.drill.1": "1x1",
+    "gui.drill.3": "3x3",
+    "gui.drill.5": "5x5",
+    "gui.drill.7": "7x7",
+    "gui.drill.9": "9x9",
+    "item.survivalessentials.five_blocks": "Radius Upgrade(5x5)",
+    "item.survivalessentials.seven_blocks": "Radius Upgrade(7x7)",
+    "item.survivalessentials.upgrade_template": "Upgrade Template"
 }
