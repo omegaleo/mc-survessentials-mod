@@ -18,7 +18,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.client.gui.BackpackContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.BookContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.DrillContainerScreen;
+import pt.omegaleo.survivalessentials.client.gui.ItemFilterContainerScreen;
 import pt.omegaleo.survivalessentials.inventory.BackpackContainer;
+import pt.omegaleo.survivalessentials.inventory.ItemFilterContainer;
 import pt.omegaleo.survivalessentials.containers.BookContainer;
 import pt.omegaleo.survivalessentials.containers.DrillContainer;
 
@@ -39,13 +41,15 @@ public final class ModContainerTypes {
     public static ContainerType<BackpackContainer> backpack;
     public static ContainerType<BookContainer> book;
     public static ContainerType<DrillContainer> drill;
-    
+    public static ContainerType<ItemFilterContainer> itemFilter;
+
     private ModContainerTypes() {}
 
     public static void registerContainerTypes(RegistryEvent.Register<ContainerType<?>> event) {
         backpack = register("backpack", new ContainerType<>(BackpackContainer::new));
         book = register("book", new ContainerType<>(BookContainer::new));
         drill = register("drill", new ContainerType<>(DrillContainer::new));
+        itemFilter = register("itemfilter", new ContainerType<>(ItemFilterContainer::new));
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -53,6 +57,7 @@ public final class ModContainerTypes {
         ScreenManager.registerFactory(backpack, BackpackContainerScreen::new);
         ScreenManager.registerFactory(book, BookContainerScreen::new);
         ScreenManager.registerFactory(drill, DrillContainerScreen::new);
+        ScreenManager.registerFactory(itemFilter, ItemFilterContainerScreen::new);
     }
 
     private static <T extends Container> ContainerType<T> register(String name, ContainerType<T> type) {

@@ -7,6 +7,7 @@ import java.util.Objects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.OreBlock;
 import net.minecraft.client.gui.recipebook.RecipeList;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,6 +17,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.FurnaceResultSlot;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,6 +42,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import pt.omegaleo.survivalessentials.ModItems;
 import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 import pt.omegaleo.survivalessentials.containers.DrillContainer;
+import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
 import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
 
 public class DrillTool extends PickaxeItem{
@@ -98,8 +101,28 @@ public class DrillTool extends PickaxeItem{
                         BlockPos[] blocksToDestroy = getAOEPositions(pos, mop.getFace(), miningRadius[currentSelectedRadius]);
                         System.out.print(blocksToDestroy);
                         for (int i = 0; i < blocksToDestroy.length; i++) {
-                            if (worldIn.isBlockPresent(blocksToDestroy[i])) {
-                                worldIn.destroyBlock(blocksToDestroy[i], true);
+                            if (worldIn.isBlockPresent(blocksToDestroy[i])) 
+                            {
+                                if(hasUpgrade((DrillUpgrade)ModItems.ITEM_FILTER.get(), stack))
+                                {
+                                    Block block = getBlock(blocksToDestroy[i], worldIn);
+                                    System.out.println(block);
+                                    if(block != null)
+                                    {
+                                        if(blockInFilter(block, stack))
+                                        {
+                                            worldIn.destroyBlock(blocksToDestroy[i], false);
+                                        }
+                                        else
+                                        {
+                                            worldIn.destroyBlock(blocksToDestroy[i], true);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    worldIn.destroyBlock(blocksToDestroy[i], true);
+                                }
                             }
                         }
                     }
@@ -215,5 +238,29 @@ public class DrillTool extends PickaxeItem{
         BlockState ibs = world.getBlockState(pos);
         Block block = ibs.getBlock();
         return block;
+    }
+
+    private boolean blockInFilter(Block block, ItemStack stack)
+    {
+        IItemHandler itemHandler = getInventory(stack);
+        if (itemHandler != null) {
+            for (int i = 0; i < 6; i++) {
+                if (itemHandler.getStackInSlot(i).getItem() instanceof ItemFilterUpgrade) {
+                    ItemFilterUpgrade upgradeInSlot = (ItemFilterUpgrade) itemHandler.getStackInSlot(i).getItem();
+                    
+                    List<ItemStack> itemsInUpgrade = upgradeInSlot.getItems(itemHandler.getStackInSlot(i));
+                    for(int j = 0; j < itemsInUpgrade.size(); j++)
+                    {
+                        System.out.println(block.asItem() + " == " + itemsInUpgrade.get(j).getItem());
+                        if(block.asItem() == itemsInUpgrade.get(j).getItem())
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -48,5 +48,7 @@
     "item.survivalessentials.seven_blocks": "Radius Upgrade(7x7)",
     "item.survivalessentials.upgrade_template": "Upgrade Template",
     "item.survivalessentials.drill_head": "Drill Head",
-    "item.survivalessentials.drill_body": "Drill Body"
+    "item.survivalessentials.drill_body": "Drill Body",
+    "item.survivalessentials.item_filter": "Item Filter Upgrade",
+    "container.survivalessentials.filter": "Item Filter"
 }

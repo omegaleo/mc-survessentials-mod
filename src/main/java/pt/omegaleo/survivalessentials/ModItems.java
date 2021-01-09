@@ -7,6 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
 import pt.omegaleo.survivalessentials.items.HouseTeleporter;
+import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
 import pt.omegaleo.survivalessentials.items.ModBook;
 import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
@@ -132,5 +133,7 @@ public class ModItems
                 () -> new DrillUpgrade());
         public static final RegistryObject<Item> SEVEN_BLOCKS = ITEMS.register("seven_blocks",
                 () -> new DrillUpgrade());
+        public static final RegistryObject<Item> ITEM_FILTER = ITEMS.register("item_filter",
+                () -> new ItemFilterUpgrade());
 
 }
