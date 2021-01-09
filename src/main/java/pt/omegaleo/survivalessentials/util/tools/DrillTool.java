@@ -44,10 +44,10 @@ import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
 
 public class DrillTool extends PickaxeItem{
     // Can install upgrades
-    // Has different mining modes, 1x1, 3x3, 5x5, 9x9
+    // Has different mining modes, 1x1, 3x3, 5x5, 7x7
     // Will have a void filter
 
-    private int[] miningRadius = new int[] { 1, 3, 5, 7, 9 };
+    private int[] miningRadius = new int[] { 1, 3, 5, 7 };
 
     private int currentSelectedRadius = 0;
 
@@ -95,23 +95,16 @@ public class DrillTool extends PickaxeItem{
 
                         BlockRayTraceResult mop = Item.rayTrace(worldIn, player, RayTraceContext.FluidMode.ANY);
 
-                        BlockPos[] blocksToDestroy = getAOEPositions(pos, mop.getFace(),
-                                miningRadius[currentSelectedRadius]);
+                        BlockPos[] blocksToDestroy = getAOEPositions(pos, mop.getFace(), miningRadius[currentSelectedRadius]);
+                        System.out.print(blocksToDestroy);
                         for (int i = 0; i < blocksToDestroy.length; i++) {
                             if (worldIn.isBlockPresent(blocksToDestroy[i])) {
                                 worldIn.destroyBlock(blocksToDestroy[i], true);
-
-                                // To prevent drill from being destroyed
-                                if (stack.getMaxDamage() - stack.getDamage() - damagePerUse < 1) {
-                                    stack.damageItem(damagePerUse - 1, entityLiving, null);
-                                } else {
-                                    stack.damageItem(damagePerUse, entityLiving, null);
-                                }
                             }
                         }
                     }
                 } catch (Exception e) {
-                    System.out.println(e.getStackTrace());
+                    System.out.println(e.getMessage());
                 }
             }
         }
@@ -156,25 +149,47 @@ public class DrillTool extends PickaxeItem{
 
     BlockPos[] getAOEPositions(BlockPos initialPosition, Direction facing, int radius) {
         BlockPos[] positions = new BlockPos[radius * radius]; // Example: 3x3 = 9, 5x5 = 25
-
         int currentPositionIndex = 0;
-
-        int middlePointIndex = ((radius * radius) / 2);
 
         int offSet = radius / 2;
 
-        positions[middlePointIndex] = initialPosition;
-
-        switch (facing) {
-            case NORTH:
-            case SOUTH:
-                for (int y = -radius / 2; y < radius / 2 + 1; y++) {
-                    for (int x = -radius / 2; x < radius / 2 + 1; x++) {
-                        positions[currentPositionIndex] = new BlockPos(initialPosition.getX() + x,
-                                initialPosition.getY() + y, initialPosition.getZ());
-                        currentPositionIndex++;
-                    }
+        if(facing == Direction.NORTH || facing == Direction.SOUTH)
+        {
+            for (int y = -radius / 2; y < radius / 2 + 1; y++) {
+                for (int x = -radius / 2; x < radius / 2 + 1; x++) {
+                    int blockX = initialPosition.getX() + x;
+                    int blockY = initialPosition.getY() + y;
+                    positions[currentPositionIndex] = new BlockPos(blockX,
+                    blockY, initialPosition.getZ());
+                    currentPositionIndex++;
                 }
+            }
+        }
+        else if(facing == Direction.UP || facing == Direction.DOWN)
+        {
+            for (int x = -radius / 2; x < radius / 2 + 1; x++) {
+                for (int z = -radius / 2; z < radius / 2 + 1; z++) {
+                    int blockX = initialPosition.getX() + x;
+                    int blockZ = initialPosition.getZ() + z;
+                    positions[currentPositionIndex] = new BlockPos(blockX,
+                            initialPosition.getY(), blockZ);
+                    System.out.println(positions[currentPositionIndex]);
+                    currentPositionIndex++;
+                }
+            }
+        }
+        else if(facing == Direction.WEST || facing == Direction.EAST)
+        {
+            for (int y = -radius / 2; y < radius / 2 + 1; y++) {
+                for (int z = -radius / 2; z < radius / 2 + 1; z++) {
+                    int blockY = initialPosition.getY() + y;
+                    int blockZ = initialPosition.getZ() + z;
+                    positions[currentPositionIndex] = new BlockPos(initialPosition.getX(),
+                    blockY, blockZ);
+                    System.out.println(positions[currentPositionIndex]);
+                    currentPositionIndex++;
+                }
+            }
         }
 
         return positions;

@@ -46,5 +46,7 @@
     "gui.drill.9": "9x9",
     "item.survivalessentials.five_blocks": "Radius Upgrade(5x5)",
     "item.survivalessentials.seven_blocks": "Radius Upgrade(7x7)",
-    "item.survivalessentials.upgrade_template": "Upgrade Template"
+    "item.survivalessentials.upgrade_template": "Upgrade Template",
+    "item.survivalessentials.drill_head": "Drill Head",
+    "item.survivalessentials.drill_body": "Drill Body"
 }
