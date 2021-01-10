@@ -208,7 +208,7 @@ public class DrillTool extends PickaxeItem{
         int expAmount = getExpAmount(block);
         if(stack.getDamage()>0)
         {
-            int amountToRepair = (int) ((damagePerUse * expAmount) * 0.25);
+            int amountToRepair = (int) ((damagePerUse * expAmount) * 0.75);
             if(stack.getDamage() - amountToRepair < 0)
             {
                 amountToRepair -= stack.getDamage();
