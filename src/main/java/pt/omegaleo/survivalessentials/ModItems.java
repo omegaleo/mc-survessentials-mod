@@ -135,5 +135,10 @@ public class ModItems
                 () -> new DrillUpgrade());
         public static final RegistryObject<Item> ITEM_FILTER = ITEMS.register("item_filter",
                 () -> new ItemFilterUpgrade());
-
+        public static final RegistryObject<Item> MAGNET = ITEMS.register("magnet",
+                () -> new DrillUpgrade());
+        public static final RegistryObject<Item> SMELT_UPGRADE = ITEMS.register("smelt_upgrade",
+                () -> new DrillUpgrade());
+        public static final RegistryObject<Item> REPAIR = ITEMS.register("repair",
+                () -> new DrillUpgrade());
 }

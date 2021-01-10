@@ -2,7 +2,11 @@ package pt.omegaleo.survivalessentials.util.tools;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
+
+import javax.lang.model.util.ElementScanner6;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.block.Block;
@@ -12,15 +16,20 @@ import net.minecraft.block.OreBlock;
 import net.minecraft.client.gui.recipebook.RecipeList;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.client.util.InputMappings;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.FurnaceResultSlot;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.crafting.AbstractCookingRecipe;
 import net.minecraft.item.crafting.FurnaceRecipe;
@@ -92,46 +101,128 @@ public class DrillTool extends PickaxeItem{
             LivingEntity entityLiving) {
         if ((stack.getMaxDamage() - stack.getDamage()) > 1) {
             if (miningRadius[currentSelectedRadius] > 1) {
-                try {
-                    if (entityLiving instanceof PlayerEntity) {
-                        PlayerEntity player = (PlayerEntity) entityLiving;
+                if (entityLiving instanceof PlayerEntity) {
+                    PlayerEntity player = (PlayerEntity) entityLiving;
 
-                        BlockRayTraceResult mop = Item.rayTrace(worldIn, player, RayTraceContext.FluidMode.ANY);
+                    BlockRayTraceResult mop = Item.rayTrace(worldIn, player, RayTraceContext.FluidMode.ANY);
 
-                        BlockPos[] blocksToDestroy = getAOEPositions(pos, mop.getFace(), miningRadius[currentSelectedRadius]);
-                        System.out.print(blocksToDestroy);
-                        for (int i = 0; i < blocksToDestroy.length; i++) {
-                            if (worldIn.isBlockPresent(blocksToDestroy[i])) 
+                    BlockPos[] blocksToDestroy = getAOEPositions(pos, mop.getFace(), miningRadius[currentSelectedRadius]);
+                    System.out.print(blocksToDestroy);
+                    for (int i = 0; i < blocksToDestroy.length; i++) {
+                        if (worldIn.isBlockPresent(blocksToDestroy[i])) 
+                        {
+                            if(hasUpgrade((DrillUpgrade)ModItems.ITEM_FILTER.get(), stack))
                             {
-                                if(hasUpgrade((DrillUpgrade)ModItems.ITEM_FILTER.get(), stack))
+                                Block block = getBlock(blocksToDestroy[i], worldIn);
+                                System.out.println(block);
+                                if(block != null)
                                 {
-                                    Block block = getBlock(blocksToDestroy[i], worldIn);
-                                    System.out.println(block);
-                                    if(block != null)
+                                    if(blockInFilter(block, stack))
                                     {
-                                        if(blockInFilter(block, stack))
-                                        {
-                                            worldIn.destroyBlock(blocksToDestroy[i], false);
-                                        }
-                                        else
-                                        {
-                                            worldIn.destroyBlock(blocksToDestroy[i], true);
-                                        }
+                                        DestroyBlock(stack, blocksToDestroy[i], false, worldIn, player);
+                                    }
+                                    else
+                                    {
+                                        DestroyBlock(stack, blocksToDestroy[i], true, worldIn, player);
                                     }
                                 }
-                                else
-                                {
-                                    worldIn.destroyBlock(blocksToDestroy[i], true);
-                                }
+                            }
+                            else
+                            {
+                                DestroyBlock(stack, blocksToDestroy[i], true, worldIn, player);
                             }
                         }
                     }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                }
+            }
+            else
+            {
+                PlayerEntity player = (PlayerEntity) entityLiving;
+                if(hasUpgrade((DrillUpgrade)ModItems.ITEM_FILTER.get(), stack))
+                {
+                    Block block = getBlock(pos, worldIn);
+                    if(block != null)
+                    {
+                        if(blockInFilter(block, stack))
+                        {
+                            DestroyBlock(stack, pos, false, worldIn, player);
+                        }
+                        else
+                        {
+                            DestroyBlock(stack, pos, true, worldIn, player);
+                        }
+                    }
+                }
+                else
+                {
+                    DestroyBlock(stack, pos, true, worldIn, player);
                 }
             }
         }
         return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+    }
+
+    void DestroyBlock(ItemStack stack, BlockPos pos, boolean keepDrop, World world, PlayerEntity player)
+    {
+        PlayerInventory inv = player.inventory;
+        Block block = getBlock(pos, world);
+        if(block == Blocks.BEDROCK)
+        {
+            return; //We can't destroy Bedrock
+        }
+
+        if(keepDrop)
+        {
+            if(hasUpgrade((DrillUpgrade)ModItems.MAGNET.get(),stack))
+            {
+                if(block != null)
+                {
+                    ItemStack drop = getDrop(block,stack);
+                    if(drop != null)
+                    {
+                        inv.addItemStackToInventory(drop);
+                        world.destroyBlock(pos, false);
+                    }
+                    else
+                    {
+                        world.destroyBlock(pos, keepDrop);
+                    }
+                }
+                else
+                {
+                    world.destroyBlock(pos, keepDrop);
+                }
+            }
+            else
+            {
+                ItemStack stackToSpawn = getDrop(block,stack);
+                world.destroyBlock(pos, false);
+                world.addEntity(new ItemEntity(world,pos.getX(),pos.getY(),pos.getZ(),stackToSpawn));
+            }
+        }
+        else
+        {
+            world.destroyBlock(pos, keepDrop);
+        }
+
+        int expAmount = getExpAmount(block);
+        if(stack.getDamage()>0)
+        {
+            int amountToRepair = (int) ((damagePerUse * expAmount) * 0.25);
+            if(stack.getDamage() - amountToRepair < 0)
+            {
+                amountToRepair -= stack.getDamage();
+                stack.setDamage(0);
+            }
+            else
+            {
+                stack.setDamage(stack.getDamage() - amountToRepair);
+            }
+        }
+        else
+        {
+            player.experienceTotal += expAmount;
+        }
     }
 
     @Override
@@ -218,6 +309,19 @@ public class DrillTool extends PickaxeItem{
         return positions;
     }
 
+    @Override
+    public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) 
+    {
+        if(hasUpgrade((DrillUpgrade)ModItems.REPAIR.get(), stack))
+        {
+            if(stack.getDamage() > 0)
+            {
+                stack.setDamage(stack.getDamage() - damagePerUse);
+            }
+        }
+        return super.onEntityItemUpdate(stack, entity);
+    }
+
     private boolean hasUpgrade(DrillUpgrade upgrade, ItemStack stack) {
         IItemHandler itemHandler = getInventory(stack);
         if (itemHandler != null) {
@@ -232,6 +336,190 @@ public class DrillTool extends PickaxeItem{
         }
 
         return false;
+    }
+
+    private ItemStack getDrop(Block block, ItemStack stack)
+    {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+
+        int fortune = 0;
+        if(enchantments.containsKey(Enchantments.FORTUNE))
+        {
+            fortune = enchantments.get(Enchantments.FORTUNE).intValue();
+        }
+
+        if(block == Blocks.DIAMOND_ORE)
+        {
+            return new ItemStack(Items.DIAMOND, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.COAL_ORE)
+        {
+            return new ItemStack(Items.COAL, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.REDSTONE_ORE)
+        {
+            return new ItemStack(Items.REDSTONE, getDropAmount(4, 5, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.LAPIS_ORE)
+        {
+            return new ItemStack(Items.LAPIS_LAZULI, getDropAmount(4, 8, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.NETHER_QUARTZ_ORE)
+        {
+            return new ItemStack(Items.QUARTZ, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.NETHER_GOLD_ORE)
+        {
+            return new ItemStack(Items.GOLD_NUGGET, getDropAmount(2, 6, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.SEA_LANTERN)
+        {
+            return new ItemStack(Items.PRISMARINE_CRYSTALS, getDropAmount(2, 3, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.STONE)
+        {
+            if(hasUpgrade((DrillUpgrade)ModItems.SMELT_UPGRADE.get(), stack))
+            {
+                return getSmeltResult(block,stack);
+            }
+            else
+            {
+                return new ItemStack(Items.COBBLESTONE,1);
+            }
+        }
+        else if(block == Blocks.GLOWSTONE)
+        {
+            return new ItemStack(Items.GLOWSTONE, getDropAmount(2, 4, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.COBWEB)
+        {
+            return new ItemStack(Items.STRING, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.BOOKSHELF)
+        {
+            return new ItemStack(Items.BOOK, getDropAmount(3, 3, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.ANCIENT_DEBRIS)
+        {
+            return new ItemStack(Items.ANCIENT_DEBRIS, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.EMERALD_ORE)
+        {
+            return new ItemStack(Items.EMERALD, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.IRON_ORE)
+        {
+            if(hasUpgrade((DrillUpgrade)ModItems.SMELT_UPGRADE.get(), stack))
+            {
+                return getSmeltResult(block,stack);
+            }
+            else
+            {
+                return new ItemStack(block.asItem(),1);
+            }
+        }
+        else if(block == Blocks.GOLD_ORE)
+        {
+            if(hasUpgrade((DrillUpgrade)ModItems.SMELT_UPGRADE.get(), stack))
+            {
+                return getSmeltResult(block,stack);
+            }
+            else
+            {
+                return new ItemStack(block.asItem(),1);
+            }
+        }
+        else
+        {
+            return new ItemStack(block.asItem(),1);
+        }
+    }
+
+    private ItemStack getSmeltResult(Block block, ItemStack stack)
+    {
+        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+
+        int fortune = 0;
+        if(enchantments.containsKey(Enchantments.FORTUNE))
+        {
+            fortune = enchantments.get(Enchantments.FORTUNE).intValue();
+        }
+
+        if(block == Blocks.IRON_ORE)
+        {
+            return new ItemStack(Items.IRON_INGOT, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else if(block == Blocks.GOLD_ORE)
+        {
+            return new ItemStack(Items.GOLD_INGOT, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+        }
+        else
+        {
+            return new ItemStack(block.asItem(),1);
+        }
+    }
+
+    private int getExpAmount(Block block)
+    {
+        if(block == Blocks.COAL_ORE)
+        {
+            return 2;
+        }
+        else if(block == Blocks.DIAMOND_ORE)
+        {
+            return 7;
+        }
+        else if(block == Blocks.EMERALD_ORE)
+        {
+            return 7;
+        }
+        else if(block == Blocks.LAPIS_ORE)
+        {
+            return 5;
+        }
+        else if(block == Blocks.NETHER_QUARTZ_ORE)
+        {
+            return 5;
+        }
+        else if(block == Blocks.NETHER_GOLD_ORE)
+        {
+            return 2;
+        }
+        else if(block == Blocks.REDSTONE_ORE)
+        {
+            return 5;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    private int getDropAmount(int min, int max, boolean hasFortune, int fortune)
+    {
+        Random rand = new Random();
+        if(hasFortune)
+        {
+            if((max + 3)-(min + 1) > 0)
+            {
+                return rand.nextInt((max + 3)-(min + 1)) + (min + 1) + (fortune * 2);
+            }
+            else
+            {
+                return (min + 1) + (fortune * 2);
+            }
+        }
+        else
+        {
+            if(max - min > 0)
+            {
+                return rand.nextInt(max-min) + min;
+            }
+            else
+            {
+                return min;
+            }
+        }
     }
 
     private Block getBlock(BlockPos pos, World world) {

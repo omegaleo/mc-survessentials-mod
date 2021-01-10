@@ -50,5 +50,8 @@
     "item.survivalessentials.drill_head": "Drill Head",
     "item.survivalessentials.drill_body": "Drill Body",
     "item.survivalessentials.item_filter": "Item Filter Upgrade",
-    "container.survivalessentials.filter": "Item Filter"
+    "container.survivalessentials.filter": "Item Filter",
+    "item.survivalessentials.smelt_upgrade": "Smelting Upgrade",
+    "item.survivalessentials.repair": "Repair Upgrade",
+    "item.survivalessentials.magnet": "Magnet Upgrade"
 }

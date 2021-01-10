@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients":
+    [
+        {
+            "item": "minecraft:furnace"
+        },
+        {
+            "item": "survivalessentials:upgrade_template"
+        }
+    ],
+    "result":
+    {
+        "item": "survivalessentials:smelt_upgrade",
+        "count": 1
+    }
+}
