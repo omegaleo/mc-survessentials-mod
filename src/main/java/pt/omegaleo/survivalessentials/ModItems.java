@@ -7,9 +7,12 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
 import pt.omegaleo.survivalessentials.items.HouseTeleporter;
+import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
 import pt.omegaleo.survivalessentials.items.ModBook;
+import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 import pt.omegaleo.survivalessentials.util.enums.ModItemTier;
+import pt.omegaleo.survivalessentials.util.tools.DrillTool;
 import pt.omegaleo.survivalessentials.util.tools.RedstoneHammer;
 import pt.omegaleo.survivalessentials.util.tools.RedstonePickaxe;
 
@@ -54,6 +57,15 @@ public class ModItems
         public static final RegistryObject<Item> HOME_TELEPORTER = ITEMS.register("home_teleporter", 
                 () -> new HouseTeleporter().asItem());
 
+        public static final RegistryObject<Item> UPGRADE_TEMPLATE = ITEMS.register("upgrade_template",
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.UPGRADES_TAB)));
+
+        public static final RegistryObject<Item> DRILL_HEAD = ITEMS.register("drill_head",
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+
+        public static final RegistryObject<Item> DRILL_BODY = ITEMS.register("drill_body",
+                () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+  
         /*public static final RegistryObject<Item> MOB_ESSENCE = ITEMS.register("mob_essence", 
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));*/
                    
@@ -103,6 +115,9 @@ public class ModItems
         public static final RegistryObject<PickaxeItem> REDSTONE_HAMMER = ITEMS.register("redstone_hammer",
                 () -> new RedstoneHammer(ModItemTier.REDSTONE, 0, -2.8F));
 
+        public static final RegistryObject<PickaxeItem> DRILL = ITEMS.register("drill",
+                () -> new DrillTool(ItemTier.IRON, 0, -2.8F, 10));
+
         // Tool Upgrades
         public static final RegistryObject<Item> TO_STONE = ITEMS.register("to_stone",
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.UPGRADES_TAB)));
@@ -112,4 +127,18 @@ public class ModItems
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.UPGRADES_TAB)));
         public static final RegistryObject<Item> TO_NETHERITE = ITEMS.register("to_netherite",
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.UPGRADES_TAB)));
+
+        // Dril Upgrades
+        public static final RegistryObject<Item> FIVE_BLOCKS = ITEMS.register("five_blocks",
+                () -> new DrillUpgrade());
+        public static final RegistryObject<Item> SEVEN_BLOCKS = ITEMS.register("seven_blocks",
+                () -> new DrillUpgrade());
+        public static final RegistryObject<Item> ITEM_FILTER = ITEMS.register("item_filter",
+                () -> new ItemFilterUpgrade());
+        public static final RegistryObject<Item> MAGNET = ITEMS.register("magnet",
+                () -> new DrillUpgrade());
+        public static final RegistryObject<Item> SMELT_UPGRADE = ITEMS.register("smelt_upgrade",
+                () -> new DrillUpgrade());
+        public static final RegistryObject<Item> REPAIR = ITEMS.register("repair",
+                () -> new DrillUpgrade());
 }

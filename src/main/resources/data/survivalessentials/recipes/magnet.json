@@ -1,0 +1,33 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "x w",
+        "xzw",
+        "yyy"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:redstone"
+        },
+        "y":
+        {
+            "item": "minecraft:iron_ingot"
+        },
+        "z":
+        {
+            "item": "survivalessentials:upgrade_template"
+        },
+        "w":
+        {
+            "item": "minecraft:lapis_lazuli"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:magnet",
+        "count": 1
+    }
+}
