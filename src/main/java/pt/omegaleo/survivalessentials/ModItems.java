@@ -65,7 +65,7 @@ public class ModItems
 
         public static final RegistryObject<Item> DRILL_BODY = ITEMS.register("drill_body",
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
-
+  
         /*public static final RegistryObject<Item> MOB_ESSENCE = ITEMS.register("mob_essence", 
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));*/
                    
@@ -116,7 +116,7 @@ public class ModItems
                 () -> new RedstoneHammer(ModItemTier.REDSTONE, 0, -2.8F));
 
         public static final RegistryObject<PickaxeItem> DRILL = ITEMS.register("drill",
-        () -> new DrillTool(ItemTier.IRON, 0, -2.8F, 10));
+                () -> new DrillTool(ItemTier.IRON, 0, -2.8F, 10));
 
         // Tool Upgrades
         public static final RegistryObject<Item> TO_STONE = ITEMS.register("to_stone",
