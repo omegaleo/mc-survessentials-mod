@@ -93,6 +93,15 @@ public class SurvivalEssentialsMod
         }
     };
 
+    public static final ItemGroup MACHINES_TAB = new ItemGroup("survivalessentials_machines") 
+    {
+        @Override
+        public ItemStack createIcon() 
+        {
+            return new ItemStack(ModItems.REDSTONE_GENERATOR.get());
+        }
+    };
+
     @Nonnull
     public static ResourceLocation getId(String path) 
     {

@@ -5,6 +5,7 @@ import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import pt.omegaleo.survivalessentials.blocks.energy.RedstoneGenerator;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
 import pt.omegaleo.survivalessentials.items.HouseTeleporter;
 import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
@@ -141,4 +142,8 @@ public class ModItems
                 () -> new DrillUpgrade());
         public static final RegistryObject<Item> REPAIR = ITEMS.register("repair",
                 () -> new DrillUpgrade());
+
+        // Blocks
+        public static final RegistryObject<Item> REDSTONE_GENERATOR = ITEMS.register("redstone_generator_block",
+                () -> new BlockItem(ModBlocks.redstoneGenerator.get(), new Item.Properties().group(SurvivalEssentialsMod.MACHINES_TAB)));
 }

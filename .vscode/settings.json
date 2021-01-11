@@ -15,7 +15,8 @@
         "minecraft",
         "minecraft forge",
         "raytraceresult",
-        "recolorbackpack"
+        "recolorbackpack",
+        "tileentity"
     ],
     "java.configuration.updateBuildConfiguration": "automatic"
 }
