@@ -11,6 +11,7 @@ import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
 import pt.omegaleo.survivalessentials.items.ModBook;
 import pt.omegaleo.survivalessentials.util.enums.Battery;
 import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
+import pt.omegaleo.survivalessentials.util.enums.EnergyStorageItem;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 import pt.omegaleo.survivalessentials.util.enums.ModItemTier;
 import pt.omegaleo.survivalessentials.util.tools.DrillTool;
@@ -145,7 +146,7 @@ public class ModItems
 
         // Energy related
         public static final RegistryObject<Item> BATTERY = ITEMS.register("battery",
-                () -> new Battery(1000));
+                () -> new EnergyStorageItem(1000));
 
         // Blocks
         /*public static final RegistryObject<Item> REDSTONE_GENERATOR = ITEMS.register("redstone_generator_block",
