@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import pt.omegaleo.survivalessentials.blocks.energy.RedstoneGenerator;
 
 public class ModBlocks {
         public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,
@@ -12,8 +11,8 @@ public class ModBlocks {
 
         // Energy related blocks
 
-        public static final RegistryObject<Block> redstoneGenerator = BLOCKS.register("redstone_generator",
-                () -> new RedstoneGenerator());
+        /*public static final RegistryObject<Block> redstoneGenerator = BLOCKS.register("redstone_generator",
+                () -> new RedstoneGenerator());*/
 
 
         

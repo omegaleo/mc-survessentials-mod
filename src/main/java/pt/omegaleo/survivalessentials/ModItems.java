@@ -5,11 +5,11 @@ import net.minecraft.item.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import pt.omegaleo.survivalessentials.blocks.energy.RedstoneGenerator;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
 import pt.omegaleo.survivalessentials.items.HouseTeleporter;
 import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
 import pt.omegaleo.survivalessentials.items.ModBook;
+import pt.omegaleo.survivalessentials.util.enums.Battery;
 import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 import pt.omegaleo.survivalessentials.util.enums.ModItemTier;
@@ -143,7 +143,11 @@ public class ModItems
         public static final RegistryObject<Item> REPAIR = ITEMS.register("repair",
                 () -> new DrillUpgrade());
 
+        // Energy related
+        public static final RegistryObject<Item> BATTERY = ITEMS.register("battery",
+                () -> new Battery(1000));
+
         // Blocks
-        public static final RegistryObject<Item> REDSTONE_GENERATOR = ITEMS.register("redstone_generator_block",
-                () -> new BlockItem(ModBlocks.redstoneGenerator.get(), new Item.Properties().group(SurvivalEssentialsMod.MACHINES_TAB)));
+        /*public static final RegistryObject<Item> REDSTONE_GENERATOR = ITEMS.register("redstone_generator_block",
+                () -> new BlockItem(ModBlocks.redstoneGenerator.get(), new Item.Properties().group(SurvivalEssentialsMod.MACHINES_TAB)));*/
 }
