@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "yxy",
+        "xzx",
+        "yxy"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:redstone"
+        },
+        "y":
+        {
+            "item": "minecraft:iron_ingot"
+        },
+        "z":
+        {
+            "item": "survivalessentials:upgrade_template"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:five_blocks",
+        "count": 1
+    }
+}

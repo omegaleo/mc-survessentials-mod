@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Potions;
 import net.minecraft.util.ActionResultType;
 
 public class RedstonePickaxe extends PickaxeItem
@@ -17,7 +18,6 @@ public class RedstonePickaxe extends PickaxeItem
     @Override
     public ActionResultType onItemUse(ItemUseContext context) 
     {
-
         context.getPlayer().addPotionEffect(new EffectInstance(Effect.get(3).getEffect())); //add Haste
 
         return super.onItemUse(context);

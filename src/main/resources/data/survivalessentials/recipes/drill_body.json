@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        " z ",
+        "xyx",
+        " z "
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:gold_ingot"
+        },
+        "y":
+        {
+            "item": "minecraft:redstone"
+        },
+        "z":
+        {
+            "item": "minecraft:iron_ingot"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:drill_body",
+        "count": 1
+    }
+}

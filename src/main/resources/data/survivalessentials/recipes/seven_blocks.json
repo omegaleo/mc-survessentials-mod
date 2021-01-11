@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "yxy",
+        "xzx",
+        "yxy"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:redstone"
+        },
+        "y":
+        {
+            "item": "minecraft:diamond"
+        },
+        "z":
+        {
+            "item": "survivalessentials:five_blocks"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:seven_blocks",
+        "count": 1
+    }
+}

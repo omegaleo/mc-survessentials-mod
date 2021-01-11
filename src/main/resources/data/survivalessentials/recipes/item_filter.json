@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients":
+    [
+        {
+            "item": "minecraft:hopper"
+        },
+        {
+            "item": "survivalessentials:upgrade_template"
+        }
+    ],
+    "result":
+    {
+        "item": "survivalessentials:item_filter",
+        "count": 1
+    }
+}

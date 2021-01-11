@@ -37,7 +37,7 @@ public class HouseTeleporter extends Item
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
         tooltip.add(new TranslationTextComponent("Position set: " + getSetCoordinates(stack)));
-        tooltip.add(new TranslationTextComponent("Hold " + "\u00A76" + "Shift" + "\u00A76" + " while right-clicking to set position"));
+        tooltip.add(new TranslationTextComponent("Hold " + "\u00A76" + "Sneak" + "\u00A76" + " while right-clicking to set position"));
     }
 
     @Override
