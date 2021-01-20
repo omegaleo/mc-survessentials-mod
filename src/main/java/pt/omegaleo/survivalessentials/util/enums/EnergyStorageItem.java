@@ -15,6 +15,16 @@ public class EnergyStorageItem extends Item
     private int curEnergy = 0;
     private int maxEnergy;
 
+    public int MaxEnergy() { return maxEnergy; }
+    
+    public void setCurrentEnergy(int energy)
+    {
+        if(energy <= maxEnergy)
+        {
+            curEnergy = energy;
+        }
+    }
+
     public EnergyStorageItem(int maxEnergy) 
     {
         super(new Properties().group(SurvivalEssentialsMod.ITEMS_TAB).maxStackSize(1).maxDamage(maxEnergy));
@@ -51,6 +61,7 @@ public class EnergyStorageItem extends Item
 
     public void InsertEnergy(ItemStack stack, int energy) 
     {
+        curEnergy = getEnergy(stack);
         if (canInsertEnergy(stack, energy)) 
         {
             curEnergy += energy;
@@ -62,7 +73,7 @@ public class EnergyStorageItem extends Item
         stack.getOrCreateTag().putInt("curEnergy", curEnergy);
     }
 
-    boolean canExtractEnergy(ItemStack stack, int energy)
+    public boolean canExtractEnergy(ItemStack stack, int energy)
     {
         this.curEnergy = getEnergy(stack);
         return curEnergy >= energy;
@@ -80,7 +91,7 @@ public class EnergyStorageItem extends Item
         return 0;
     }
 
-    boolean canInsertEnergy(ItemStack stack, int energy)
+    public boolean canInsertEnergy(ItemStack stack, int energy)
     {
         this.curEnergy = getEnergy(stack);
         return maxEnergy >= (this.curEnergy + energy);

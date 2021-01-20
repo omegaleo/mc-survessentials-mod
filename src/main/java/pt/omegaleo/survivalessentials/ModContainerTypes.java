@@ -14,10 +14,12 @@ import pt.omegaleo.survivalessentials.client.gui.BackpackContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.BookContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.DrillContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.ItemFilterContainerScreen;
+import pt.omegaleo.survivalessentials.client.gui.PortableChargerContainerScreen;
 import pt.omegaleo.survivalessentials.inventory.BackpackContainer;
 import pt.omegaleo.survivalessentials.inventory.ItemFilterContainer;
 import pt.omegaleo.survivalessentials.containers.BookContainer;
 import pt.omegaleo.survivalessentials.containers.DrillContainer;
+import pt.omegaleo.survivalessentials.containers.PortableChargerContainer;
 
 /**
  * Mod {@link ContainerType}s and {@link net.minecraft.client.gui.screen.Screen} registration.
@@ -37,6 +39,7 @@ public final class ModContainerTypes {
     public static ContainerType<BookContainer> book;
     public static ContainerType<DrillContainer> drill;
     public static ContainerType<ItemFilterContainer> itemFilter;
+    public static ContainerType<PortableChargerContainer> portableChargerContainer;
   
     private ModContainerTypes() {}
 
@@ -45,6 +48,7 @@ public final class ModContainerTypes {
         book = register("book", new ContainerType<>(BookContainer::new));
         drill = register("drill", new ContainerType<>(DrillContainer::new));
         itemFilter = register("itemfilter", new ContainerType<>(ItemFilterContainer::new));
+        portableChargerContainer = register("portablechargercontainer", new ContainerType<>(PortableChargerContainer::new));
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -54,6 +58,7 @@ public final class ModContainerTypes {
         ScreenManager.registerFactory(book, BookContainerScreen::new);
         ScreenManager.registerFactory(drill, DrillContainerScreen::new);
         ScreenManager.registerFactory(itemFilter, ItemFilterContainerScreen::new);
+        ScreenManager.registerFactory(portableChargerContainer, PortableChargerContainerScreen::new);
     }
 
     private static <T extends Container> ContainerType<T> register(String name, ContainerType<T> type) {

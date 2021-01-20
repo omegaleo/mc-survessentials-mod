@@ -4,7 +4,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,11 +12,9 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import pt.omegaleo.survivalessentials.ModContainerTypes;
 import pt.omegaleo.survivalessentials.items.PortableChargerItem;
-import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
 import pt.omegaleo.survivalessentials.util.enums.EnergyStorageItem;
-import pt.omegaleo.survivalessentials.util.tools.DrillTool;
 
-public class PortableChargerContainer extends Container 
+public class PortableChargerContainer extends Container
 {
     private final ItemStack item;
     private final IItemHandler itemHandler;
@@ -28,7 +25,7 @@ public class PortableChargerContainer extends Container
 
     public PortableChargerContainer(int id, PlayerInventory playerInventory) 
     {
-        super(ModContainerTypes.drill, id);
+        super(ModContainerTypes.portableChargerContainer, id);
 
         this.item = getHeldItem(playerInventory.player);
         this.itemHandler = ((PortableChargerItem) this.item.getItem()).getInventory(this.item);
@@ -106,7 +103,7 @@ public class PortableChargerContainer extends Container
     public void onContainerClosed(PlayerEntity playerIn) {
         super.onContainerClosed(playerIn);
         // Save the inventory to the backpack's NBT
-        ((DrillTool) this.item.getItem()).saveInventory(this.item, this.itemHandler);
+        ((PortableChargerItem) this.item.getItem()).saveInventory(this.item, this.itemHandler);
     }
 
     @Override
@@ -132,18 +129,31 @@ public class PortableChargerContainer extends Container
         {
             Slot fuelSlotObj = this.inventorySlots.get(fuelSlot);
             ItemStack currentItemInSlot = fuelSlotObj.getStack();
-            if(isFuel(stack))
+            if(isFuel(currentItemInSlot))
             {
                 if(currentItemInSlot.getItem() == stack.getItem())
                 {
-                    
+                    this.mergeItemStack(stack, fuelSlot, fuelSlot, false);
                 }
             }
+            else
+            {
+                //Slot is empty
+                this.mergeItemStack(stack, fuelSlot, fuelSlot, false);
+            }
+            slot.onSlotChanged();
         }
 
         if (isEnergyStorage(stack))
         {
-
+            Slot energySlotObj = this.inventorySlots.get(energyStorageSlot);
+            ItemStack currentItemInSlot = energySlotObj.getStack();
+            if(!isEnergyStorage(currentItemInSlot))
+            {
+                //Slot is empty, put item in slot
+                energySlotObj.putStack(currentItemInSlot);
+                slot.onSlotChanged();
+            }
         }
 
         int containerSlots = itemHandler.getSlots();
@@ -198,6 +208,19 @@ public class PortableChargerContainer extends Container
         return item == Items.COAL || item == Items.COAL_BLOCK || item == Items.CHARCOAL;
     }
 
+    private static int getEnergyAmount(ItemStack stack) 
+    {
+        if (isFuel(stack))
+        {
+            Item item = stack.getItem();
+            if (item == Items.COAL) { return 100; }
+            if (item == Items.COAL_BLOCK) { return 900; }
+            if (item == Items.CHARCOAL) { return 50; }
+        }
+        
+        return 0;
+    }
+    
     private static boolean isEnergyStorage(ItemStack stack) 
     {
         return stack.getItem() instanceof EnergyStorageItem;
@@ -225,5 +248,35 @@ public class PortableChargerContainer extends Container
 
         return true;
     }
-    
+
+    @Override
+    public void detectAndSendChanges() 
+    {
+        System.out.println("TICK");
+        PortableChargerItem charger = (PortableChargerItem)item.getItem();
+        System.out.println("Fuel Slot: " + itemHandler.getStackInSlot(fuelSlot));
+        System.out.println("Energy Slot: " + itemHandler.getStackInSlot(energyStorageSlot));
+        if (itemHandler.getStackInSlot(fuelSlot) != null)
+        {
+            ItemStack fuelStack = itemHandler.getStackInSlot(fuelSlot);
+            if(isFuel(fuelStack))
+            {
+                charger.InsertEnergy(item, getEnergyAmount(fuelStack));
+                fuelStack.setCount(fuelStack.getCount() - 1);
+            }
+        }
+
+        if (itemHandler.getStackInSlot(energyStorageSlot) != null)
+        {
+            ItemStack energyStack = itemHandler.getStackInSlot(energyStorageSlot);
+            if(isEnergyStorage(energyStack))
+            {
+                EnergyStorageItem energyStorage = (EnergyStorageItem)energyStack.getItem();
+                int energyExtracted = charger.ExtractEnergy(item, 10);
+                energyStorage.InsertEnergy(item, energyExtracted);
+            }
+
+        }
+        super.detectAndSendChanges();
+    }
 }

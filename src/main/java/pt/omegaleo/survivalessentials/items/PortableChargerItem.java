@@ -13,12 +13,24 @@ import net.minecraftforge.items.ItemStackHandler;
 import pt.omegaleo.survivalessentials.containers.PortableChargerContainer;
 import pt.omegaleo.survivalessentials.util.enums.EnergyStorageItem;
 
-public class PortableChargerItem extends EnergyStorageItem{
+public class PortableChargerItem extends EnergyStorageItem
+{
+
+    public PortableChargerItem(int maxEnergy, boolean isFull) 
+    {
+        super(maxEnergy);
+        if(isFull)
+        {
+            this.setCurrentEnergy(maxEnergy);
+        }
+    }
 
     public PortableChargerItem(int maxEnergy) 
     {
         super(maxEnergy);
     }
+
+    
 
     public int getInventorySize(ItemStack stack) {
         return 2;
@@ -43,7 +55,7 @@ public class PortableChargerItem extends EnergyStorageItem{
         {
             playerIn.openContainer(new SimpleNamedContainerProvider(
                     (id, playerInventory, player) -> new PortableChargerContainer(id, playerInventory),
-                    new TranslationTextComponent("container.survivalessentials.pCharger")
+                    new TranslationTextComponent("container.survivalessentials.pcharger")
             ));
         }
         return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));

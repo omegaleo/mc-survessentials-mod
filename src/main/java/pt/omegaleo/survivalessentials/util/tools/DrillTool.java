@@ -551,4 +551,14 @@ public class DrillTool extends PickaxeItem{
 
         return false;
     }
+
+    @Override
+    public void setDamage(ItemStack stack, int damage) 
+    {
+        //Prevent drill from being destroyed
+        if(stack.getMaxDamage() - damage > 1)
+        {
+            super.setDamage(stack, damage);
+        }
+    }
 }

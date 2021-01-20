@@ -9,7 +9,7 @@ import pt.omegaleo.survivalessentials.items.BackpackItem;
 import pt.omegaleo.survivalessentials.items.HouseTeleporter;
 import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
 import pt.omegaleo.survivalessentials.items.ModBook;
-import pt.omegaleo.survivalessentials.util.enums.Battery;
+import pt.omegaleo.survivalessentials.items.PortableChargerItem;
 import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
 import pt.omegaleo.survivalessentials.util.enums.EnergyStorageItem;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
@@ -147,6 +147,12 @@ public class ModItems
         // Energy related
         public static final RegistryObject<Item> BATTERY = ITEMS.register("battery",
                 () -> new EnergyStorageItem(1000));
+        
+        public static final RegistryObject<Item> PORTABLE_CHARGER = ITEMS.register("pcharger", 
+                () -> new PortableChargerItem(10000));
+        
+        public static final RegistryObject<Item> FULL_PORTABLE_CHARGER = ITEMS.register("fullpcharger", 
+                () -> new PortableChargerItem(10000,true));
 
         // Blocks
         /*public static final RegistryObject<Item> REDSTONE_GENERATOR = ITEMS.register("redstone_generator_block",
