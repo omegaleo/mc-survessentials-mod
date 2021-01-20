@@ -36,6 +36,8 @@ public class SurvivalEssentialsMod
         ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModRecipes.RECIPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModTileEntities.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModEnchantments.ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -61,7 +63,16 @@ public class SurvivalEssentialsMod
         @Override
         public ItemStack createIcon() 
         {
-            return new ItemStack(ModItems.WOOD_PULP.get());
+            return new ItemStack(ModItems.REDSTONE_INGOT.get());
+        }
+    };
+
+    public static final ItemGroup MACHINES_TAB = new ItemGroup("survivalessentials_machines") 
+    {
+        @Override
+        public ItemStack createIcon() 
+        {
+            return new ItemStack(ModItems.enchantment_extractor.get());
         }
     };
 

@@ -10,6 +10,7 @@ import pt.omegaleo.survivalessentials.items.HouseTeleporter;
 import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
 import pt.omegaleo.survivalessentials.items.ModBook;
 import pt.omegaleo.survivalessentials.items.PortableChargerItem;
+import pt.omegaleo.survivalessentials.util.RedstoneElytraArmor;
 import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
 import pt.omegaleo.survivalessentials.util.enums.EnergyStorageItem;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
@@ -92,6 +93,10 @@ public class ModItems
         public static final RegistryObject<ArmorItem> REDSTONE_CHESTPLATE = ITEMS.register("redstone_chestplate",
                 () -> new ArmorItem(ModArmorMaterials.REDSTONE, EquipmentSlotType.CHEST, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
 
+        public static final RegistryObject<ArmorItem> REDSTONE_ELYTRA_CHESTPLATE = ITEMS.register("redstone_elytra_chestplate",
+                () -> new RedstoneElytraArmor(ModArmorMaterials.REDSTONE, EquipmentSlotType.CHEST, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
+
         public static final RegistryObject<ArmorItem> REDSTONE_LEGGINGS = ITEMS.register("redstone_leggings",
                 () -> new ArmorItem(ModArmorMaterials.REDSTONE, EquipmentSlotType.LEGS, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
 
@@ -155,6 +160,6 @@ public class ModItems
                 () -> new PortableChargerItem(10000,true));
 
         // Blocks
-        /*public static final RegistryObject<Item> REDSTONE_GENERATOR = ITEMS.register("redstone_generator_block",
-                () -> new BlockItem(ModBlocks.redstoneGenerator.get(), new Item.Properties().group(SurvivalEssentialsMod.MACHINES_TAB)));*/
+        public static final RegistryObject<Item> enchantment_extractor = ITEMS.register("enchantment_extractor",
+                () -> new BlockItem(ModBlocks.enchantment_extractor.get(), new Item.Properties().group(SurvivalEssentialsMod.MACHINES_TAB)));
 }
