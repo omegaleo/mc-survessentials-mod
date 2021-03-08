@@ -16,6 +16,7 @@ import pt.omegaleo.survivalessentials.util.enums.EnergyStorageItem;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 import pt.omegaleo.survivalessentials.util.enums.ModItemTier;
 import pt.omegaleo.survivalessentials.util.tools.DrillTool;
+import pt.omegaleo.survivalessentials.util.tools.Hammer;
 import pt.omegaleo.survivalessentials.util.tools.RedstoneHammer;
 import pt.omegaleo.survivalessentials.util.tools.RedstonePickaxe;
 
@@ -121,6 +122,23 @@ public class ModItems
         
         public static final RegistryObject<PickaxeItem> REDSTONE_HAMMER = ITEMS.register("redstone_hammer",
                 () -> new RedstoneHammer(ModItemTier.REDSTONE, 0, -2.8F));
+
+
+        //Hammers
+        public static final RegistryObject<PickaxeItem> STONE_HAMMER = ITEMS.register("stone_hammer",
+                () -> new Hammer(ItemTier.STONE, 0, -2.8F));
+
+        public static final RegistryObject<PickaxeItem> IRON_HAMMER = ITEMS.register("iron_hammer",
+                () -> new Hammer(ItemTier.IRON, 0, -2.8F));
+
+        public static final RegistryObject<PickaxeItem> GOLD_HAMMER = ITEMS.register("gold_hammer",
+                () -> new Hammer(ItemTier.GOLD, 0, -2.8F));
+
+        public static final RegistryObject<PickaxeItem> DIAMOND_HAMMER = ITEMS.register("diamond_hammer",
+                () -> new Hammer(ItemTier.DIAMOND, 0, -2.8F));
+
+        public static final RegistryObject<PickaxeItem> NETHERITE_HAMMER = ITEMS.register("netherite_hammer",
+                () -> new Hammer(ItemTier.NETHERITE, 0, -2.8F));
 
         public static final RegistryObject<PickaxeItem> DRILL = ITEMS.register("drill",
         () -> new DrillTool(ItemTier.IRON, 0, -2.8F, 10));

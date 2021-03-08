@@ -56,5 +56,10 @@
     "item.survivalessentials.magnet": "Magnet Upgrade",
     "container.survivalessentials.redstonegenerator": "Redstone Generator",
     "container.survivalessentials.enchantmentextractor": "Enchantment Extractor",
-    "block.survivalessentials.enchantment_extractor_block": "Enchantment Extractor"
+    "block.survivalessentials.enchantment_extractor_block": "Enchantment Extractor",
+    "item.survivalessentials.stone_hammer": "Stone Hammer",
+    "item.survivalessentials.iron_hammer": "Iron Hammer",
+    "item.survivalessentials.gold_hammer": "Gold Hammer",
+    "item.survivalessentials.diamond_hammer": "Diamond Hammer",
+    "item.survivalessentials.netherite_hammer": "Netherite Hammer"
 }
