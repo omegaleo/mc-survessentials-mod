@@ -17,6 +17,7 @@ import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 import pt.omegaleo.survivalessentials.util.enums.ModItemTier;
 import pt.omegaleo.survivalessentials.util.tools.DrillTool;
 import pt.omegaleo.survivalessentials.util.tools.Hammer;
+import pt.omegaleo.survivalessentials.util.tools.ImprovedAxeItem;
 import pt.omegaleo.survivalessentials.util.tools.RedstoneHammer;
 import pt.omegaleo.survivalessentials.util.tools.RedstonePickaxe;
 
@@ -139,6 +140,26 @@ public class ModItems
 
         public static final RegistryObject<PickaxeItem> NETHERITE_HAMMER = ITEMS.register("netherite_hammer",
                 () -> new Hammer(ItemTier.NETHERITE, 0, -2.8F));
+
+
+        //Improved axes
+        public static final RegistryObject<AxeItem> STONE_HATCHET = ITEMS.register("stone_hatchet",
+                () -> new ImprovedAxeItem(ItemTier.STONE, 0, -2.8F));
+
+        public static final RegistryObject<AxeItem> IRON_HATCHET = ITEMS.register("iron_hatchet",
+                () -> new ImprovedAxeItem(ItemTier.IRON, 0, -2.8F));
+        
+        public static final RegistryObject<AxeItem> GOLD_HATCHET = ITEMS.register("gold_hatchet",
+                () -> new ImprovedAxeItem(ItemTier.GOLD, 0, -2.8F));
+        
+        public static final RegistryObject<AxeItem> REDSTONE_HATCHET = ITEMS.register("redstone_hatchet",
+                () -> new ImprovedAxeItem(ModItemTier.REDSTONE, 0, -2.8F));
+
+        public static final RegistryObject<AxeItem> DIAMOND_HATCHET = ITEMS.register("diamond_hatchet",
+                () -> new ImprovedAxeItem(ItemTier.DIAMOND, 0, -2.8F));
+
+        public static final RegistryObject<AxeItem> NETHERITE_HATCHET = ITEMS.register("netherite_hatchet",
+                () -> new ImprovedAxeItem(ItemTier.NETHERITE, 0, -2.8F));
 
         public static final RegistryObject<PickaxeItem> DRILL = ITEMS.register("drill",
         () -> new DrillTool(ItemTier.IRON, 0, -2.8F, 10));

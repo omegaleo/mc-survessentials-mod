@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "y  ",
+        "yyy",
+        " x "
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:stick"
+        },
+        "y":
+        {
+            "item": "minecraft:diamond"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:diamond_hatchet",
+        "count": 1
+    }
+}

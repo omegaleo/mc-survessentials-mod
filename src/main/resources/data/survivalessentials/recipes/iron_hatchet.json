@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "y  ",
+        "yyy",
+        " x "
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:stick"
+        },
+        "y":
+        {
+            "item": "minecraft:iron_ingot"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:iron_hatchet",
+        "count": 1
+    }
+}
