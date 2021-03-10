@@ -4,11 +4,15 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class RegenEnchantment extends Enchantment {
+public class PotionEnchantment extends Enchantment {
 
-    public RegenEnchantment() 
+    int _maxLevel = 0;
+
+    public PotionEnchantment(EnchantmentType type, EquipmentSlotType[] slotTypes, int maxLevel) 
     {
-        super(Rarity.VERY_RARE, EnchantmentType.ARMOR,  new EquipmentSlotType[] {EquipmentSlotType.CHEST, EquipmentSlotType.FEET, EquipmentSlotType.HEAD, EquipmentSlotType.LEGS});
+        super(Rarity.VERY_RARE, type,  slotTypes);
+
+        _maxLevel = maxLevel;
     }
     
     @Override
@@ -26,7 +30,7 @@ public class RegenEnchantment extends Enchantment {
     @Override
     public int getMaxLevel() 
     {
-        return 5;
+        return _maxLevel;
     }
 
     @Override

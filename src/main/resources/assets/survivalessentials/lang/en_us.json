@@ -67,5 +67,12 @@
     "item.survivalessentials.gold_hatchet": "Gold Hatchet",
     "item.survivalessentials.diamond_hatchet": "Diamond Hatchet",
     "item.survivalessentials.redstone_hatchet": "Redstone Hatchet",
-    "item.survivalessentials.netherite_hatchet": "Netherite Hatchet"
+    "item.survivalessentials.netherite_hatchet": "Netherite Hatchet",
+    "enchantment.survivalessentials.regen": "Regeneration",
+    "enchantment.survivalessentials.extrahearts": "Extra Hearts",
+    "enchantment.survivalessentials.night_vision": "Night Vision",
+    "enchantment.survivalessentials.water_breathing": "Water Breathing",
+    "enchantment.survivalessentials.healing": "Healing",
+    "enchantment.survivalessentials.swiftness": "Swiftness",
+    "enchantment.survivalessentials.leaping": "Leaping"
 }
