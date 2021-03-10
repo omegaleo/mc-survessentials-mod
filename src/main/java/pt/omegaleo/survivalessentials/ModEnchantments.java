@@ -75,7 +75,7 @@ public class ModEnchantments {
                 level += EnchantmentHelper.getEnchantmentLevel(EXTRA_HEARTS.get(), currentArmorPiece);
             }
 
-            AttributeModifier modifier = new AttributeModifier("MaxHealth", 1.0f * level, AttributeModifier.Operation.ADDITION);
+            AttributeModifier modifier = new AttributeModifier("MaxHealth", 1.75f * level, AttributeModifier.Operation.ADDITION);
             if(level > 0 && player.getAttribute(Attributes.MAX_HEALTH).getValue() < player.getAttribute(Attributes.MAX_HEALTH).getBaseValue() + (1.0f * level))
             {
                 player.getAttribute(Attributes.MAX_HEALTH).applyPersistentModifier(modifier);
