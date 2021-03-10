@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.eventbus.EventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -32,19 +33,19 @@ public class SurvivalEssentialsMod
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ColorHandlers::registerItemColor);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(ContainerType.class, ModContainerTypes::registerContainerTypes);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModContainerTypes::registerScreens);
-        
+
         ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModRecipes.RECIPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModTileEntities.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
-        ModEnchantments.ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModEnchantments.ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus()); 
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent event) 
     {
-        DeferredWorkQueue.runLater(this::registerPotions); 
+        DeferredWorkQueue.runLater(this::registerPotions);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) 

@@ -8,6 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
 import pt.omegaleo.survivalessentials.items.HouseTeleporter;
 import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
+import pt.omegaleo.survivalessentials.items.LootBag;
 import pt.omegaleo.survivalessentials.items.ModBook;
 import pt.omegaleo.survivalessentials.items.PortableChargerItem;
 import pt.omegaleo.survivalessentials.util.RedstoneElytraArmor;
@@ -15,6 +16,7 @@ import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
 import pt.omegaleo.survivalessentials.util.enums.EnergyStorageItem;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 import pt.omegaleo.survivalessentials.util.enums.ModItemTier;
+import pt.omegaleo.survivalessentials.util.enums.GlobalEnums.LootType;
 import pt.omegaleo.survivalessentials.util.tools.DrillTool;
 import pt.omegaleo.survivalessentials.util.tools.Hammer;
 import pt.omegaleo.survivalessentials.util.tools.ImprovedAxeItem;
@@ -70,6 +72,9 @@ public class ModItems
 
         public static final RegistryObject<Item> DRILL_BODY = ITEMS.register("drill_body",
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+
+        public static final RegistryObject<Item> FOOD_LOOTBAG = ITEMS.register("food_lootbag", 
+                () -> new LootBag(LootType.FOOD).asItem());
 
         /*public static final RegistryObject<Item> MOB_ESSENCE = ITEMS.register("mob_essence", 
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));*/

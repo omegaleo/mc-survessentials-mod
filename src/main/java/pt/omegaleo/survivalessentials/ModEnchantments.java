@@ -97,7 +97,7 @@ public class ModEnchantments {
                 level += EnchantmentHelper.getEnchantmentLevel(REGEN.get(), currentArmorPiece);
             }
 
-            EffectInstance regenEffect = Potions.REGENERATION.getEffects().get(0);
+            EffectInstance regenEffect = new EffectInstance(Potions.REGENERATION.getEffects().get(0));
 
             if(level > 0)
             {
