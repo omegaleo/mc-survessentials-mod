@@ -200,8 +200,6 @@ public class ModEnchantments {
 
         int amount = r.nextInt(2);
 
-        System.out.println(amount);
-
         event.getEntity().entityDropItem(new ItemStack(ModItems.FOOD_LOOTBAG.get(), amount));
     }
 }
