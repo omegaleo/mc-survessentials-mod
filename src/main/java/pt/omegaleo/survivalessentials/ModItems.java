@@ -193,6 +193,15 @@ public class ModItems
         public static final RegistryObject<Item> REPAIR = ITEMS.register("repair",
                 () -> new DrillUpgrade());
 
+        public static final RegistryObject<Item> REDSTONE_TIER = ITEMS.register("redstone_tier",
+                () -> new DrillUpgrade());
+
+        public static final RegistryObject<Item> DIAMOND_TIER = ITEMS.register("diamond_tier",
+                () -> new DrillUpgrade());
+
+        public static final RegistryObject<Item> NETHERITE_TIER = ITEMS.register("netherite_tier",
+                () -> new DrillUpgrade());
+
         // Energy related
         public static final RegistryObject<Item> BATTERY = ITEMS.register("battery",
                 () -> new EnergyStorageItem(1000));

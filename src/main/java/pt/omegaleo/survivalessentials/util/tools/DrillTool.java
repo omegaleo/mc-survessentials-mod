@@ -97,6 +97,24 @@ public class DrillTool extends PickaxeItem{
     }
 
     @Override
+    public int getMaxDamage(ItemStack stack) {
+        if(hasUpgrade((DrillUpgrade)ModItems.REDSTONE_TIER.get(), stack))
+        {
+            return 800;
+        }
+        else if(hasUpgrade((DrillUpgrade)ModItems.DIAMOND_TIER.get(), stack))
+        {
+            return 1561;
+        }
+        else if(hasUpgrade((DrillUpgrade)ModItems.NETHERITE_TIER.get(), stack))
+        {
+            return 2031;
+        }
+
+        return super.getMaxDamage(stack);
+    }
+
+    @Override
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos,
             LivingEntity entityLiving) {
         if ((stack.getMaxDamage() - stack.getDamage()) > 1) {
@@ -205,8 +223,10 @@ public class DrillTool extends PickaxeItem{
             world.destroyBlock(pos, keepDrop);
         }
 
+        stack.setDamage(stack.getDamage() + 1);
+
         int expAmount = getExpAmount(block);
-        if(stack.getDamage()>0)
+        if(stack.getDamage()>0 && hasUpgrade((DrillUpgrade)ModItems.REPAIR.get(), stack))
         {
             int amountToRepair = (int) ((damagePerUse * expAmount) * 0.75);
             if(stack.getDamage() - amountToRepair < 0)
