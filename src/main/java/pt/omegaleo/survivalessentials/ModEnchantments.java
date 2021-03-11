@@ -1,6 +1,7 @@
 package pt.omegaleo.survivalessentials;
 
 import java.util.Iterator;
+import java.util.Random;
 
 import net.minecraft.client.gui.fonts.TexturedGlyph.Effect;
 import net.minecraft.enchantment.Enchantment;
@@ -19,6 +20,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -189,5 +191,17 @@ public class ModEnchantments {
                 player.removeActivePotionEffect(healingEffect.getPotion());
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void LootModifications(LivingDeathEvent event)
+    {
+        Random r = new Random();
+
+        int amount = r.nextInt(2);
+
+        System.out.println(amount);
+
+        event.getEntity().entityDropItem(new ItemStack(ModItems.FOOD_LOOTBAG.get(), amount));
     }
 }
