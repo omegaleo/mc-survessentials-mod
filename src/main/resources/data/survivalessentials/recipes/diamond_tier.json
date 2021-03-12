@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "yyy",
+        "yxy",
+        "yyy"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "survivalessentials:redstone_tier"
+        },
+        "y":
+        {
+            "item": "minecraft:diamond"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:diamond_tier",
+        "count": 1
+    }
+}

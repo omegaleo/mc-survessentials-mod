@@ -74,5 +74,10 @@
     "enchantment.survivalessentials.water_breathing": "Water Breathing",
     "enchantment.survivalessentials.healing": "Healing",
     "enchantment.survivalessentials.swiftness": "Swiftness",
-    "enchantment.survivalessentials.leaping": "Leaping"
+    "enchantment.survivalessentials.leaping": "Leaping",
+    "itemGroup.survivalessentials_machines": "Survival Essentials Machines",
+    "item.survivalessentials.redstone_tier": "Redstone Tier Upgrade",
+    "item.survivalessentials.diamond_tier": "Diamond Tier Upgrade",
+    "item.survivalessentials.netherite_tier": "Netherite Tier Upgrade",
+    "item.survivalessentials.food_lootbag": "Lootbag (Food)"
 }

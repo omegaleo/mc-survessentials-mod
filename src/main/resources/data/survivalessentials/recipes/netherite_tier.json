@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "yyy",
+        "yxy",
+        "yyy"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "survivalessentials:diamond_tier"
+        },
+        "y":
+        {
+            "item": "minecraft:netherite_ingot"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:netherite_tier",
+        "count": 1
+    }
+}
