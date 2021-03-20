@@ -7,6 +7,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
+import pt.omegaleo.survivalessentials.items.CustomItem;
 import pt.omegaleo.survivalessentials.items.HouseTeleporter;
 import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
 import pt.omegaleo.survivalessentials.items.LootBag;
@@ -79,6 +80,15 @@ public class ModItems
 
         public static final RegistryObject<Item> CORUNDUM_GEM = ITEMS.register("corundum_gem", 
                 () -> new Item(new Properties().group(SurvivalEssentialsMod.ITEMS_TAB).maxStackSize(64)));
+
+        public static final RegistryObject<Item> MYTHRIL_FRAGMENT = ITEMS.register("mythril_fragment", 
+                () -> new Item(new Properties().group(SurvivalEssentialsMod.ITEMS_TAB).maxStackSize(64)));
+
+        public static final RegistryObject<Item> MYTHRIL_COMPOUND = ITEMS.register("mythril_compound", 
+                () -> new Item(new Properties().group(SurvivalEssentialsMod.ITEMS_TAB).maxStackSize(64)));
+
+        public static final RegistryObject<Item> MYTHRIL_INGOT = ITEMS.register("mythril_ingot", 
+                () -> new CustomItem(new Properties().group(SurvivalEssentialsMod.ITEMS_TAB).maxStackSize(64), true));
 
         /*public static final RegistryObject<Item> MOB_ESSENCE = ITEMS.register("mob_essence", 
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));*/
@@ -222,4 +232,7 @@ public class ModItems
 
         public static final RegistryObject<Item> CORUNDUM_ORE = ITEMS.register("corundum_ore",
                 () -> new BlockItem(ModBlocks.CORUNDUM_ORE.get(), new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
+
+        public static final RegistryObject<Item> MYTHRIL_ORE = ITEMS.register("mythril_ore",
+                () -> new BlockItem(ModBlocks.MYTHRIL_ORE.get(), new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 }

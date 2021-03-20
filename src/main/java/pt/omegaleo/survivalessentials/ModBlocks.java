@@ -23,4 +23,7 @@ public class ModBlocks {
         //Ores
         public static final RegistryObject<Block> CORUNDUM_ORE = BLOCKS.register("corundum_ore",
                 () -> new CustomOreBlock());
+
+        public static final RegistryObject<Block> MYTHRIL_ORE = BLOCKS.register("mythril_ore",
+                () -> new CustomOreBlock());
 }

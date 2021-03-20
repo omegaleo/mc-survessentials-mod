@@ -81,5 +81,9 @@
     "item.survivalessentials.netherite_tier": "Netherite Tier Upgrade",
     "item.survivalessentials.food_lootbag": "Lootbag (Food)",
     "item.survivalessentials.corundum_gem": "Corundum",
-    "block.survivalessentials.corundum_ore": "Corundum Ore"
+    "block.survivalessentials.corundum_ore": "Corundum Ore",
+    "item.survivalessentials.mythril_fragment": "Mythril Fragment",
+    "block.survivalessentials.mythril_ore": "Mythril Ore",
+    "item.survivalessentials.mythril_compound": "Mythril Compound",
+    "item.survivalessentials.mythril_ingot": "Mythril Ingot"
 }
