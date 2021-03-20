@@ -9,7 +9,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.blocks.BlockEnchantmentExtractor;
-import pt.omegaleo.survivalessentials.blocks.CorundumOre;
+import pt.omegaleo.survivalessentials.blocks.CustomOreBlock;
 
 public class ModBlocks {
         public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,
@@ -22,5 +22,5 @@ public class ModBlocks {
         
         //Ores
         public static final RegistryObject<Block> CORUNDUM_ORE = BLOCKS.register("corundum_ore",
-                () -> new CorundumOre());
+                () -> new CustomOreBlock());
 }
