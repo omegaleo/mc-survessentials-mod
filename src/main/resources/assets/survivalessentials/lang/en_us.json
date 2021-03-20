@@ -79,5 +79,7 @@
     "item.survivalessentials.redstone_tier": "Redstone Tier Upgrade",
     "item.survivalessentials.diamond_tier": "Diamond Tier Upgrade",
     "item.survivalessentials.netherite_tier": "Netherite Tier Upgrade",
-    "item.survivalessentials.food_lootbag": "Lootbag (Food)"
+    "item.survivalessentials.food_lootbag": "Lootbag (Food)",
+    "item.survivalessentials.corundum_gem": "Corundum",
+    "block.survivalessentials.corundum_ore": "Corundum Ore"
 }

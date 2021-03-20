@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.eventbus.EventBus;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import pt.omegaleo.survivalessentials.brewing.VinegarRecipe;
 import pt.omegaleo.survivalessentials.client.ColorHandlers;
+import pt.omegaleo.survivalessentials.world.OreGeneration;
 
 import javax.annotation.Nonnull;
 
@@ -39,6 +41,8 @@ public class SurvivalEssentialsMod
         ModRecipes.RECIPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModTileEntities.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModEnchantments.ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus()); 
+
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGeneration::setupOreGeneration);
 
         MinecraftForge.EVENT_BUS.register(this);
     }

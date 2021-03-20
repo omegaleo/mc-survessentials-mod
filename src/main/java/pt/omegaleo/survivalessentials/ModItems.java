@@ -2,6 +2,7 @@ package pt.omegaleo.survivalessentials;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
+import net.minecraft.item.Item.Properties;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -75,6 +76,9 @@ public class ModItems
 
         public static final RegistryObject<Item> FOOD_LOOTBAG = ITEMS.register("food_lootbag", 
                 () -> new LootBag(LootType.FOOD).asItem());
+
+        public static final RegistryObject<Item> CORUNDUM_GEM = ITEMS.register("corundum_gem", 
+                () -> new Item(new Properties().group(SurvivalEssentialsMod.ITEMS_TAB).maxStackSize(64)));
 
         /*public static final RegistryObject<Item> MOB_ESSENCE = ITEMS.register("mob_essence", 
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));*/
@@ -215,4 +219,7 @@ public class ModItems
         // Blocks
         public static final RegistryObject<Item> enchantment_extractor = ITEMS.register("enchantment_extractor",
                 () -> new BlockItem(ModBlocks.enchantment_extractor.get(), new Item.Properties().group(SurvivalEssentialsMod.MACHINES_TAB)));
+
+        public static final RegistryObject<Item> CORUNDUM_ORE = ITEMS.register("corundum_ore",
+                () -> new BlockItem(ModBlocks.CORUNDUM_ORE.get(), new Item.Properties().group(SurvivalEssentialsMod.ITEMS_TAB)));
 }
