@@ -170,39 +170,51 @@ public class ModItems
 
         //Hammers
         public static final RegistryObject<PickaxeItem> STONE_HAMMER = ITEMS.register("stone_hammer",
-                () -> new Hammer(ItemTier.STONE, 0, -2.8F));
+                () -> new Hammer(ItemTier.STONE, 0, -2.8F, false));
 
         public static final RegistryObject<PickaxeItem> IRON_HAMMER = ITEMS.register("iron_hammer",
-                () -> new Hammer(ItemTier.IRON, 0, -2.8F));
+                () -> new Hammer(ItemTier.IRON, 0, -2.8F, false));
 
         public static final RegistryObject<PickaxeItem> GOLD_HAMMER = ITEMS.register("gold_hammer",
-                () -> new Hammer(ItemTier.GOLD, 0, -2.8F));
+                () -> new Hammer(ItemTier.GOLD, 0, -2.8F, false));
 
         public static final RegistryObject<PickaxeItem> DIAMOND_HAMMER = ITEMS.register("diamond_hammer",
-                () -> new Hammer(ItemTier.DIAMOND, 0, -2.8F));
+                () -> new Hammer(ItemTier.DIAMOND, 0, -2.8F, false));
 
         public static final RegistryObject<PickaxeItem> NETHERITE_HAMMER = ITEMS.register("netherite_hammer",
-                () -> new Hammer(ItemTier.NETHERITE, 0, -2.8F));
+                () -> new Hammer(ItemTier.NETHERITE, 0, -2.8F, false));
+
+        public static final RegistryObject<PickaxeItem> CORUNDUM_HAMMER = ITEMS.register("corundum_hammer",
+                () -> new Hammer(ModItemTier.CORUNDUM, 0, -2.8F, false));
+
+        public static final RegistryObject<PickaxeItem> MYTHRIL_HAMMER = ITEMS.register("mythril_hammer",
+                () -> new Hammer(ModItemTier.MYTHRIL, 0, -2.8F, true));
 
 
         //Improved axes
         public static final RegistryObject<AxeItem> STONE_HATCHET = ITEMS.register("stone_hatchet",
-                () -> new ImprovedAxeItem(ItemTier.STONE, 0, -2.8F));
+                () -> new ImprovedAxeItem(ItemTier.STONE, 0, -2.8F, false));
 
         public static final RegistryObject<AxeItem> IRON_HATCHET = ITEMS.register("iron_hatchet",
-                () -> new ImprovedAxeItem(ItemTier.IRON, 0, -2.8F));
+                () -> new ImprovedAxeItem(ItemTier.IRON, 0, -2.8F, false));
         
         public static final RegistryObject<AxeItem> GOLD_HATCHET = ITEMS.register("gold_hatchet",
-                () -> new ImprovedAxeItem(ItemTier.GOLD, 0, -2.8F));
+                () -> new ImprovedAxeItem(ItemTier.GOLD, 0, -2.8F, false));
         
         public static final RegistryObject<AxeItem> REDSTONE_HATCHET = ITEMS.register("redstone_hatchet",
-                () -> new ImprovedAxeItem(ModItemTier.REDSTONE, 0, -2.8F));
+                () -> new ImprovedAxeItem(ModItemTier.REDSTONE, 0, -2.8F, false));
 
         public static final RegistryObject<AxeItem> DIAMOND_HATCHET = ITEMS.register("diamond_hatchet",
-                () -> new ImprovedAxeItem(ItemTier.DIAMOND, 0, -2.8F));
+                () -> new ImprovedAxeItem(ItemTier.DIAMOND, 0, -2.8F, false));
 
         public static final RegistryObject<AxeItem> NETHERITE_HATCHET = ITEMS.register("netherite_hatchet",
-                () -> new ImprovedAxeItem(ItemTier.NETHERITE, 0, -2.8F));
+                () -> new ImprovedAxeItem(ItemTier.NETHERITE, 0, -2.8F, false));
+
+        public static final RegistryObject<AxeItem> CORUNDUM_HATCHET = ITEMS.register("corundum_hatchet",
+                () -> new ImprovedAxeItem(ModItemTier.CORUNDUM, 0, -2.8F, false));
+
+        public static final RegistryObject<AxeItem> MYTHRIL_HATCHET = ITEMS.register("mythril_hatchet",
+                () -> new ImprovedAxeItem(ModItemTier.MYTHRIL, 0, -2.8F, true));
 
         public static final RegistryObject<PickaxeItem> DRILL = ITEMS.register("drill",
         () -> new DrillTool(ItemTier.IRON, 0, -2.8F, 10));

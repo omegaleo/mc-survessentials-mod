@@ -93,5 +93,9 @@
     "item.survivalessentials.mythril_helmet": "Mythril Helmet",
     "item.survivalessentials.mythril_chestplate": "Mythril Chestplate",
     "item.survivalessentials.mythril_leggings": "Mythril Leggings",
-    "item.survivalessentials.mythril_boots": "Mythril Boots"
+    "item.survivalessentials.mythril_boots": "Mythril Boots",
+    "item.survivalessentials.corundum_hammer": "Corundum Hammer",
+    "item.survivalessentials.mythril_hammer": "Mythril Hammer",
+    "item.survivalessentials.corundum_hatchet": "Corundum Hatchet",
+    "item.survivalessentials.mythril_hatchet": "Mythril Hatchet"
 }
