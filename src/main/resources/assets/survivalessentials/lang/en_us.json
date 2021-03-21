@@ -85,5 +85,13 @@
     "item.survivalessentials.mythril_fragment": "Mythril Fragment",
     "block.survivalessentials.mythril_ore": "Mythril Ore",
     "item.survivalessentials.mythril_compound": "Mythril Compound",
-    "item.survivalessentials.mythril_ingot": "Mythril Ingot"
+    "item.survivalessentials.mythril_ingot": "Mythril Ingot",
+    "item.survivalessentials.corundum_helmet": "Corundum Helmet",
+    "item.survivalessentials.corundum_chestplate": "Corundum Chestplate",
+    "item.survivalessentials.corundum_leggings": "Corundum Leggings",
+    "item.survivalessentials.corundum_boots": "Corundum Boots",
+    "item.survivalessentials.mythril_helmet": "Mythril Helmet",
+    "item.survivalessentials.mythril_chestplate": "Mythril Chestplate",
+    "item.survivalessentials.mythril_leggings": "Mythril Leggings",
+    "item.survivalessentials.mythril_boots": "Mythril Boots"
 }

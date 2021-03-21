@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "xxx",
+        "x x",
+        "x x"
+    ],
+    "key":
+    {
+        "x":
+        [
+            {
+                "item": "survivalessentials:corundum_gem"
+            }
+        ]
+    },
+    "result":
+    {
+        "item": "survivalessentials:corundum_leggings",
+        "count": 1
+    }
+}

@@ -18,7 +18,7 @@ public class ModArmorMaterials implements IArmorMaterial
     public final static ModArmorMaterials WOOD = new ModArmorMaterials(SurvivalEssentialsMod.MOD_ID+":wood", 5, new int[] {1,2,1,1}, 18, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F, () -> {return Ingredient.fromItems(Items.BIRCH_WOOD);});
     public final static ModArmorMaterials REDSTONE = new ModArmorMaterials(SurvivalEssentialsMod.MOD_ID+":redstone",27,new int[]{1,4,3,1}, 30, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1.5F, () -> {return Ingredient.fromItems(ModItems.REDSTONE_INGOT.get());});
     public final static ModArmorMaterials CORUNDUM = new ModArmorMaterials(SurvivalEssentialsMod.MOD_ID+":corundum",30,new int[]{2,6,4,2}, 27, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1.75F, () -> {return Ingredient.fromItems(ModItems.CORUNDUM_GEM.get());});
-
+    public final static ModArmorMaterials MYTHRIL = new ModArmorMaterials(SurvivalEssentialsMod.MOD_ID+":mythril",45,new int[]{5,10,5,4}, 30, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 4.0F, () -> {return Ingredient.fromItems(ModItems.MYTHRIL_INGOT.get());});
 
     private static final int[] MAX_DAMAGE_ARRAY = new int[] { 11, 16, 15, 13 };
     private final String name;

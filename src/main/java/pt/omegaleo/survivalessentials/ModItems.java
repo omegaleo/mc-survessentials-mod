@@ -7,6 +7,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
+import pt.omegaleo.survivalessentials.items.CustomArmorItem;
 import pt.omegaleo.survivalessentials.items.CustomItem;
 import pt.omegaleo.survivalessentials.items.HouseTeleporter;
 import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
@@ -121,8 +122,31 @@ public class ModItems
         public static final RegistryObject<ArmorItem> REDSTONE_LEGGINGS = ITEMS.register("redstone_leggings",
                 () -> new ArmorItem(ModArmorMaterials.REDSTONE, EquipmentSlotType.LEGS, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
 
-        public static final RegistryObject<ArmorItem> REDSTONE_BOOTS = ITEMS.register("redstone_boots",
-                () -> new ArmorItem(ModArmorMaterials.REDSTONE, EquipmentSlotType.FEET, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+        public static final RegistryObject<ArmorItem> CORUNDUM_BOOTS = ITEMS.register("corundum_boots",
+                () -> new ArmorItem(ModArmorMaterials.CORUNDUM, EquipmentSlotType.FEET, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
+                public static final RegistryObject<ArmorItem> CORUNDUM_HELMET = ITEMS.register("corundum_helmet",
+                () -> new ArmorItem(ModArmorMaterials.CORUNDUM, EquipmentSlotType.HEAD,
+                        new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
+        public static final RegistryObject<ArmorItem> CORUNDUM_CHESTPLATE = ITEMS.register("corundum_chestplate",
+                () -> new ArmorItem(ModArmorMaterials.CORUNDUM, EquipmentSlotType.CHEST, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
+        public static final RegistryObject<ArmorItem> CORUNDUM_LEGGINGS = ITEMS.register("corundum_leggings",
+                () -> new ArmorItem(ModArmorMaterials.CORUNDUM, EquipmentSlotType.LEGS, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
+        public static final RegistryObject<ArmorItem> MYTHRIL_BOOTS = ITEMS.register("mythril_boots",
+                () -> new CustomArmorItem(ModArmorMaterials.MYTHRIL, EquipmentSlotType.FEET, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB), true));
+
+        public static final RegistryObject<ArmorItem> MYTHRIL_HELMET = ITEMS.register("mythril_helmet",
+                () -> new CustomArmorItem(ModArmorMaterials.MYTHRIL, EquipmentSlotType.HEAD,
+                        new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB), true));
+
+        public static final RegistryObject<ArmorItem> MYTHRIL_CHESTPLATE = ITEMS.register("mythril_chestplate",
+                () -> new CustomArmorItem(ModArmorMaterials.MYTHRIL, EquipmentSlotType.CHEST, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB), true));
+
+        public static final RegistryObject<ArmorItem> MYTHRIL_LEGGINGS = ITEMS.register("mythril_leggings",
+                () -> new CustomArmorItem(ModArmorMaterials.MYTHRIL, EquipmentSlotType.LEGS, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB), true));
 
         // Tools
         public static final RegistryObject<PickaxeItem> REDSTONE_PICKAXE = ITEMS.register("redstone_pickaxe",
