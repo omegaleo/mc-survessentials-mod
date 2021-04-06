@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -18,9 +19,11 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
+import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -201,5 +204,15 @@ public class ModEnchantments {
         int amount = r.nextInt(2);
 
         event.getEntity().entityDropItem(new ItemStack(ModItems.FOOD_LOOTBAG.get(), amount));
+
+        if (event.getEntity() instanceof EndermanEntity)
+        {
+            double blockPlacerChance = r.nextDouble();
+
+            if (blockPlacerChance <= 0.1)
+            {
+                event.getEntity().entityDropItem(new ItemStack(ModItems.BLOCK_PLACER.get(), 1));
+            }
+        }
     }
 }

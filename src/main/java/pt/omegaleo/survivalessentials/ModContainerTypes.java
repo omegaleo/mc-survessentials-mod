@@ -11,12 +11,14 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.client.gui.BackpackContainerScreen;
+import pt.omegaleo.survivalessentials.client.gui.BlockPlacerContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.BookContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.DrillContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.EnchantmentExtractorContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.ItemFilterContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.PortableChargerContainerScreen;
 import pt.omegaleo.survivalessentials.inventory.BackpackContainer;
+import pt.omegaleo.survivalessentials.inventory.BlockPlacerContainer;
 import pt.omegaleo.survivalessentials.inventory.ItemFilterContainer;
 import pt.omegaleo.survivalessentials.containers.BookContainer;
 import pt.omegaleo.survivalessentials.containers.DrillContainer;
@@ -43,6 +45,7 @@ public final class ModContainerTypes {
     public static ContainerType<ItemFilterContainer> itemFilter;
     public static ContainerType<PortableChargerContainer> portableChargerContainer;
     public static ContainerType<EnchantmentExtractorContainer> enchantmentExtractorContainer;
+    public static ContainerType<BlockPlacerContainer> blockPlacerContainer;
 
     private ModContainerTypes() {}
 
@@ -53,6 +56,7 @@ public final class ModContainerTypes {
         itemFilter = register("itemfilter", new ContainerType<>(ItemFilterContainer::new));
         portableChargerContainer = register("portablechargercontainer", new ContainerType<>(PortableChargerContainer::new));
         enchantmentExtractorContainer = register("enchantmentextractorcontainer", new ContainerType<>(EnchantmentExtractorContainer::createContainerClientSide));
+        blockPlacerContainer = register("blockplacercontainer", new ContainerType<>(BlockPlacerContainer::new));
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -64,6 +68,7 @@ public final class ModContainerTypes {
         ScreenManager.registerFactory(itemFilter, ItemFilterContainerScreen::new);
         ScreenManager.registerFactory(portableChargerContainer, PortableChargerContainerScreen::new);
         ScreenManager.registerFactory(enchantmentExtractorContainer, EnchantmentExtractorContainerScreen::new);
+        ScreenManager.registerFactory(blockPlacerContainer, BlockPlacerContainerScreen::new);
     }
 
     private static <T extends Container> ContainerType<T> register(String name, ContainerType<T> type) {

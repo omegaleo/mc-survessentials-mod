@@ -7,6 +7,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
+import pt.omegaleo.survivalessentials.items.BlockPlacer;
 import pt.omegaleo.survivalessentials.items.CustomArmorItem;
 import pt.omegaleo.survivalessentials.items.CustomItem;
 import pt.omegaleo.survivalessentials.items.HouseTeleporter;
@@ -20,6 +21,11 @@ import pt.omegaleo.survivalessentials.util.enums.EnergyStorageItem;
 import pt.omegaleo.survivalessentials.util.enums.ModArmorMaterials;
 import pt.omegaleo.survivalessentials.util.enums.ModItemTier;
 import pt.omegaleo.survivalessentials.util.enums.GlobalEnums.LootType;
+import pt.omegaleo.survivalessentials.util.tools.CustomAxeItem;
+import pt.omegaleo.survivalessentials.util.tools.CustomHoeItem;
+import pt.omegaleo.survivalessentials.util.tools.CustomPickaxeItem;
+import pt.omegaleo.survivalessentials.util.tools.CustomShovelItem;
+import pt.omegaleo.survivalessentials.util.tools.CustomSwordItem;
 import pt.omegaleo.survivalessentials.util.tools.DrillTool;
 import pt.omegaleo.survivalessentials.util.tools.Hammer;
 import pt.omegaleo.survivalessentials.util.tools.ImprovedAxeItem;
@@ -122,6 +128,9 @@ public class ModItems
         public static final RegistryObject<ArmorItem> REDSTONE_LEGGINGS = ITEMS.register("redstone_leggings",
                 () -> new ArmorItem(ModArmorMaterials.REDSTONE, EquipmentSlotType.LEGS, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
 
+        public static final RegistryObject<ArmorItem> REDSTONE_BOOTS = ITEMS.register("redstone_boots",
+                () -> new ArmorItem(ModArmorMaterials.REDSTONE, EquipmentSlotType.FEET, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
+
         public static final RegistryObject<ArmorItem> CORUNDUM_BOOTS = ITEMS.register("corundum_boots",
                 () -> new ArmorItem(ModArmorMaterials.CORUNDUM, EquipmentSlotType.FEET, new Item.Properties().group(SurvivalEssentialsMod.ARMOR_TAB)));
 
@@ -167,6 +176,37 @@ public class ModItems
         public static final RegistryObject<PickaxeItem> REDSTONE_HAMMER = ITEMS.register("redstone_hammer",
                 () -> new RedstoneHammer(ModItemTier.REDSTONE, 0, -2.8F));
 
+
+        public static final RegistryObject<PickaxeItem> CORUNDUM_PICKAXE = ITEMS.register("corundum_pickaxe",
+                () -> new PickaxeItem(ModItemTier.CORUNDUM, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+
+        public static final RegistryObject<SwordItem> CORUNDUM_SWORD = ITEMS.register("corundum_sword",
+                () -> new SwordItem(ModItemTier.CORUNDUM, 2, 6.0F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+
+        public static final RegistryObject<AxeItem> CORUNDUM_AXE = ITEMS.register("corundum_axe",
+                () -> new AxeItem(ModItemTier.CORUNDUM, 3, 5.0F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+        
+        public static final RegistryObject<ShovelItem> CORUNDUM_SHOVEL = ITEMS.register("corundum_shovel",
+                () -> new ShovelItem(ModItemTier.CORUNDUM, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+
+        public static final RegistryObject<HoeItem> CORUNDUM_HOE = ITEMS.register("corundum_hoe",
+                () -> new HoeItem(ModItemTier.CORUNDUM, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
+
+
+        public static final RegistryObject<PickaxeItem> MYTHRIL_PICKAXE = ITEMS.register("mythril_pickaxe",
+                () -> new CustomPickaxeItem(ModItemTier.MYTHRIL, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB), true));
+
+        public static final RegistryObject<SwordItem> MYTHRIL_SWORD = ITEMS.register("mythril_sword",
+                () -> new CustomSwordItem(ModItemTier.MYTHRIL, 2, 6.0F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB), true));
+
+        public static final RegistryObject<AxeItem> MYTHRIL_AXE = ITEMS.register("mythril_axe",
+                () -> new CustomAxeItem(ModItemTier.MYTHRIL, 3, 5.0F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB), true));
+        
+        public static final RegistryObject<ShovelItem> MYTHRIL_SHOVEL = ITEMS.register("mythril_shovel",
+                () -> new CustomShovelItem(ModItemTier.MYTHRIL, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB), true));
+
+        public static final RegistryObject<HoeItem> MYTHRIL_HOE = ITEMS.register("mythril_hoe",
+                () -> new CustomHoeItem(ModItemTier.MYTHRIL, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB), true));
 
         //Hammers
         public static final RegistryObject<PickaxeItem> STONE_HAMMER = ITEMS.register("stone_hammer",
@@ -219,6 +259,9 @@ public class ModItems
         public static final RegistryObject<PickaxeItem> DRILL = ITEMS.register("drill",
         () -> new DrillTool(ItemTier.IRON, 0, -2.8F, 10));
 
+        public static final RegistryObject<Item> BLOCK_PLACER = ITEMS.register("block_placer", 
+        () -> new BlockPlacer());
+
         // Tool Upgrades
         public static final RegistryObject<Item> TO_STONE = ITEMS.register("to_stone",
                 () -> new Item(new Item.Properties().group(SurvivalEssentialsMod.UPGRADES_TAB)));
@@ -250,6 +293,9 @@ public class ModItems
                 () -> new DrillUpgrade());
 
         public static final RegistryObject<Item> NETHERITE_TIER = ITEMS.register("netherite_tier",
+                () -> new DrillUpgrade());
+
+        public static final RegistryObject<Item> MYTHRIL_TIER = ITEMS.register("mythril_tier",
                 () -> new DrillUpgrade());
 
         // Energy related

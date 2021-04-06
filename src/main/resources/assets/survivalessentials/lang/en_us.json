@@ -96,6 +96,18 @@
     "item.survivalessentials.mythril_boots": "Mythril Boots",
     "item.survivalessentials.corundum_hammer": "Corundum Hammer",
     "item.survivalessentials.mythril_hammer": "Mythril Hammer",
+    "item.survivalessentials.corundum_sword": "Corundum Sword",
+    "item.survivalessentials.mythril_sword": "Mythril Sword",
+    "item.survivalessentials.corundum_pickaxe": "Corundum Pickaxe",
+    "item.survivalessentials.mythril_pickaxe": "Mythril Pickaxe",
+    "item.survivalessentials.corundum_shovel": "Corundum Shovel",
+    "item.survivalessentials.mythril_shovel": "Mythril Shovel",
+    "item.survivalessentials.corundum_hoe": "Corundum Hoe",
+    "item.survivalessentials.mythril_hoe": "Mythril Hoe",
+    "item.survivalessentials.corundum_axe": "Corundum Axe",
+    "item.survivalessentials.mythril_axe": "Mythril Axe",
     "item.survivalessentials.corundum_hatchet": "Corundum Hatchet",
-    "item.survivalessentials.mythril_hatchet": "Mythril Hatchet"
+    "item.survivalessentials.mythril_hatchet": "Mythril Hatchet",
+    "container.survivalessentials.blockPlacer": "Block Placer",
+    "item.survivalessentials.block_placer": "Block Placer"
 }

@@ -110,6 +110,10 @@ public class DrillTool extends PickaxeItem{
         {
             return 2031;
         }
+        else if(hasUpgrade((DrillUpgrade)ModItems.MYTHRIL_TIER.get(), stack))
+        {
+            return 3000;
+        }
 
         return super.getMaxDamage(stack);
     }
