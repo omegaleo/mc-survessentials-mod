@@ -67,6 +67,17 @@ public class HammerTool extends PickaxeItem
                     }
 
                     stack.setDamage(stack.getDamage() + 1);
+                    if(worldIn.isBlockPresent(blocksToDestroy[i]))
+                    {
+                        worldIn.destroyBlock(blocksToDestroy[i], true);
+                    }
+                }
+                    
+                int damage = damagePerUse;
+    
+                if((stack.getMaxDamage() - stack.getDamage()) - damagePerUse <= 0)
+                {
+                    damage = stack.getMaxDamage() - stack.getDamage() - 1;
                 }
             }
         }
@@ -82,7 +93,6 @@ public class HammerTool extends PickaxeItem
         Block block = ibs.getBlock();
         return block;
     }
-
 
     public BlockPos[] getAOEPositions(BlockPos initialBlockPos, Direction facing)
     {

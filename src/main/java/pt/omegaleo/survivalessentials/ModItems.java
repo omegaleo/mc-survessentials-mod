@@ -176,7 +176,6 @@ public class ModItems
         public static final RegistryObject<PickaxeItem> REDSTONE_HAMMER = ITEMS.register("redstone_hammer",
                 () -> new RedstoneHammer(ModItemTier.REDSTONE, 0, -2.8F));
 
-
         public static final RegistryObject<PickaxeItem> CORUNDUM_PICKAXE = ITEMS.register("corundum_pickaxe",
                 () -> new PickaxeItem(ModItemTier.CORUNDUM, 0, -2.8F, new Item.Properties().group(SurvivalEssentialsMod.TOOLS_TAB)));
 
@@ -285,7 +284,7 @@ public class ModItems
                 () -> new DrillUpgrade());
         public static final RegistryObject<Item> REPAIR = ITEMS.register("repair",
                 () -> new DrillUpgrade());
-
+  
         public static final RegistryObject<Item> REDSTONE_TIER = ITEMS.register("redstone_tier",
                 () -> new DrillUpgrade());
 
