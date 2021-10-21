@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "xx ",
+        "xy ",
+        " y "
+    ],
+    "key":
+    {
+        "x":
+            [
+                {
+                    "item": "survivalessentials:mythril_ingot"
+                }
+            ],
+        "y":
+            [
+                {
+                    "item": "minecraft:stick"
+                }
+            ]
+    },      
+    "result":
+    {
+        "item": "survivalessentials:mythril_axe",
+        "count": 1
+    }
+}
