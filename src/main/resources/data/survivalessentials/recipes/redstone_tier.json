@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "yyy",
+        "yxy",
+        "yyy"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "survivalessentials:upgrade_template"
+        },
+        "y":
+        {
+            "item": "survivalessentials:redstone_ingot"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:redstone_tier",
+        "count": 1
+    }
+}

@@ -6,6 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.eventbus.EventBus;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -13,6 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import pt.omegaleo.survivalessentials.brewing.VinegarRecipe;
 import pt.omegaleo.survivalessentials.client.ColorHandlers;
+import pt.omegaleo.survivalessentials.world.OreGeneration;
 
 import javax.annotation.Nonnull;
 
@@ -32,17 +35,21 @@ public class SurvivalEssentialsMod
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ColorHandlers::registerItemColor);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(ContainerType.class, ModContainerTypes::registerContainerTypes);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModContainerTypes::registerScreens);
-        
+
         ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModRecipes.RECIPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModTileEntities.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ModEnchantments.ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus()); 
+
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGeneration::setupOreGeneration);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent event) 
     {
-        DeferredWorkQueue.runLater(this::registerPotions); 
+        DeferredWorkQueue.runLater(this::registerPotions);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) 
@@ -61,7 +68,16 @@ public class SurvivalEssentialsMod
         @Override
         public ItemStack createIcon() 
         {
-            return new ItemStack(ModItems.WOOD_PULP.get());
+            return new ItemStack(ModItems.REDSTONE_INGOT.get());
+        }
+    };
+
+    public static final ItemGroup MACHINES_TAB = new ItemGroup("survivalessentials_machines") 
+    {
+        @Override
+        public ItemStack createIcon() 
+        {
+            return new ItemStack(ModItems.enchantment_extractor.get());
         }
     };
 
@@ -92,6 +108,15 @@ public class SurvivalEssentialsMod
             return new ItemStack(ModItems.REDSTONE_PICKAXE.get());
         }
     };
+
+    /*public static final ItemGroup MACHINES_TAB = new ItemGroup("survivalessentials_machines") 
+    {
+        @Override
+        public ItemStack createIcon() 
+        {
+            return new ItemStack(ModItems.REDSTONE_GENERATOR.get());
+        }
+    }*/
 
     @Nonnull
     public static ResourceLocation getId(String path) 

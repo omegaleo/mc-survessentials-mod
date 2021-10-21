@@ -6,6 +6,7 @@ import javax.lang.model.util.ElementScanner6;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
@@ -60,6 +61,12 @@ public class HammerTool extends PickaxeItem
                 BlockPos[] blocksToDestroy = getAOEPositions(pos, mop.getFace());
                 for(int i = 0; i < blocksToDestroy.length; i++)
                 {
+                    if(worldIn.isBlockPresent(blocksToDestroy[i]) && getBlock(blocksToDestroy[i], worldIn) != Blocks.BEDROCK)
+                    {
+                        worldIn.destroyBlock(blocksToDestroy[i], true);
+                    }
+
+                    stack.setDamage(stack.getDamage() + 1);
                     if(worldIn.isBlockPresent(blocksToDestroy[i]))
                     {
                         worldIn.destroyBlock(blocksToDestroy[i], true);
@@ -81,6 +88,11 @@ public class HammerTool extends PickaxeItem
         return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
     }
 
+    private Block getBlock(BlockPos pos, World world) {
+        BlockState ibs = world.getBlockState(pos);
+        Block block = ibs.getBlock();
+        return block;
+    }
 
     public BlockPos[] getAOEPositions(BlockPos initialBlockPos, Direction facing)
     {

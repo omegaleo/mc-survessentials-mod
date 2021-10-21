@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "xyx",
+        "yxy",
+        "xyx"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "survivalessentials:mythril_fragment"
+        },
+        "y":
+        {
+            "item": "minecraft:diamond"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:mythril_compound",
+        "count": 1
+    }
+}

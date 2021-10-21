@@ -8,21 +8,22 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.client.gui.BackpackContainerScreen;
+import pt.omegaleo.survivalessentials.client.gui.BlockPlacerContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.BookContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.DrillContainerScreen;
+import pt.omegaleo.survivalessentials.client.gui.EnchantmentExtractorContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.ItemFilterContainerScreen;
+import pt.omegaleo.survivalessentials.client.gui.PortableChargerContainerScreen;
 import pt.omegaleo.survivalessentials.inventory.BackpackContainer;
+import pt.omegaleo.survivalessentials.inventory.BlockPlacerContainer;
 import pt.omegaleo.survivalessentials.inventory.ItemFilterContainer;
 import pt.omegaleo.survivalessentials.containers.BookContainer;
 import pt.omegaleo.survivalessentials.containers.DrillContainer;
+import pt.omegaleo.survivalessentials.containers.EnchantmentExtractorContainer;
+import pt.omegaleo.survivalessentials.containers.PortableChargerContainer;
 
 /**
  * Mod {@link ContainerType}s and {@link net.minecraft.client.gui.screen.Screen} registration.
@@ -42,6 +43,9 @@ public final class ModContainerTypes {
     public static ContainerType<BookContainer> book;
     public static ContainerType<DrillContainer> drill;
     public static ContainerType<ItemFilterContainer> itemFilter;
+    public static ContainerType<PortableChargerContainer> portableChargerContainer;
+    public static ContainerType<EnchantmentExtractorContainer> enchantmentExtractorContainer;
+    public static ContainerType<BlockPlacerContainer> blockPlacerContainer;
 
     private ModContainerTypes() {}
 
@@ -50,14 +54,21 @@ public final class ModContainerTypes {
         book = register("book", new ContainerType<>(BookContainer::new));
         drill = register("drill", new ContainerType<>(DrillContainer::new));
         itemFilter = register("itemfilter", new ContainerType<>(ItemFilterContainer::new));
+        portableChargerContainer = register("portablechargercontainer", new ContainerType<>(PortableChargerContainer::new));
+        enchantmentExtractorContainer = register("enchantmentextractorcontainer", new ContainerType<>(EnchantmentExtractorContainer::createContainerClientSide));
+        blockPlacerContainer = register("blockplacercontainer", new ContainerType<>(BlockPlacerContainer::new));
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void registerScreens(FMLClientSetupEvent event) {
+    public static void registerScreens(FMLClientSetupEvent event) 
+    {
         ScreenManager.registerFactory(backpack, BackpackContainerScreen::new);
         ScreenManager.registerFactory(book, BookContainerScreen::new);
         ScreenManager.registerFactory(drill, DrillContainerScreen::new);
         ScreenManager.registerFactory(itemFilter, ItemFilterContainerScreen::new);
+        ScreenManager.registerFactory(portableChargerContainer, PortableChargerContainerScreen::new);
+        ScreenManager.registerFactory(enchantmentExtractorContainer, EnchantmentExtractorContainerScreen::new);
+        ScreenManager.registerFactory(blockPlacerContainer, BlockPlacerContainerScreen::new);
     }
 
     private static <T extends Container> ContainerType<T> register(String name, ContainerType<T> type) {

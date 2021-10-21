@@ -6,6 +6,7 @@
         "**/.factorypath": true
     },
     "cSpell.words": [
+        "Elytra",
         "Teleporter",
         "Tessellator",
         "bufferbuilder",
@@ -14,8 +15,10 @@
         "itemfilter",
         "minecraft",
         "minecraft forge",
+        "portablechargercontainer",
         "raytraceresult",
-        "recolorbackpack"
+        "recolorbackpack",
+        "tileentity"
     ],
     "java.configuration.updateBuildConfiguration": "automatic"
 }

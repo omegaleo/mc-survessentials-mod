@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "zyz",
+        "yxy",
+        "zyz"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:enchanting_table"
+        },
+        "y":
+        {
+            "item": "minecraft:grindstone"
+        },
+        "z":
+        {
+            "item": "minecraft:iron_block"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:enchantment_extractor",
+        "count": 1
+    }
+}

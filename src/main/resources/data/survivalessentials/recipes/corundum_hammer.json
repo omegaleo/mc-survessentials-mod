@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "yyy",
+        "yxy",
+        " x "
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:stick"
+        },
+        "y":
+        {
+            "item": "survivalessentials:corundum_gem"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:corundum_hammer",
+        "count": 1
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": 
+    {
+        "item": "survivalessentials:mythril_compound"
+    },
+    "result": "survivalessentials:mythril_ingot",
+    "experience": 0.0,
+    "cookingtime": 200
+}

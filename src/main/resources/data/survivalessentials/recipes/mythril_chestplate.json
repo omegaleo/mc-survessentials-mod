@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "x x",
+        "xxx",
+        "xxx"
+    ],
+    "key":
+    {
+        "x":
+        [
+            {
+                "item": "survivalessentials:mythril_ingot"
+            }
+        ]
+    },
+    "result":
+    {
+        "item": "survivalessentials:mythril_chestplate",
+        "count": 1
+    }
+}

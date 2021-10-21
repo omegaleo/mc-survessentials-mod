@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "survivalessentials:block/enchantment_extractor_block" }
+    }
+}
