@@ -32,7 +32,7 @@ public class BlockPlacerContainerScreen extends ContainerScreen<BlockPlacerConta
     @Override
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
         this.font.drawString(matrixStack, title.getString(), 8, 6, 4210752);
-        this.font.drawString(matrixStack, playerInventory.getDisplayName().getString(), 8, this.ySize - 96 + 2, 4210752);
+        this.font.drawString(matrixStack, playerInventory.getDisplayName().getString(), 8, this.ySize - 48 + 6, 4210752);
     }
 
     @Override

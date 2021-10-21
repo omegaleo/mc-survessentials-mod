@@ -27,7 +27,7 @@ public class BlockPlacer extends Item
     
     public int getInventorySize(ItemStack stack) 
     {
-        return 27;
+        return 54;
     }
 
     public IItemHandler getInventory(ItemStack stack) 
