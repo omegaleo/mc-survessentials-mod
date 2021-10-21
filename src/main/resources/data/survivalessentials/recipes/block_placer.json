@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "zxz",
+        "xyx",
+        "zxz"
+    ],
+    "key":
+    {
+        "x":
+        {
+            "item": "minecraft:dispenser"
+        },
+        "y":
+        {
+            "item": "survivalessentials:backpack"
+        },
+        "z":
+        {
+            "item": "minecraft:stone"
+        }
+    },
+    "result":
+    {
+        "item": "survivalessentials:block_placer",
+        "count": 1
+    }
+}
