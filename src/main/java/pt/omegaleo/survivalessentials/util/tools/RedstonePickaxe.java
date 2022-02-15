@@ -1,31 +1,26 @@
 package pt.omegaleo.survivalessentials.util.tools;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.*;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Potions;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.InteractionResult;
+
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.context.UseOnContext;
 
 public class RedstonePickaxe extends PickaxeItem
 {
 
-    public RedstonePickaxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
+    public RedstonePickaxe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
         super(tier, attackDamageIn, attackSpeedIn, builder);
     }
-    
 
-    @Override
-    public ActionResultType onItemUse(ItemUseContext context) 
-    {
-        context.getPlayer().addPotionEffect(new EffectInstance(Effect.get(3).getEffect())); //add Haste
-
-        return super.onItemUse(context);
-    }
-    
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
-        player.addPotionEffect(new EffectInstance(Effect.get(3).getEffect()));
+        player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED));
         super.onUsingTick(stack, player, count);
     }
 }

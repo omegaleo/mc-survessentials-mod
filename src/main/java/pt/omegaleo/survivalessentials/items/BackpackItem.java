@@ -2,23 +2,23 @@ package pt.omegaleo.survivalessentials.items;
 
 import java.awt.Color;
 
-import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 import pt.omegaleo.survivalessentials.inventory.BackpackContainer;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class BackpackItem extends Item 
 {
@@ -26,7 +26,7 @@ public class BackpackItem extends Item
 
     public BackpackItem() 
     {
-        super(new Properties().group(SurvivalEssentialsMod.ITEMS_TAB).maxStackSize(1));
+        super(new Properties().tab(SurvivalEssentialsMod.ITEMS_TAB).stacksTo(1));
     }
     
     public int getInventorySize(ItemStack stack) 
@@ -50,16 +50,13 @@ public class BackpackItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) 
+    public InteractionResultHolder<ItemStack> use(Level p_41432_, Player p_41433_, InteractionHand p_41434_)
     {
-        if (!worldIn.isRemote) 
-        {
-            playerIn.openContainer(new SimpleNamedContainerProvider(
-                    (id, playerInventory, player) -> new BackpackContainer(id, playerInventory),
-                    new TranslationTextComponent("container.survivalessentials.backpack")
-            ));
-        }
-        return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+        p_41433_.openMenu(new SimpleMenuProvider(
+                (id, playerInventory, player) -> new BackpackContainer(id, playerInventory),
+                new TranslatableComponent("container.survivalessentials.backpack")
+        ));
+        return super.use(p_41432_, p_41433_, p_41434_);
     }
 
     public static int getBackpackColor(ItemStack stack) 
@@ -72,7 +69,7 @@ public class BackpackItem extends Item
         stack.getOrCreateTag().putInt(NBT_COLOR, color);
     }
 
-    public static int getItemColor(ItemStack stack, int tintIndex) 
+    public static int getItemColor(ItemStack stack, int tintIndex)
     {
         if (tintIndex == 0) 
         {
@@ -82,16 +79,12 @@ public class BackpackItem extends Item
     }
 
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) 
-    {
-        if (isInGroup(group)) 
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
+        for (DyeColor color : DyeColor.values())
         {
-            for (DyeColor color : DyeColor.values()) 
-            {
-                ItemStack stack = new ItemStack(this);
-                setBackpackColor(stack, color.getFireworkColor());
-                items.add(stack);
-            }
+            ItemStack stack = new ItemStack(this);
+            setBackpackColor(stack, color.getFireworkColor());
+            items.add(stack);
         }
     }
 }

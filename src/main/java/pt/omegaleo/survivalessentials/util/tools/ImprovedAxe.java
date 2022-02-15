@@ -1,35 +1,19 @@
 package pt.omegaleo.survivalessentials.util.tools;
 
-import java.util.Set;
-
-import javax.lang.model.util.ElementScanner6;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.ToolItem;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceContext.FluidMode;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
-import pt.omegaleo.survivalessentials.util.enums.IExtendedReach;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class ImprovedAxe extends AxeItem
 {
@@ -40,38 +24,40 @@ public class ImprovedAxe extends AxeItem
      * }
      */
 
-    public ImprovedAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, int damagePerUse) 
+    public ImprovedAxe(Tier tier, int attackDamageIn, float attackSpeedIn, int damagePerUse) 
     {
-        super(tier, attackDamageIn, attackSpeedIn, new Properties().group(SurvivalEssentialsMod.TOOLS_TAB));
+        super(tier, attackDamageIn, attackSpeedIn, new Properties().tab(SurvivalEssentialsMod.TOOLS_TAB));
         this.damagePerUse = damagePerUse;
     }
 
     private int damagePerUse = 10;
 
-
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) 
+    public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, Player player) {
+        return onBlockDestroyed(itemstack, player.level, player.level.getBlockState(pos), pos, player);
+    }
+
+    public boolean onBlockDestroyed(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) 
     {
         try
         {
-            if(entityLiving instanceof PlayerEntity)
+            if(entityLiving instanceof Player)
             {
-                PlayerEntity player = (PlayerEntity)entityLiving;
+                Player player = (Player)entityLiving;
 
-                BlockRayTraceResult mop = Item.rayTrace(worldIn, player, RayTraceContext.FluidMode.ANY);
-
-                DestroyWoodBlocks(pos, mop.getFace(), worldIn);
+                DestroyWoodBlocks(pos, player.getDirection(), worldIn);
             }
         }
         catch(Exception e)
         {
             System.out.println(e.getStackTrace());
+            return false;
         }
-        return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+        return true;
     }
 
 
-    public void DestroyWoodBlocks(BlockPos initialBlockPos, Direction facing, World world)
+    public void DestroyWoodBlocks(BlockPos initialBlockPos, Direction facing, Level world)
     {
         //Return a 3x3 area for now
 
@@ -189,7 +175,7 @@ public class ImprovedAxe extends AxeItem
     }
 
 
-    boolean IsWoodBlockDown(BlockPos currentPos, Direction facing, World world)
+    boolean IsWoodBlockDown(BlockPos currentPos, Direction facing, Level world)
     {
         if(facing == Direction.DOWN || facing == Direction.UP)
         {
@@ -221,7 +207,7 @@ public class ImprovedAxe extends AxeItem
 
     }
 
-    boolean IsWoodBlockUp(BlockPos currentPos, Direction facing, World world)
+    boolean IsWoodBlockUp(BlockPos currentPos, Direction facing, Level world)
     {
         if(facing == Direction.DOWN || facing == Direction.UP)
         {
@@ -229,7 +215,7 @@ public class ImprovedAxe extends AxeItem
             BlockPos posUp = new BlockPos(currentPos.getX(),currentPos.getY(),currentPos.getZ() + 1);
 
             BlockState ibsUp = world.getBlockState(posUp);
-            Block blockUp = ibsUp.getBlock();        
+            Block blockUp = ibsUp.getBlock();
 
             return IsWoodBlock(blockUp);
         }

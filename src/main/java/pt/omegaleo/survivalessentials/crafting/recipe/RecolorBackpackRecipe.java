@@ -1,23 +1,25 @@
 package pt.omegaleo.survivalessentials.crafting.recipe;
 
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.SpecialRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import pt.omegaleo.survivalessentials.ModItems;
 import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class RecolorBackpackRecipe extends SpecialRecipe
+public class RecolorBackpackRecipe extends CustomRecipe
 {
 
     public static final ResourceLocation NAME = SurvivalEssentialsMod.getId("recolorbackpack");
@@ -29,21 +31,21 @@ public class RecolorBackpackRecipe extends SpecialRecipe
     }
 
     @Override
-    public boolean matches(CraftingInventory inv, World worldIn) 
+    public boolean matches(CraftingContainer inv, Level worldIn) 
     {
         int backpackCount = 0;
         int dyeCount = 0;
 
-        for (int i = 0; i < inv.getSizeInventory(); ++i) 
+        for (int i = 0; i < inv.getContainerSize(); ++i)
         {
-            ItemStack stack = inv.getStackInSlot(i);
+            ItemStack stack = inv.getItem(i);
             if (!stack.isEmpty()) 
             {
                 if (stack.getItem() instanceof BackpackItem) 
                 {
                     ++backpackCount;
                 } 
-                else if (stack.getItem().isIn(Tags.Items.DYES)) 
+                else if (stack.getItem().getCreativeTabs().contains(Tags.Items.DYES))
                 {
                     ++dyeCount;
                 } 
@@ -58,21 +60,20 @@ public class RecolorBackpackRecipe extends SpecialRecipe
     }
 
     @Override
-    public ItemStack getCraftingResult(CraftingInventory inv) 
-    {
+    public ItemStack assemble(CraftingContainer inv) {
         ItemStack backpack = ItemStack.EMPTY;
         Collection<ItemStack> dyes = new ArrayList<>();
 
-        for (int i = 0; i < inv.getSizeInventory(); ++i) 
+        for (int i = 0; i < inv.getContainerSize(); ++i)
         {
-            ItemStack stack = inv.getStackInSlot(i);
-            if (!stack.isEmpty()) 
+            ItemStack stack = inv.getItem(i);
+            if (!stack.isEmpty())
             {
-                if (stack.getItem() instanceof BackpackItem) 
+                if (stack.getItem() instanceof BackpackItem)
                 {
                     backpack = stack;
-                } 
-                else if (stack.getItem().isIn(Tags.Items.DYES)) 
+                }
+                else if (stack.getItem().getCreativeTabs().contains(Tags.Items.DYES))
                 {
                     dyes.add(stack);
                 }
@@ -84,6 +85,16 @@ public class RecolorBackpackRecipe extends SpecialRecipe
         return result;
     }
 
+    @Override
+    public boolean canCraftInDimensions(int p_43999_, int p_44000_) {
+        return true;
+    }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return SERIALIZER;
+    }
+
     private static void applyDyes(ItemStack backpack, Collection<ItemStack> dyes) 
     {
         int[] componentSums = new int[3];
@@ -91,7 +102,7 @@ public class RecolorBackpackRecipe extends SpecialRecipe
         int colorCount = 0;
 
         int backpackColor = BackpackItem.getBackpackColor(backpack);
-        if (backpackColor != DyeColor.WHITE.getFireworkColor()) 
+        if (backpackColor != DyeColor.WHITE.getFireworkColor())
         {
             float r = (float) (backpackColor >> 16 & 255) / 255.0F;
             float g = (float) (backpackColor >> 8 & 255) / 255.0F;
@@ -108,7 +119,7 @@ public class RecolorBackpackRecipe extends SpecialRecipe
             DyeColor dyeColor = DyeColor.getColor(dye);
             if (dyeColor != null) 
             {
-                float[] componentValues = dyeColor.getColorComponentValues();
+                float[] componentValues = dyeColor.getTextureDiffuseColors();
                 int r = (int) (componentValues[0] * 255.0F);
                 int g = (int) (componentValues[1] * 255.0F);
                 int b = (int) (componentValues[2] * 255.0F);
@@ -136,36 +147,24 @@ public class RecolorBackpackRecipe extends SpecialRecipe
         }
     }
 
-    @Override
-    public boolean canFit(int width, int height) 
-    {
-        return width * height >= 2;
-    }
 
-    @Override
-    public IRecipeSerializer<?> getSerializer() 
+    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RecolorBackpackRecipe>
     {
-        return SERIALIZER;
-    }
-    
 
-    public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<RecolorBackpackRecipe> 
-    {
         @Override
-        public RecolorBackpackRecipe read(ResourceLocation recipeId, JsonObject json) 
-        {
-            return new RecolorBackpackRecipe(recipeId);
+        public RecolorBackpackRecipe fromJson(ResourceLocation p_44103_, JsonObject p_44104_) {
+            return new RecolorBackpackRecipe(p_44103_);
+        }
+
+        @Nullable
+        @Override
+        public RecolorBackpackRecipe fromNetwork(ResourceLocation p_44105_, FriendlyByteBuf p_44106_) {
+            return new RecolorBackpackRecipe(p_44105_);
         }
 
         @Override
-        public RecolorBackpackRecipe read(ResourceLocation recipeId, PacketBuffer buffer) 
-        {
-            return new RecolorBackpackRecipe(recipeId);
-        }
+        public void toNetwork(FriendlyByteBuf p_44101_, RecolorBackpackRecipe p_44102_) {
 
-        @Override
-        public void write(PacketBuffer buffer, RecolorBackpackRecipe recipe) 
-        {
         }
     }
 }

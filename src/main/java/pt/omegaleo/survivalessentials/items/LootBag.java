@@ -2,20 +2,18 @@ package pt.omegaleo.survivalessentials.items;
 
 import java.util.Random;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 import pt.omegaleo.survivalessentials.containers.BookContainer;
 import pt.omegaleo.survivalessentials.util.enums.GlobalEnums.LootType;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class LootBag extends Item
 {
@@ -60,13 +58,12 @@ public class LootBag extends Item
 
     public LootBag(LootType type) 
     {
-        super(new Properties().group(SurvivalEssentialsMod.ITEMS_TAB).maxStackSize(64));
+        super(new Properties().tab(SurvivalEssentialsMod.ITEMS_TAB).stacksTo(64));
         _type = type;
     }
-    
+
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) 
-    {
+    public InteractionResultHolder<ItemStack> use(Level p_41432_, Player playerIn, InteractionHand handIn) {
         Random r = new Random();
 
         if(_type == LootType.FOOD)
@@ -78,11 +75,12 @@ public class LootBag extends Item
             if(amount == 0) amount = 1; //To guarantee it always drops at least 1
 
             if(foodResult != null)
-                playerIn.inventory.addItemStackToInventory(new ItemStack(foodResult, amount));
+                playerIn.getInventory().add(new ItemStack(foodResult, amount));
         }
 
-        playerIn.getHeldItem(handIn).shrink(1);
+        playerIn.getItemInHand(handIn).shrink(1);
 
-        return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+        return super.use(p_41432_, playerIn, handIn);
     }
+
 }

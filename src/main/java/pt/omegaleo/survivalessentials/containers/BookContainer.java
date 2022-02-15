@@ -1,22 +1,23 @@
 package pt.omegaleo.survivalessentials.containers;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import pt.omegaleo.survivalessentials.ModContainerTypes;
 
-public class BookContainer extends Container {
+public class BookContainer extends AbstractContainerMenu {
 
-    public BookContainer(int id, PlayerInventory playerInventory) 
+    public BookContainer(int id, Inventory playerInventory) 
     {
         super(ModContainerTypes.book, id);
     }
 
-	@Override
-    public boolean canInteractWith(PlayerEntity playerIn) 
-    {
+    public int getInventoryRows() {
+        return this.slots.size() / 9;
+    }
+
+    @Override
+    public boolean stillValid(Player p_38874_) {
         return true;
     }
-    
 }

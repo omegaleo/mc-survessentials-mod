@@ -1,77 +1,55 @@
 package pt.omegaleo.survivalessentials;
 
-import net.minecraft.inventory.container.ContainerType;
+import com.mojang.blaze3d.platform.ScreenManager;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.client.gui.BackpackContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.BlockPlacerContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.BookContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.DrillContainerScreen;
-import pt.omegaleo.survivalessentials.client.gui.EnchantmentExtractorContainerScreen;
 import pt.omegaleo.survivalessentials.client.gui.ItemFilterContainerScreen;
-import pt.omegaleo.survivalessentials.client.gui.PortableChargerContainerScreen;
 import pt.omegaleo.survivalessentials.inventory.BackpackContainer;
 import pt.omegaleo.survivalessentials.inventory.BlockPlacerContainer;
 import pt.omegaleo.survivalessentials.inventory.ItemFilterContainer;
 import pt.omegaleo.survivalessentials.containers.BookContainer;
 import pt.omegaleo.survivalessentials.containers.DrillContainer;
-import pt.omegaleo.survivalessentials.containers.EnchantmentExtractorContainer;
-import pt.omegaleo.survivalessentials.containers.PortableChargerContainer;
 
-/**
- * Mod {@link ContainerType}s and {@link net.minecraft.client.gui.screen.Screen} registration.
- * <p>
- * {@code ContainerTypes} are registered in {@link #registerContainerTypes(RegistryEvent.Register)}
- * <p>
- * {@code Screens} are registered in {@link #registerScreens(FMLClientSetupEvent)}.
- * <p>
- * {@code ContainerTypes} and {@link Container}s exist on both the client and server, and can be
- * used to send data between the two sides.
- * <p>
- * {@code Screens} exist only on the client, so make sure the server doesn't have any code that
- * references them. If needed, use the {@code @OnlyIn(Dist.CLIENT)} to remove code from the server.
- */
 public final class ModContainerTypes {
-    public static ContainerType<BackpackContainer> backpack;
-    public static ContainerType<BookContainer> book;
-    public static ContainerType<DrillContainer> drill;
-    public static ContainerType<ItemFilterContainer> itemFilter;
-    public static ContainerType<PortableChargerContainer> portableChargerContainer;
-    public static ContainerType<EnchantmentExtractorContainer> enchantmentExtractorContainer;
-    public static ContainerType<BlockPlacerContainer> blockPlacerContainer;
+    public static MenuType<BackpackContainer> backpack;
+    public static MenuType<BookContainer> book;
+    public static MenuType<DrillContainer> drill;
+    public static MenuType<ItemFilterContainer> itemFilter;
+    public static MenuType<BlockPlacerContainer> blockPlacerContainer;
 
     private ModContainerTypes() {}
 
-    public static void registerContainerTypes(RegistryEvent.Register<ContainerType<?>> event) {
-        backpack = register("backpack", new ContainerType<>(BackpackContainer::new));
-        book = register("book", new ContainerType<>(BookContainer::new));
-        drill = register("drill", new ContainerType<>(DrillContainer::new));
-        itemFilter = register("itemfilter", new ContainerType<>(ItemFilterContainer::new));
-        portableChargerContainer = register("portablechargercontainer", new ContainerType<>(PortableChargerContainer::new));
-        enchantmentExtractorContainer = register("enchantmentextractorcontainer", new ContainerType<>(EnchantmentExtractorContainer::createContainerClientSide));
-        blockPlacerContainer = register("blockplacercontainer", new ContainerType<>(BlockPlacerContainer::new));
+    public static void registerContainerTypes(RegistryEvent.Register<MenuType<?>> event) {
+        backpack = register("backpack", new MenuType<>(BackpackContainer::new));
+        book = register("book", new MenuType<>(BookContainer::new));
+        drill = register("drill", new MenuType<>(DrillContainer::new));
+        itemFilter = register("itemfilter", new MenuType<>(ItemFilterContainer::new));
+        blockPlacerContainer = register("blockplacercontainer", new MenuType<>(BlockPlacerContainer::new));
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void registerScreens(FMLClientSetupEvent event) 
     {
-        ScreenManager.registerFactory(backpack, BackpackContainerScreen::new);
-        ScreenManager.registerFactory(book, BookContainerScreen::new);
-        ScreenManager.registerFactory(drill, DrillContainerScreen::new);
-        ScreenManager.registerFactory(itemFilter, ItemFilterContainerScreen::new);
-        ScreenManager.registerFactory(portableChargerContainer, PortableChargerContainerScreen::new);
-        ScreenManager.registerFactory(enchantmentExtractorContainer, EnchantmentExtractorContainerScreen::new);
-        ScreenManager.registerFactory(blockPlacerContainer, BlockPlacerContainerScreen::new);
+        MenuScreens.register(backpack, BackpackContainerScreen::new);
+        MenuScreens.register(book, BookContainerScreen::new);
+        MenuScreens.register(drill, DrillContainerScreen::new);
+        MenuScreens.register(itemFilter, ItemFilterContainerScreen::new);
+        MenuScreens.register(blockPlacerContainer, BlockPlacerContainerScreen::new);
     }
 
-    private static <T extends Container> ContainerType<T> register(String name, ContainerType<T> type) {
+    private static <T extends AbstractContainerMenu> MenuType<T> register(String name, MenuType<T> type) {
         ResourceLocation id = SurvivalEssentialsMod.getId(name);
         type.setRegistryName(id);
         ForgeRegistries.CONTAINERS.register(type);

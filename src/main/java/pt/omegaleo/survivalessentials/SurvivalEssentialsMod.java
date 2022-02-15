@@ -1,9 +1,9 @@
 package pt.omegaleo.survivalessentials;
 
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.eventbus.EventBus;
@@ -31,27 +31,24 @@ public class SurvivalEssentialsMod {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ColorHandlers::registerItemColor);
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(ContainerType.class,
+        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(MenuType.class,
                 ModContainerTypes::registerContainerTypes);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModContainerTypes::registerScreens);
 
         ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModRecipes.RECIPES.register(FMLJavaModLoadingContext.get().getModEventBus());
-        ModTileEntities.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModEnchantments.ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
-
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGeneration::setupOreGeneration);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        DeferredWorkQueue.runLater(this::registerPotions);
+        registerPotions();
+        OreGeneration.registerOres();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-
     }
 
     private void registerPotions() {
@@ -59,37 +56,30 @@ public class SurvivalEssentialsMod {
     }
 
     // Custom ItemGroup TAB
-    public static final ItemGroup ITEMS_TAB = new ItemGroup("survivalessentials_items") {
+    public static final CreativeModeTab ITEMS_TAB = new CreativeModeTab("survivalessentials_items") {
         @Override
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(ModItems.REDSTONE_INGOT.get());
         }
     };
 
-    public static final ItemGroup MACHINES_TAB = new ItemGroup("survivalessentials_machines") {
+    public static final CreativeModeTab ARMOR_TAB = new CreativeModeTab("survivalessentials_armor") {
         @Override
-        public ItemStack createIcon() {
-            return new ItemStack(ModItems.enchantment_extractor.get());
-        }
-    };
-
-    public static final ItemGroup ARMOR_TAB = new ItemGroup("survivalessentials_armor") {
-        @Override
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(ModItems.WOOD_CHESTPLATE.get());
         }
     };
 
-    public static final ItemGroup UPGRADES_TAB = new ItemGroup("survivalessentials_upgrades") {
+    public static final CreativeModeTab UPGRADES_TAB = new CreativeModeTab("survivalessentials_upgrades") {
         @Override
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(ModItems.TO_DIAMOND.get());
         }
     };
 
-    public static final ItemGroup TOOLS_TAB = new ItemGroup("survivalessentials_tools") {
+    public static final CreativeModeTab TOOLS_TAB = new CreativeModeTab("survivalessentials_tools") {
         @Override
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(ModItems.REDSTONE_PICKAXE.get());
         }
     };

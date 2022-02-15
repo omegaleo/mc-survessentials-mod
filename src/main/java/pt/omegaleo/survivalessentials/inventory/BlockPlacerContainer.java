@@ -1,24 +1,26 @@
 package pt.omegaleo.survivalessentials.inventory;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import pt.omegaleo.survivalessentials.ModContainerTypes;
+import pt.omegaleo.survivalessentials.items.BackpackItem;
 import pt.omegaleo.survivalessentials.items.BlockPlacer;
 
-public class BlockPlacerContainer extends Container {
+public class BlockPlacerContainer extends AbstractContainerMenu {
     private final ItemStack item;
     private final IItemHandler itemHandler;
     private int blocked = -1;
 
-    public BlockPlacerContainer(int id, PlayerInventory playerInventory) {
+    public BlockPlacerContainer(int id, Inventory playerInventory) {
         super(ModContainerTypes.blockPlacerContainer, id);
         this.item = getHeldItem(playerInventory.player);
         this.itemHandler = ((BlockPlacer) this.item.getItem()).getInventory(this.item);
@@ -44,24 +46,24 @@ public class BlockPlacerContainer extends Container {
         for (int x = 0; x < 9; ++x) {
             Slot slot = addSlot(new Slot(playerInventory, x, 8 + x * 18, 161 + yOffset) {
                 @Override
-                public boolean canTakeStack(PlayerEntity playerIn) {
-                    return slotNumber != blocked;
+                public boolean mayPickup(Player playerIn) {
+                    return index != blocked;
                 }
             });
 
-            if (x == playerInventory.currentItem && ItemStack.areItemStacksEqual(playerInventory.getCurrentItem(), this.item)) {
-                blocked = slot.slotNumber;
+            if (x == playerInventory.selected && ItemStack.isSame(playerInventory.getItem(playerInventory.selected), this.item)) {
+                blocked = slot.index;
             }
         }
     }
 
-    private static ItemStack getHeldItem(PlayerEntity player) {
+    private static ItemStack getHeldItem(Player player) {
         // Determine which held item is a backpack (if either)
-        if (isBlockPlacer(player.getHeldItemMainhand())) {
-            return player.getHeldItemMainhand();
+        if (isBlockPlacer(player.getMainHandItem())) {
+            return player.getMainHandItem();
         }
-        if (isBlockPlacer(player.getHeldItemOffhand())) {
-            return player.getHeldItemOffhand();
+        if (isBlockPlacer(player.getOffhandItem())) {
+            return player.getOffhandItem();
         }
         return ItemStack.EMPTY;
     }
@@ -76,80 +78,78 @@ public class BlockPlacerContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
+    protected void clearContainer(Player p_150412_, Container p_150413_) {
+        super.clearContainer(p_150412_, p_150413_);
+        ((BackpackItem) this.item.getItem()).saveInventory(this.item, this.itemHandler);
+    }
+
+    @Override
+    public boolean stillValid(Player p_38874_) {
         return true;
     }
 
     @Override
-    public void onContainerClosed(PlayerEntity playerIn) {
-        super.onContainerClosed(playerIn);
-        // Save the inventory to the backpack's NBT
-        ((BlockPlacer) this.item.getItem()).saveInventory(this.item, this.itemHandler);
-    }
-
-    @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         // This method handles shift-clicking to transfer items quickly. This can easily crash the game if not coded
         // correctly. The first slots (index 0 to whatever) are usually the inventory block/item, while player slots
         // start after those.
         Slot slot = this.getSlot(index);
 
-        if (!slot.canTakeStack(playerIn)) {
-            return slot.getStack();
+        if (!slot.mayPickup(playerIn)) {
+            return slot.getItem();
         }
 
-        if (index == blocked || !slot.getHasStack()) {
+        if (index == blocked || !slot.hasItem()) {
             return ItemStack.EMPTY;
         }
 
-        ItemStack stack = slot.getStack();
-
-        if (!isBlock(stack))
-        {
-            return ItemStack.EMPTY;
-        }
-
+        ItemStack stack = slot.getItem();
         ItemStack newStack = stack.copy();
 
-            int containerSlots = itemHandler.getSlots();
-            if (index < containerSlots) {
-                if (!this.mergeItemStack(stack, containerSlots, this.inventorySlots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-                slot.onSlotChanged();
-            } else if (!this.mergeItemStack(stack, 0, containerSlots, false)) {
+        int containerSlots = itemHandler.getSlots();
+        if (index < containerSlots) {
+            if (!this.moveItemStackTo(stack, containerSlots, this.slots.size(), true)) {
                 return ItemStack.EMPTY;
             }
+            slot.setChanged();
+        } else if (!this.moveItemStackTo(stack, 0, containerSlots, false)) {
+            return ItemStack.EMPTY;
+        }
 
-            if (stack.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
-            } else {
-                slot.onSlotChanged();
-            }
+        if (stack.isEmpty()) {
+            slot.set(ItemStack.EMPTY);
+        } else {
+            slot.setChanged();
+        }
 
-            return slot.onTake(playerIn, newStack);
+        slot.onTake(playerIn, newStack);
+        return newStack;
     }
 
     @Override
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-        if (slotId < 0 || slotId > inventorySlots.size()) {
-            return super.slotClick(slotId, dragType, clickTypeIn, player);
+    protected boolean moveItemStackTo(ItemStack p_38904_, int p_38905_, int p_38906_, boolean p_38907_) {
+        return super.moveItemStackTo(p_38904_, p_38905_, p_38906_, p_38907_);
+    }
+
+    @Override
+    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+        if (slotId < 0 || slotId > slots.size()) {
+            super.clicked(slotId, dragType, clickTypeIn, player);
         }
 
-        Slot slot = inventorySlots.get(slotId);
-        if (!canTake(slotId, slot, dragType, player, clickTypeIn) || !isBlock(slot.getStack())) {
-            return slot.getStack();
+        Slot slot = slots.get(slotId);
+        if (!canTake(slotId, slot, dragType, player, clickTypeIn) || !isBlock(slot.getItem())) {
+            return;
         }
-
-        return super.slotClick(slotId, dragType, clickTypeIn, player);
+        super.clicked(slotId, dragType, clickTypeIn, player);
     }
 
     private static boolean isBlockPlacer(ItemStack stack) {
         return stack.getItem() instanceof BlockPlacer;
     }
 
-    private boolean canTake(int slotId, Slot slot, int button, PlayerEntity player, ClickType clickType) {
-        if (slotId == blocked || slotId <= itemHandler.getSlots() - 1 && isBlockPlacer(player.inventory.getItemStack())) {
+    private boolean canTake(int slotId, Slot slot, int button, Player player, ClickType clickType) {
+        if (slotId == blocked || slotId <= itemHandler.getSlots() - 1 && isBlockPlacer(player.getInventory().getItem(slotId))) {
             return false;
         }
 
@@ -163,7 +163,7 @@ public class BlockPlacerContainer extends Container {
 
             Slot hotbarSlot = getSlot(hotbarId);
             if (slotId <= itemHandler.getSlots() - 1) {
-                return !isBlockPlacer(slot.getStack()) && !isBlockPlacer(hotbarSlot.getStack()) && isBlock(slot.getStack());
+                return !isBlockPlacer(slot.getItem()) && !isBlockPlacer(hotbarSlot.getItem()) && isBlock(slot.getItem());
             }
         }
 

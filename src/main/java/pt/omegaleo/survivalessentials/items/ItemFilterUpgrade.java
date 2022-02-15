@@ -3,14 +3,13 @@ package pt.omegaleo.survivalessentials.items;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import pt.omegaleo.survivalessentials.inventory.ItemFilterContainer;
@@ -61,15 +60,13 @@ public class ItemFilterUpgrade extends DrillUpgrade
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) 
-    {
-        if (!worldIn.isRemote) 
-        {
-            playerIn.openContainer(new SimpleNamedContainerProvider(
-                    (id, playerInventory, player) -> new ItemFilterContainer(id, playerInventory),
-                    new TranslationTextComponent("container.survivalessentials.filter")
-            ));
-        }
-        return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+    public InteractionResultHolder<ItemStack> use(Level p_41432_, Player p_41433_, InteractionHand p_41434_) {
+        p_41433_.openMenu(new SimpleMenuProvider(
+                (id, playerInventory, player) -> new ItemFilterContainer(id, playerInventory),
+                new TranslatableComponent("container.survivalessentials.filter")
+        ));
+
+        return super.use(p_41432_, p_41433_, p_41434_);
     }
+
 }

@@ -1,7 +1,9 @@
 package pt.omegaleo.survivalessentials.items;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class CustomItem extends Item
 {
@@ -14,7 +16,7 @@ public class CustomItem extends Item
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return isEnchanted;
     }
     

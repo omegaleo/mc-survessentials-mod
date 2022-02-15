@@ -1,14 +1,16 @@
 package pt.omegaleo.survivalessentials.enchantments;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.entity.EquipmentSlot;
+
+import net.minecraft.world.item.enchantment.Enchantment.Rarity;
 
 public class PotionEnchantment extends Enchantment {
 
     int _maxLevel = 0;
 
-    public PotionEnchantment(EnchantmentType type, EquipmentSlotType[] slotTypes, int maxLevel) 
+    public PotionEnchantment(EnchantmentCategory type, EquipmentSlot[] slotTypes, int maxLevel) 
     {
         super(Rarity.VERY_RARE, type,  slotTypes);
 
@@ -16,26 +18,20 @@ public class PotionEnchantment extends Enchantment {
     }
     
     @Override
-    public int getMinEnchantability(int enchantmentLevel) 
+    public int getMinCost(int enchantmentLevel)
     {
         return 20 * enchantmentLevel;
     }
 
     @Override
-    public int getMaxEnchantability(int enchantmentLevel) 
+    public int getMaxCost(int enchantmentLevel)
     {
-        return getMinEnchantability(enchantmentLevel) + 10;
+        return getMinCost(enchantmentLevel) + 10;
     }
 
     @Override
     public int getMaxLevel() 
     {
         return _maxLevel;
-    }
-
-    @Override
-    protected boolean canApplyTogether(Enchantment ench) 
-    {
-        return true;
     }
 }

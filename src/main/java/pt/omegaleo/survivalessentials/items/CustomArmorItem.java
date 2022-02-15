@@ -1,23 +1,22 @@
 package pt.omegaleo.survivalessentials.items;
 
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ItemStack;
 
 public class CustomArmorItem extends ArmorItem
 {
     boolean isEnchanted = false;
 
-    public CustomArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn, boolean isEnchanted) 
+    public CustomArmorItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties builderIn, boolean isEnchanted) 
     {
         super(materialIn, slot, builderIn);
         this.isEnchanted = isEnchanted;
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return isEnchanted;
     }
     

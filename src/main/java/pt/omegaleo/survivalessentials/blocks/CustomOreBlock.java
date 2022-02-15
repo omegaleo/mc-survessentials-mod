@@ -2,20 +2,14 @@ package pt.omegaleo.survivalessentials.blocks;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.OreBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.OreBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
 
 public class CustomOreBlock extends OreBlock 
 {
     public CustomOreBlock() {
-        super(Block.Properties.create(Material.ROCK)
-                .hardnessAndResistance(5.0f)
-                .sound(SoundType.STONE)
-                .harvestTool(ToolType.PICKAXE)
-                .harvestLevel(3));
+        super(Block.Properties.of(Material.STONE).sound(SoundType.STONE));
     }
 }

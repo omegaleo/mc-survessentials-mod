@@ -1,48 +1,84 @@
 package pt.omegaleo.survivalessentials.world;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
-import net.minecraft.block.Block;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.OreFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import pt.omegaleo.survivalessentials.ModBlocks;
-import pt.omegaleo.survivalessentials.util.enums.OreGenBlock;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.placement.CountPlacement;
-import net.minecraft.world.gen.placement.Placement;
-import net.minecraft.world.gen.placement.TopSolidRangeConfig;
+import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 
 public class OreGeneration 
 {
-    static OreGenBlock[] OresToGenerateOverworld = new OreGenBlock[]
-    {
-        new OreGenBlock(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, ModBlocks.CORUNDUM_ORE.get().getDefaultState(), 5, 15, 30, 10)
-    };
+    public static final List<ConfiguredFeature<?, ?>> OVERWORLD_ORES = new ArrayList<>();
+    public static final List<ConfiguredFeature<?, ?>> END_ORES = new ArrayList<>();
+    public static final List<ConfiguredFeature<?, ?>> NETHER_ORES = new ArrayList<>();
 
-    static OreGenBlock[] OresToGenerateNether = new OreGenBlock[]
-    {
-        new OreGenBlock(OreFeatureConfig.FillerBlockType.BASE_STONE_NETHER, ModBlocks.MYTHRIL_ORE.get().getDefaultState(), 5, 5, 20, 10)
-    };
-    
-    public static void setupOreGeneration(final BiomeLoadingEvent event)
-    {
-        if(!event.getCategory().equals(Biome.Category.NETHER) && !event.getCategory().equals(Biome.Category.THEEND))
-        {
-            for(OreGenBlock ore : OresToGenerateOverworld)
-            {
-                event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, 
-                    Feature.ORE.withConfiguration(new OreFeatureConfig(ore.fillerType, ore.state, ore.veinSize)).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(ore.minHeight, 0, ore.maxHeight))).square().func_242731_b(ore.amount));
-            }
-        }
-        else if(event.getCategory().equals(Biome.Category.NETHER))
-        {
-            for(OreGenBlock ore : OresToGenerateNether)
-            {
-                event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, 
-                    Feature.ORE.withConfiguration(new OreFeatureConfig(ore.fillerType, ore.state, ore.veinSize)).withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(ore.minHeight, 0, ore.maxHeight))).square().func_242731_b(ore.amount));
+    public static final RuleTest END_TEST = new BlockMatchTest(Blocks.END_STONE);
+
+    public static void registerOres() {
+        ConfiguredFeature<?, ?> corundumOre = Feature.ORE
+                .configured(new OreConfiguration(List.of(
+                        OreConfiguration.target(OreConfiguration.Predicates.STONE_ORE_REPLACEABLES,
+                                ModBlocks.CORUNDUM_ORE.get().defaultBlockState())),
+                        3))
+                .rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(20)).squared().count(2);
+        OVERWORLD_ORES.add(register(ModBlocks.CORUNDUM_ORE.get().getName().getString(), corundumOre));
+
+        ConfiguredFeature<?, ?> deepSlateCorundumOre = Feature.ORE
+                .configured(new OreConfiguration(List.of(
+                        OreConfiguration.target(OreConfiguration.Predicates.DEEPSLATE_ORE_REPLACEABLES,
+                                ModBlocks.CORUNDUM_ORE.get().defaultBlockState())),
+                        3))
+                .rangeUniform(VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(20)).squared().count(2);
+        OVERWORLD_ORES.add(register(ModBlocks.CORUNDUM_ORE.get().getName().getString(), deepSlateCorundumOre));
+
+        ConfiguredFeature<?, ?> mythrilOre = Feature.ORE
+                .configured(new OreConfiguration(List.of(OreConfiguration.target(
+                        OreConfiguration.Predicates.NETHER_ORE_REPLACEABLES, ModBlocks.MYTHRIL_ORE.get().defaultBlockState())), 3))
+                .rangeTriangle(VerticalAnchor.absolute(50), VerticalAnchor.absolute(120)).squared().count(2);
+        NETHER_ORES.add(register(ModBlocks.MYTHRIL_ORE.get().getName().getString(), mythrilOre));
+
+        ConfiguredFeature<?, ?> eggOre = Feature.ORE
+                .configured(new OreConfiguration(
+                        List.of(OreConfiguration.target(END_TEST, Blocks.GOLD_BLOCK.defaultBlockState())), 15))
+                .rangeUniform(VerticalAnchor.absolute(20), VerticalAnchor.absolute(60)).squared().count(100);
+        //END_ORES.add(register("egg", eggOre));
+    }
+
+    private static <Config extends FeatureConfiguration> ConfiguredFeature<Config, ?> register(String name,
+                                                                                               ConfiguredFeature<Config, ?> configuredFeature) {
+        return Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(SurvivalEssentialsMod.MOD_ID, name),
+                configuredFeature);
+    }
+
+    @Mod.EventBusSubscriber(modid = SurvivalEssentialsMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+    public static class ForgeBusSubscriber {
+        @SubscribeEvent
+        public static void biomeLoading(BiomeLoadingEvent event) {
+            List<Supplier<ConfiguredFeature<?, ?>>> features = event.getGeneration()
+                    .getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES);
+
+            switch(event.getCategory()) {
+                case NETHER -> OreGeneration.NETHER_ORES.forEach(ore -> features.add(() -> ore));
+                case THEEND -> OreGeneration.END_ORES.forEach(ore -> features.add(() -> ore));
+                default -> OreGeneration.OVERWORLD_ORES.forEach(ore -> features.add(() -> ore));
             }
         }
     }

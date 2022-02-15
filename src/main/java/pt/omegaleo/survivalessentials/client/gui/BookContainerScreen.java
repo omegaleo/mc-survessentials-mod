@@ -2,25 +2,21 @@ package pt.omegaleo.survivalessentials.client.gui;
 
 import java.util.List;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 import pt.omegaleo.survivalessentials.containers.BookContainer;
 import pt.omegaleo.survivalessentials.inventory.BackpackContainer;
 
-public class BookContainerScreen extends ContainerScreen<BookContainer> 
+public class BookContainerScreen extends AbstractContainerScreen<BookContainer> 
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/book.png");
     private int currentPage = 0;
@@ -45,66 +41,52 @@ public class BookContainerScreen extends ContainerScreen<BookContainer>
         new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/pages/page17.png")
     };
 
-    public BookContainerScreen(BookContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) 
+    private final Inventory playerInventory;
+    private final int inventoryRows;
+
+    public BookContainerScreen(BookContainer screenContainer, Inventory inv, Component titleIn) 
     {
         super(screenContainer, inv, titleIn);
-        this.xSize = 256;
-        this.ySize = 256;
+        this.playerInventory = inv;
+        this.inventoryRows = screenContainer.getInventoryRows();
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) 
-    {
-        this.renderBackground(matrixStack);
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBg(matrixStack, mouseX, mouseY, (int)partialTicks);
+        this.font.draw(matrixStack, title.getString(), 8, 6, 4210752);
+        this.font.draw(matrixStack, playerInventory.getDisplayName().getString(), 8, this.getYSize() - 96 + 2, 4210752);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) 
-    {
-        /*if (minecraft == null) return;
-
-        // Render the GUI texture
-        RenderSystem.enableBlend();
-        GlStateManager.color4f(1, 1, 1, 1);
-        minecraft.getTextureManager().bindTexture(PAGES[0]);
-        int posX = (this.width - 256) / 2;
-        int posY = (this.height - 256) / 2;
-        blit(matrixStack, posX, posY, 0, 0, 256, 256);*/
-    }
-
-    @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) 
-    {
+    protected void renderBg(PoseStack matrixStack, float p_97788_, int p_97789_, int p_97790_) {
         if (minecraft == null) return;
 
         // Render the GUI texture
         RenderSystem.enableBlend();
-        GlStateManager.color4f(1, 1, 1, 1);
-        minecraft.getTextureManager().bindTexture(TEXTURE);
+        GlStateManager._clearColor(1, 1, 1, 1);
+        minecraft.getTextureManager().getTexture(TEXTURE);
         int posX = (this.width - 256) / 2;
         int posY = (this.height - 256) / 2;
         // blit(posX, posY, minU, minV, maxU, maxV)
         blit(matrixStack, posX, posY, 0, 0, 256, 256);
-        minecraft.getTextureManager().bindTexture(PAGES[currentPage]);
+        minecraft.getTextureManager().getTexture(PAGES[currentPage]);
         blit(matrixStack, posX, posY, 0, 0, 256, 256);
 
-        Button prevPage = new Button(posX - 64, posY + 64, 16, 16, new TranslationTextComponent("gui.book.prev"), (button) -> {
+        Button prevPage = new Button(posX - 64, posY + 64, 16, 16, new TranslatableComponent("gui.book.prev"), (button) -> {
             if(currentPage > 0)
             {
                 currentPage--;
             }
         });
-        addButton(prevPage);
-
-        Button nextPage = new Button(posX + 256 + 64, posY + 64, 16, 16, new TranslationTextComponent("gui.book.next"), (button) -> {
+        addRenderableWidget(prevPage);
+        Button nextPage = new Button(posX + 256 + 64, posY + 64, 16, 16, new TranslatableComponent("gui.book.next"), (button) -> {
             if(currentPage < PAGES.length-1)
             {
                 currentPage++;
             }
         });
-        addButton(nextPage);
-        
+        addRenderableWidget(nextPage);
     }
 }

@@ -1,26 +1,25 @@
 package pt.omegaleo.survivalessentials.items;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.item.Items;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 import pt.omegaleo.survivalessentials.inventory.BlockPlacerContainer;
 
+import net.minecraft.world.item.Item.Properties;
+
 public class BlockPlacer extends Item {
     public BlockPlacer() {
-        super(new Properties().group(SurvivalEssentialsMod.ITEMS_TAB).maxStackSize(1));
+        super(new Properties().tab(SurvivalEssentialsMod.ITEMS_TAB).stacksTo(1));
     }
 
     public int getInventorySize(ItemStack stack) {
@@ -48,28 +47,17 @@ public class BlockPlacer extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (!worldIn.isRemote) {
-            if (playerIn.isSneaking()) {
-                playerIn.openContainer(new SimpleNamedContainerProvider(
-                        (id, playerInventory, player) -> new BlockPlacerContainer(id, playerInventory),
-                        new TranslationTextComponent("container.survivalessentials.blockPlacer")));
-            }
+    public InteractionResultHolder<ItemStack> use(Level p_41432_, Player playerIn, InteractionHand p_41434_) {
+
+        if (playerIn.isCrouching())
+        {
+            playerIn.openMenu(new SimpleMenuProvider(
+                    (id, playerInventory, player) -> new BlockPlacerContainer(id, playerInventory),
+                    new TranslatableComponent("container.survivalessentials.blockPlacer")));
         }
-        return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
-    }
-
-    @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-
-        PlayerEntity player = context.getPlayer();
-
-        if (player.isSneaking()) {
-            player.openContainer(new SimpleNamedContainerProvider(
-                    (id, playerInventory, p) -> new BlockPlacerContainer(id, playerInventory),
-                    new TranslationTextComponent("container.survivalessentials.blockPlacer")));
-        } else {
-            ItemStack stack = context.getItem();
+        else
+        {
+            ItemStack stack = playerIn.getMainHandItem();
 
             if (stack != null) {
                 IItemHandler itemHandler = getInventory(stack);
@@ -81,7 +69,7 @@ public class BlockPlacer extends Item {
                         if (firstBlock.getItem() instanceof BlockItem) {
                             BlockItem blockItem = (BlockItem) firstBlock.getItem();
 
-                            blockItem.tryPlace(new BlockItemUseContext(context));
+                            blockItem.use(p_41432_, playerIn, p_41434_);
 
                             itemHandler.extractItem(0, 1, false);
 
@@ -110,8 +98,9 @@ public class BlockPlacer extends Item {
             }
         }
 
-        return super.onItemUse(context);
+        return super.use(p_41432_, playerIn, p_41434_);
     }
+
 
     Boolean isBlockPlacer(ItemStack stack) {
         return stack.getItem() instanceof BlockPlacer;

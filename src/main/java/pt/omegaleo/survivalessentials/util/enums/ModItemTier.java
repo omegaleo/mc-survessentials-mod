@@ -4,15 +4,15 @@ import pt.omegaleo.survivalessentials.ModItems;
 
 import java.util.function.Supplier;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
-public enum ModItemTier implements IItemTier 
+public enum ModItemTier implements Tier 
 {
             //Harvest level, Uses, Efficiency, Damage, Enchantability, RepairMaterial
-    REDSTONE(3, 800, 12.5f, 3.0f, 30,() -> { return Ingredient.fromItems(ModItems.REDSTONE_INGOT.get()); }),
-    CORUNDUM(4, 1000, 13.5f, 5.0f, 27,() -> { return Ingredient.fromItems(ModItems.CORUNDUM_GEM.get()); }),
-    MYTHRIL(5, 3000, 16.5f, 8.0f, 30,() -> { return Ingredient.fromItems(ModItems.MYTHRIL_INGOT.get()); });
+    REDSTONE(3, 800, 12.5f, 3.0f, 30,() -> { return Ingredient.of(ModItems.REDSTONE_INGOT.get()); }),
+    CORUNDUM(4, 1000, 13.5f, 5.0f, 27,() -> { return Ingredient.of(ModItems.CORUNDUM_GEM.get()); }),
+    MYTHRIL(5, 3000, 16.5f, 8.0f, 30,() -> { return Ingredient.of(ModItems.MYTHRIL_INGOT.get()); });
 
     private final int harvestLevel;
     private final int maxUses;
@@ -32,33 +32,32 @@ public enum ModItemTier implements IItemTier
     }
 
     @Override
-    public int getMaxUses() {
+    public int getUses() {
         return this.maxUses;
     }
 
     @Override
-    public float getEfficiency() {
+    public float getSpeed() {
         return this.efficiency;
     }
 
     @Override
-    public float getAttackDamage() {
+    public float getAttackDamageBonus() {
         return this.attackDamage;
     }
 
     @Override
-    public int getHarvestLevel() {
+    public int getLevel() {
         return this.harvestLevel;
     }
 
     @Override
-    public int getEnchantability() {
+    public int getEnchantmentValue() {
         return this.enchantability;
     }
 
     @Override
-    public Ingredient getRepairMaterial() {
+    public Ingredient getRepairIngredient() {
         return this.repairMaterial.get();
     }
-    
 }

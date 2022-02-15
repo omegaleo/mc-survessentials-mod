@@ -4,43 +4,30 @@ import java.util.Set;
 
 import javax.lang.model.util.ElementScanner6;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.ToolItem;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceContext.FluidMode;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
+
+import net.minecraft.world.item.PickaxeItem;
+
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+
 import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
-import pt.omegaleo.survivalessentials.util.enums.IExtendedReach;
+
 
 public class HammerTool extends PickaxeItem
 {
-    /*
-     * public HammerTool() { super(new
-     * Properties().group(SurvivalEssentialsMod.ITEMS_TAB).maxStackSize(1));
-     * 
-     * }
-     */
-
-    public HammerTool(IItemTier tier, int attackDamageIn, float attackSpeedIn, int damagePerUse) 
+    public HammerTool(Tier tier, int attackDamageIn, float attackSpeedIn, int damagePerUse) 
     {
-        super(tier, attackDamageIn, attackSpeedIn, new Properties().group(SurvivalEssentialsMod.TOOLS_TAB));
+        super(tier, attackDamageIn, attackSpeedIn, new Properties().tab(SurvivalEssentialsMod.TOOLS_TAB));
         this.damagePerUse = damagePerUse;
     }
 
@@ -48,26 +35,28 @@ public class HammerTool extends PickaxeItem
 
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) 
+    public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, Player player) {
+        return onBlockDestroyed(itemstack, player.level, player.level.getBlockState(pos), pos, player);
+    }
+
+    public boolean onBlockDestroyed(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving)
     {
         try
         {
-            if(entityLiving instanceof PlayerEntity)
+            if(entityLiving instanceof Player)
             {
-                PlayerEntity player = (PlayerEntity)entityLiving;
+                Player player = (Player)entityLiving;
 
-                BlockRayTraceResult mop = Item.rayTrace(worldIn, player, RayTraceContext.FluidMode.ANY);
-
-                BlockPos[] blocksToDestroy = getAOEPositions(pos, mop.getFace());
+                BlockPos[] blocksToDestroy = getAOEPositions(pos, player.getDirection());
                 for(int i = 0; i < blocksToDestroy.length; i++)
                 {
-                    if(worldIn.isBlockPresent(blocksToDestroy[i]) && getBlock(blocksToDestroy[i], worldIn) != Blocks.BEDROCK)
+                    if(!worldIn.isEmptyBlock(blocksToDestroy[i]) && getBlock(blocksToDestroy[i], worldIn) != Blocks.BEDROCK)
                     {
                         worldIn.destroyBlock(blocksToDestroy[i], true);
                     }
 
-                    stack.setDamage(stack.getDamage() + 1);
-                    if(worldIn.isBlockPresent(blocksToDestroy[i]))
+                    stack.setDamageValue(stack.getDamageValue() + 1);
+                    if(!worldIn.isEmptyBlock(blocksToDestroy[i]))
                     {
                         worldIn.destroyBlock(blocksToDestroy[i], true);
                     }
@@ -75,20 +64,21 @@ public class HammerTool extends PickaxeItem
                     
                 int damage = damagePerUse;
     
-                if((stack.getMaxDamage() - stack.getDamage()) - damagePerUse <= 0)
+                if((stack.getMaxDamage() - stack.getDamageValue()) - damagePerUse <= 0)
                 {
-                    damage = stack.getMaxDamage() - stack.getDamage() - 1;
+                    damage = stack.getMaxDamage() - stack.getDamageValue() - 1;
                 }
             }
         }
         catch(Exception e)
         {
             System.out.println(e.getStackTrace());
+            return false;
         }
-        return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+        return true;
     }
 
-    private Block getBlock(BlockPos pos, World world) {
+    private Block getBlock(BlockPos pos, Level world) {
         BlockState ibs = world.getBlockState(pos);
         Block block = ibs.getBlock();
         return block;

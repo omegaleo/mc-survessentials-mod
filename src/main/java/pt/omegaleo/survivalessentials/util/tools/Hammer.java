@@ -1,13 +1,13 @@
 package pt.omegaleo.survivalessentials.util.tools;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ItemStack;
 
 public class Hammer extends HammerTool 
 {
     boolean isEnchanted = false;
 
-    public Hammer(IItemTier tier, int attackDamageIn, float attackSpeedIn, boolean isEnchanted) 
+    public Hammer(Tier tier, int attackDamageIn, float attackSpeedIn, boolean isEnchanted) 
     {
         super(tier, attackDamageIn, attackSpeedIn, 10);
 
@@ -15,7 +15,7 @@ public class Hammer extends HammerTool
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return isEnchanted;
     }
 }

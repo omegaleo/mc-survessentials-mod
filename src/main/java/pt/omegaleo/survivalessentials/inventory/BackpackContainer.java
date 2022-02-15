@@ -1,23 +1,24 @@
 package pt.omegaleo.survivalessentials.inventory;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import pt.omegaleo.survivalessentials.ModContainerTypes;
 import pt.omegaleo.survivalessentials.items.BackpackItem;
 
-public class BackpackContainer extends Container {
+public class BackpackContainer extends AbstractContainerMenu {
     private final ItemStack item;
     private final IItemHandler itemHandler;
     private int blocked = -1;
 
-    public BackpackContainer(int id, PlayerInventory playerInventory) {
+    public BackpackContainer(int id, Inventory playerInventory) {
         super(ModContainerTypes.backpack, id);
         this.item = getHeldItem(playerInventory.player);
         this.itemHandler = ((BackpackItem) this.item.getItem()).getInventory(this.item);
@@ -43,24 +44,24 @@ public class BackpackContainer extends Container {
         for (int x = 0; x < 9; ++x) {
             Slot slot = addSlot(new Slot(playerInventory, x, 8 + x * 18, 161 + yOffset) {
                 @Override
-                public boolean canTakeStack(PlayerEntity playerIn) {
-                    return slotNumber != blocked;
+                public boolean mayPickup(Player playerIn) {
+                    return index != blocked;
                 }
             });
 
-            if (x == playerInventory.currentItem && ItemStack.areItemStacksEqual(playerInventory.getCurrentItem(), this.item)) {
-                blocked = slot.slotNumber;
+            if (x == playerInventory.selected && ItemStack.isSame(playerInventory.getItem(playerInventory.selected), this.item)) {
+                blocked = slot.index;
             }
         }
     }
 
-    private static ItemStack getHeldItem(PlayerEntity player) {
+    private static ItemStack getHeldItem(Player player) {
         // Determine which held item is a backpack (if either)
-        if (isBackpack(player.getHeldItemMainhand())) {
-            return player.getHeldItemMainhand();
+        if (isBackpack(player.getMainHandItem())) {
+            return player.getMainHandItem();
         }
-        if (isBackpack(player.getHeldItemOffhand())) {
-            return player.getHeldItemOffhand();
+        if (isBackpack(player.getOffhandItem())) {
+            return player.getOffhandItem();
         }
         return ItemStack.EMPTY;
     }
@@ -75,74 +76,70 @@ public class BackpackContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return true;
-    }
-
-    @Override
-    public void onContainerClosed(PlayerEntity playerIn) {
-        super.onContainerClosed(playerIn);
-        // Save the inventory to the backpack's NBT
+    protected void clearContainer(Player p_150412_, Container p_150413_) {
+        super.clearContainer(p_150412_, p_150413_);
         ((BackpackItem) this.item.getItem()).saveInventory(this.item, this.itemHandler);
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public boolean stillValid(Player p_38874_) {
+        return true;
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player playerIn, int index) {
         // This method handles shift-clicking to transfer items quickly. This can easily crash the game if not coded
         // correctly. The first slots (index 0 to whatever) are usually the inventory block/item, while player slots
         // start after those.
         Slot slot = this.getSlot(index);
 
-        if (!slot.canTakeStack(playerIn)) {
-            return slot.getStack();
+        if (!slot.mayPickup(playerIn)) {
+            return slot.getItem();
         }
 
-        if (index == blocked || !slot.getHasStack()) {
+        if (index == blocked || !slot.hasItem()) {
             return ItemStack.EMPTY;
         }
 
-        ItemStack stack = slot.getStack();
+        ItemStack stack = slot.getItem();
         ItemStack newStack = stack.copy();
 
         int containerSlots = itemHandler.getSlots();
         if (index < containerSlots) {
-            if (!this.mergeItemStack(stack, containerSlots, this.inventorySlots.size(), true)) {
+            if (!this.moveItemStackTo(stack, containerSlots, this.slots.size(), true)) {
                 return ItemStack.EMPTY;
             }
-            slot.onSlotChanged();
-        } else if (!this.mergeItemStack(stack, 0, containerSlots, false)) {
+            slot.setChanged();
+        } else if (!this.moveItemStackTo(stack, 0, containerSlots, false)) {
             return ItemStack.EMPTY;
         }
 
         if (stack.isEmpty()) {
-            slot.putStack(ItemStack.EMPTY);
+            slot.set(ItemStack.EMPTY);
         } else {
-            slot.onSlotChanged();
+            slot.setChanged();
         }
 
-        return slot.onTake(playerIn, newStack);
+        slot.onTake(playerIn, newStack);
+        return newStack;
     }
 
     @Override
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-        if (slotId < 0 || slotId > inventorySlots.size()) {
-            return super.slotClick(slotId, dragType, clickTypeIn, player);
+    public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
+        if (slotId < 0 || slotId > slots.size()) {
+            super.clicked(slotId, dragType, clickTypeIn, player);
         }
 
-        Slot slot = inventorySlots.get(slotId);
-        if (!canTake(slotId, slot, dragType, player, clickTypeIn)) {
-            return slot.getStack();
+        Slot slot = slots.get(slotId);
+        if (!canTake(slotId, slot, dragType, player, clickTypeIn) || !isBackpack(slot.getItem())) {
+            return;
         }
-
-        return super.slotClick(slotId, dragType, clickTypeIn, player);
+        super.clicked(slotId, dragType, clickTypeIn, player);
     }
 
-    private static boolean isBackpack(ItemStack stack) {
-        return stack.getItem() instanceof BackpackItem;
-    }
 
-    private boolean canTake(int slotId, Slot slot, int button, PlayerEntity player, ClickType clickType) {
-        if (slotId == blocked || slotId <= itemHandler.getSlots() - 1 && isBackpack(player.inventory.getItemStack())) {
+    private boolean canTake(int slotId, Slot slot, int button, Player player, ClickType clickType) {
+        if (slotId == blocked || slotId <= itemHandler.getSlots() - 1 && isBackpack(player.getInventory().getItem(slotId))) {
             return false;
         }
 
@@ -156,10 +153,14 @@ public class BackpackContainer extends Container {
 
             Slot hotbarSlot = getSlot(hotbarId);
             if (slotId <= itemHandler.getSlots() - 1) {
-                return !isBackpack(slot.getStack()) && !isBackpack(hotbarSlot.getStack());
+                return !isBackpack(slot.getItem()) && !isBackpack(hotbarSlot.getItem()) && isBackpack(slot.getItem());
             }
         }
 
         return true;
+    }
+
+    private static boolean isBackpack(ItemStack stack) {
+        return stack.getItem() instanceof BackpackItem;
     }
 }

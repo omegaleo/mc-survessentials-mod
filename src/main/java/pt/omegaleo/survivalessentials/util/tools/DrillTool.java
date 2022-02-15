@@ -8,44 +8,26 @@ import java.util.Random;
 
 import javax.lang.model.util.ElementScanner6;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.OreBlock;
-import net.minecraft.client.gui.recipebook.RecipeList;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.client.util.InputMappings;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.FurnaceResultSlot;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import pt.omegaleo.survivalessentials.ModItems;
@@ -53,6 +35,8 @@ import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 import pt.omegaleo.survivalessentials.containers.DrillContainer;
 import pt.omegaleo.survivalessentials.items.ItemFilterUpgrade;
 import pt.omegaleo.survivalessentials.util.enums.DrillUpgrade;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class DrillTool extends PickaxeItem{
     // Can install upgrades
@@ -65,8 +49,8 @@ public class DrillTool extends PickaxeItem{
 
     private int damagePerUse = 10;
 
-    public DrillTool(IItemTier tier, int attackDamageIn, float attackSpeedIn, int damagePerUse) {
-        super(tier, attackDamageIn, attackSpeedIn, new Properties().group(SurvivalEssentialsMod.TOOLS_TAB));
+    public DrillTool(Tier tier, int attackDamageIn, float attackSpeedIn, int damagePerUse) {
+        super(tier, attackDamageIn, attackSpeedIn, new Properties().tab(SurvivalEssentialsMod.TOOLS_TAB));
         this.damagePerUse = damagePerUse;
     }
 
@@ -87,13 +71,9 @@ public class DrillTool extends PickaxeItem{
     }
 
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-
-        tooltip.add(new TranslationTextComponent(
-                "Current radius: " + miningRadius[currentSelectedRadius] + "x" + miningRadius[currentSelectedRadius]));
-        tooltip.add(new TranslationTextComponent(
-                "Hold " + "\u00A76" + "Sneak" + "\u00A76" + " while right-clicking to open drill menu"));
+    public Component getDescription() {
+        return new TextComponent(
+                "Current radius: " + miningRadius[currentSelectedRadius] + "x" + miningRadius[currentSelectedRadius] +"\r\n" +"Hold " + "\u00A76" + "Sneak" + "\u00A76" + " while right-clicking to open drill menu");
     }
 
     @Override
@@ -119,47 +99,41 @@ public class DrillTool extends PickaxeItem{
     }
 
     @Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos,
-            LivingEntity entityLiving) {
-        if ((stack.getMaxDamage() - stack.getDamage()) > 1) {
+    public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
+        var worldIn = player.level;
+        if ((stack.getMaxDamage() - stack.getDamageValue()) > 1) {
             if (miningRadius[currentSelectedRadius] > 1) {
-                if (entityLiving instanceof PlayerEntity) {
-                    PlayerEntity player = (PlayerEntity) entityLiving;
 
-                    BlockRayTraceResult mop = Item.rayTrace(worldIn, player, RayTraceContext.FluidMode.ANY);
-
-                    BlockPos[] blocksToDestroy = getAOEPositions(pos, mop.getFace(), miningRadius[currentSelectedRadius]);
-                    System.out.print(blocksToDestroy);
-                    for (int i = 0; i < blocksToDestroy.length; i++) {
-                        if (worldIn.isBlockPresent(blocksToDestroy[i])) 
+                BlockPos[] blocksToDestroy = getAOEPositions(pos, player.getDirection(), miningRadius[currentSelectedRadius]);
+                System.out.print(blocksToDestroy);
+                for (int i = 0; i < blocksToDestroy.length; i++) {
+                    if (!worldIn.isEmptyBlock(blocksToDestroy[i]))
+                    {
+                        if(hasUpgrade((DrillUpgrade)ModItems.ITEM_FILTER.get(), stack))
                         {
-                            if(hasUpgrade((DrillUpgrade)ModItems.ITEM_FILTER.get(), stack))
+                            Block block = getBlock(blocksToDestroy[i], worldIn);
+                            System.out.println(block);
+                            if(block != null)
                             {
-                                Block block = getBlock(blocksToDestroy[i], worldIn);
-                                System.out.println(block);
-                                if(block != null)
+                                if(blockInFilter(block, stack))
                                 {
-                                    if(blockInFilter(block, stack))
-                                    {
-                                        DestroyBlock(stack, blocksToDestroy[i], false, worldIn, player);
-                                    }
-                                    else
-                                    {
-                                        DestroyBlock(stack, blocksToDestroy[i], true, worldIn, player);
-                                    }
+                                    DestroyBlock(stack, blocksToDestroy[i], false, worldIn, player);
+                                }
+                                else
+                                {
+                                    DestroyBlock(stack, blocksToDestroy[i], true, worldIn, player);
                                 }
                             }
-                            else
-                            {
-                                DestroyBlock(stack, blocksToDestroy[i], true, worldIn, player);
-                            }
+                        }
+                        else
+                        {
+                            DestroyBlock(stack, blocksToDestroy[i], true, worldIn, player);
                         }
                     }
                 }
             }
             else
             {
-                PlayerEntity player = (PlayerEntity) entityLiving;
                 if(hasUpgrade((DrillUpgrade)ModItems.ITEM_FILTER.get(), stack))
                 {
                     Block block = getBlock(pos, worldIn);
@@ -181,12 +155,18 @@ public class DrillTool extends PickaxeItem{
                 }
             }
         }
-        return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+        return super.onBlockStartBreak(stack, pos, player);
     }
 
-    void DestroyBlock(ItemStack stack, BlockPos pos, boolean keepDrop, World world, PlayerEntity player)
+    @Override
+    public void onDestroyed(ItemEntity p_150887_) {
+        //Always prevent destruction
+        return;
+    }
+
+    void DestroyBlock(ItemStack stack, BlockPos pos, boolean keepDrop, Level world, Player player)
     {
-        PlayerInventory inv = player.inventory;
+        Inventory inv = player.getInventory();
         Block block = getBlock(pos, world);
         if(block == Blocks.BEDROCK)
         {
@@ -202,7 +182,7 @@ public class DrillTool extends PickaxeItem{
                     ItemStack drop = getDrop(block,stack);
                     if(drop != null)
                     {
-                        inv.addItemStackToInventory(drop);
+                        inv.add(drop);
                         world.destroyBlock(pos, false);
                     }
                     else
@@ -219,7 +199,7 @@ public class DrillTool extends PickaxeItem{
             {
                 ItemStack stackToSpawn = getDrop(block,stack);
                 world.destroyBlock(pos, false);
-                world.addEntity(new ItemEntity(world,pos.getX(),pos.getY(),pos.getZ(),stackToSpawn));
+                world.addFreshEntity(new ItemEntity(world,pos.getX(),pos.getY(),pos.getZ(),stackToSpawn));
             }
         }
         else
@@ -227,38 +207,37 @@ public class DrillTool extends PickaxeItem{
             world.destroyBlock(pos, keepDrop);
         }
 
-        stack.setDamage(stack.getDamage() + 1);
+        stack.setDamageValue(stack.getDamageValue() + 1);
 
         int expAmount = getExpAmount(block);
-        if(stack.getDamage()>0 && hasUpgrade((DrillUpgrade)ModItems.REPAIR.get(), stack))
+        if(stack.getDamageValue()>0 && hasUpgrade((DrillUpgrade)ModItems.REPAIR.get(), stack))
         {
             int amountToRepair = (int) ((damagePerUse * expAmount) * 0.75);
-            if(stack.getDamage() - amountToRepair < 0)
+            if(stack.getDamageValue() - amountToRepair < 0)
             {
-                amountToRepair -= stack.getDamage();
-                stack.setDamage(0);
+                amountToRepair -= stack.getDamageValue();
+                stack.setDamageValue(0);
             }
             else
             {
-                stack.setDamage(stack.getDamage() - amountToRepair);
+                stack.setDamageValue(stack.getDamageValue() - amountToRepair);
             }
         }
         else
         {
-            player.experienceTotal += expAmount;
+            player.experienceLevel += expAmount;
         }
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (playerIn.isSneaking()) {
-            if (!worldIn.isRemote) {
-                playerIn.openContainer(new SimpleNamedContainerProvider(
-                        (id, playerInventory, player) -> new DrillContainer(id, playerInventory),
-                        new TranslationTextComponent("container.survivalessentials.drill")));
-            }
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn)
+    {
+        if (playerIn.isCrouching()) {
+            playerIn.openMenu(new SimpleMenuProvider(
+                    (id, playerInventory, player) -> new DrillContainer(id, playerInventory),
+                    new TranslatableComponent("container.survivalessentials.drill")));
         }
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        return super.use(worldIn, playerIn, handIn);
     }
 
     public int GetCurrentRadius(ItemStack stack) {
@@ -334,13 +313,13 @@ public class DrillTool extends PickaxeItem{
     }
 
     @Override
-    public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) 
+    public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity)
     {
         if(hasUpgrade((DrillUpgrade)ModItems.REPAIR.get(), stack))
         {
-            if(stack.getDamage() > 0)
+            if(stack.getDamageValue() > 0)
             {
-                stack.setDamage(stack.getDamage() - damagePerUse);
+                stack.setDamageValue(stack.getDamageValue() - damagePerUse);
             }
         }
         return super.onEntityItemUpdate(stack, entity);
@@ -366,39 +345,39 @@ public class DrillTool extends PickaxeItem{
     {
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 
-        int fortune = 0;
-        if(enchantments.containsKey(Enchantments.FORTUNE))
+        int BLOCK_FORTUNE = 0;
+        if(enchantments.containsKey(Enchantments.BLOCK_FORTUNE))
         {
-            fortune = enchantments.get(Enchantments.FORTUNE).intValue();
+            BLOCK_FORTUNE = enchantments.get(Enchantments.BLOCK_FORTUNE).intValue();
         }
 
         if(block == Blocks.DIAMOND_ORE)
         {
-            return new ItemStack(Items.DIAMOND, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.DIAMOND, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.COAL_ORE)
         {
-            return new ItemStack(Items.COAL, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.COAL, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.REDSTONE_ORE)
         {
-            return new ItemStack(Items.REDSTONE, getDropAmount(4, 5, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.REDSTONE, getDropAmount(4, 5, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.LAPIS_ORE)
         {
-            return new ItemStack(Items.LAPIS_LAZULI, getDropAmount(4, 8, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.LAPIS_LAZULI, getDropAmount(4, 8, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.NETHER_QUARTZ_ORE)
         {
-            return new ItemStack(Items.QUARTZ, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.QUARTZ, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.NETHER_GOLD_ORE)
         {
-            return new ItemStack(Items.GOLD_NUGGET, getDropAmount(2, 6, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.GOLD_NUGGET, getDropAmount(2, 6, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.SEA_LANTERN)
         {
-            return new ItemStack(Items.PRISMARINE_CRYSTALS, getDropAmount(2, 3, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.PRISMARINE_CRYSTALS, getDropAmount(2, 3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.STONE)
         {
@@ -413,23 +392,23 @@ public class DrillTool extends PickaxeItem{
         }
         else if(block == Blocks.GLOWSTONE)
         {
-            return new ItemStack(Items.GLOWSTONE, getDropAmount(2, 4, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.GLOWSTONE, getDropAmount(2, 4, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.COBWEB)
         {
-            return new ItemStack(Items.STRING, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.STRING, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.BOOKSHELF)
         {
-            return new ItemStack(Items.BOOK, getDropAmount(3, 3, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.BOOK, getDropAmount(3, 3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.ANCIENT_DEBRIS)
         {
-            return new ItemStack(Items.ANCIENT_DEBRIS, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.ANCIENT_DEBRIS, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.EMERALD_ORE)
         {
-            return new ItemStack(Items.EMERALD, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.EMERALD, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.IRON_ORE)
         {
@@ -463,19 +442,19 @@ public class DrillTool extends PickaxeItem{
     {
         Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 
-        int fortune = 0;
-        if(enchantments.containsKey(Enchantments.FORTUNE))
+        int BLOCK_FORTUNE = 0;
+        if(enchantments.containsKey(Enchantments.BLOCK_FORTUNE))
         {
-            fortune = enchantments.get(Enchantments.FORTUNE).intValue();
+            BLOCK_FORTUNE = enchantments.get(Enchantments.BLOCK_FORTUNE).intValue();
         }
 
         if(block == Blocks.IRON_ORE)
         {
-            return new ItemStack(Items.IRON_INGOT, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.IRON_INGOT, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.GOLD_ORE)
         {
-            return new ItemStack(Items.GOLD_INGOT, getDropAmount(1, 1, enchantments.containsKey(Enchantments.FORTUNE),fortune));
+            return new ItemStack(Items.GOLD_INGOT, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else
         {
@@ -519,18 +498,18 @@ public class DrillTool extends PickaxeItem{
         }
     }
 
-    private int getDropAmount(int min, int max, boolean hasFortune, int fortune)
+    private int getDropAmount(int min, int max, boolean hasBLOCK_FORTUNE, int BLOCK_FORTUNE)
     {
         Random rand = new Random();
-        if(hasFortune)
+        if(hasBLOCK_FORTUNE)
         {
             if((max + 3)-(min + 1) > 0)
             {
-                return rand.nextInt((max + 3)-(min + 1)) + (min + 1) + (fortune * 2);
+                return rand.nextInt((max + 3)-(min + 1)) + (min + 1) + (BLOCK_FORTUNE * 2);
             }
             else
             {
-                return (min + 1) + (fortune * 2);
+                return (min + 1) + (BLOCK_FORTUNE * 2);
             }
         }
         else
@@ -546,7 +525,7 @@ public class DrillTool extends PickaxeItem{
         }
     }
 
-    private Block getBlock(BlockPos pos, World world) {
+    private Block getBlock(BlockPos pos, Level world) {
         BlockState ibs = world.getBlockState(pos);
         Block block = ibs.getBlock();
         return block;
@@ -577,8 +556,7 @@ public class DrillTool extends PickaxeItem{
     }
 
     @Override
-    public void setDamage(ItemStack stack, int damage) 
-    {
+    public void setDamage(ItemStack stack, int damage) {
         //Prevent drill from being destroyed
         if(stack.getMaxDamage() - damage > 1)
         {

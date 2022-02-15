@@ -1,21 +1,23 @@
 package pt.omegaleo.survivalessentials.util.tools;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class CustomSwordItem extends SwordItem
 {
     boolean isEnchanted = false;
 
-    public CustomSwordItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder, boolean isEnchanted) {
+    public CustomSwordItem(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builder, boolean isEnchanted) {
         super(tier, attackDamageIn, attackSpeedIn, builder);
         
         this.isEnchanted = isEnchanted;
     }
 
     @Override
-    public boolean hasEffect(ItemStack stack) {
+    public boolean isFoil(ItemStack stack) {
         return isEnchanted;
     }
 }
