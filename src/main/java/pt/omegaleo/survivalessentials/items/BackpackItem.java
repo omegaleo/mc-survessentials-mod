@@ -80,11 +80,14 @@ public class BackpackItem extends Item
 
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        for (DyeColor color : DyeColor.values())
+        if (group == SurvivalEssentialsMod.ITEMS_TAB)
         {
-            ItemStack stack = new ItemStack(this);
-            setBackpackColor(stack, color.getFireworkColor());
-            items.add(stack);
+            for (DyeColor color : DyeColor.values())
+            {
+                ItemStack stack = new ItemStack(this);
+                setBackpackColor(stack, color.getFireworkColor());
+                items.add(stack);
+            }
         }
     }
 }

@@ -1,9 +1,9 @@
 package pt.omegaleo.survivalessentials;
 
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import pt.omegaleo.survivalessentials.crafting.recipe.RecolorBackpackRecipe;
 
 public class ModRecipes 

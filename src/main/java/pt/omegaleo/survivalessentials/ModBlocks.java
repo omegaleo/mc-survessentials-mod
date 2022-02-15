@@ -1,9 +1,9 @@
 package pt.omegaleo.survivalessentials;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import pt.omegaleo.survivalessentials.blocks.CustomOreBlock;
 
 public class ModBlocks {

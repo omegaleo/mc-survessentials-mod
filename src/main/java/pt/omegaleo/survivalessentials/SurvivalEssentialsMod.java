@@ -8,6 +8,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.eventbus.EventBus;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import pt.omegaleo.survivalessentials.brewing.VinegarRecipe;
 import pt.omegaleo.survivalessentials.client.ColorHandlers;
+import pt.omegaleo.survivalessentials.setup.ModSetup;
 import pt.omegaleo.survivalessentials.world.OreGeneration;
 
 import javax.annotation.Nonnull;
@@ -28,24 +30,26 @@ public class SurvivalEssentialsMod {
     public static final String MOD_ID = "survivalessentials";
 
     public SurvivalEssentialsMod() {
+        ModSetup.setup();
+
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ColorHandlers::registerItemColor);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(MenuType.class,
                 ModContainerTypes::registerContainerTypes);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ModContainerTypes::registerScreens);
-
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ModSetup::init);
         ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModRecipes.RECIPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         ModEnchantments.ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
-
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        registerPotions();
-        OreGeneration.registerOres();
+        event.enqueueWork(() -> {
+            registerPotions();
+        });
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
