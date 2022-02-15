@@ -20,7 +20,7 @@ import pt.omegaleo.survivalessentials.util.tools.DrillTool;
 
 public class DrillContainerScreen extends AbstractContainerScreen<DrillContainer> 
 {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/drill.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(SurvivalEssentialsMod.MOD_ID, "textures/gui/drill.png");
     private final Inventory playerInventory;
     private final int inventoryRows;
     private final DrillContainer container;
@@ -44,11 +44,7 @@ public class DrillContainerScreen extends AbstractContainerScreen<DrillContainer
     @Override
     protected void renderBg(PoseStack matrixStack, float p_97788_, int p_97789_, int p_97790_) {
         if (minecraft == null) return;
-
-        // Render the GUI texture
-        RenderSystem.enableBlend();
-        GlStateManager._clearColor(1, 1, 1, 1);
-        minecraft.getTextureManager().getTexture(TEXTURE);
+        RenderSystem.setShaderTexture(0,TEXTURE);
         int posX = (this.width - this.getXSize()) / 2;
         int posY = (this.height - this.getYSize()) / 2;
         // blit(posX, posY, minU, minV, maxU, maxV)

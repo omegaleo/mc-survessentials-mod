@@ -25,7 +25,7 @@ public class ModBook extends Item
     @Override
     public InteractionResultHolder<ItemStack> use(Level p_41432_, Player p_41433_, InteractionHand p_41434_) {
         p_41433_.openMenu(new SimpleMenuProvider(
-                (id, playerInventory, player) -> new ItemFilterContainer(id, playerInventory),
+                (id, playerInventory, player) -> new BookContainer(id, playerInventory),
                 new TranslatableComponent("container.survivalessentials.modbook")
         ));
 

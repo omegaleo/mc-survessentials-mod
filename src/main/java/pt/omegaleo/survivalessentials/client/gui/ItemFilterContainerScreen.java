@@ -13,8 +13,7 @@ import pt.omegaleo.survivalessentials.inventory.ItemFilterContainer;
 
 public class ItemFilterContainerScreen extends AbstractContainerScreen<ItemFilterContainer> 
 {
-    //private static final ResourceLocation TEXTURE = new ResourceLocation(SurvivalEssentialsMod.MOD_ID,"textures/gui/filter.png");
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/container/generic_54.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(SurvivalEssentialsMod.MOD_ID, "textures/gui/generic_54.png");
 
     private final Inventory playerInventory;
     private final int inventoryRows;
@@ -36,10 +35,7 @@ public class ItemFilterContainerScreen extends AbstractContainerScreen<ItemFilte
     @Override
     protected void renderBg(PoseStack p_97787_, float p_97788_, int p_97789_, int p_97790_) {
         if (minecraft == null) return;
-
-        // Render the GUI texture
-        GlStateManager._clearColor(1, 1, 1, 1);
-        minecraft.getTextureManager().getTexture(TEXTURE);
+        RenderSystem.setShaderTexture(0,TEXTURE);
         int posX = (this.width - this.getXSize()) / 2;
         int posY = (this.height - this.getYSize()) / 2;
         // blit(posX, posY, minU, minV, maxU, maxV)
