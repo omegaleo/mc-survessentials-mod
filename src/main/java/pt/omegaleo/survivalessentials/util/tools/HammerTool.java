@@ -61,12 +61,10 @@ public class HammerTool extends PickaxeItem
                         worldIn.destroyBlock(blocksToDestroy[i], true);
                     }
                 }
-                    
-                int damage = damagePerUse;
-    
-                if((stack.getMaxDamage() - stack.getDamageValue()) - damagePerUse <= 0)
+
+                if (!player.isCreative())
                 {
-                    damage = stack.getMaxDamage() - stack.getDamageValue() - 1;
+                    player.getMainHandItem().setDamageValue(player.getMainHandItem().getDamageValue() - damagePerUse);
                 }
             }
         }

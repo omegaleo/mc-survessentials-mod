@@ -15,6 +15,8 @@ import pt.omegaleo.survivalessentials.SurvivalEssentialsMod;
 
 import net.minecraft.world.item.Item.Properties;
 
+import java.util.ArrayList;
+
 public class ImprovedAxe extends AxeItem
 {
     /*
@@ -45,7 +47,14 @@ public class ImprovedAxe extends AxeItem
             {
                 Player player = (Player)entityLiving;
 
-                DestroyWoodBlocks(pos, player.getDirection(), worldIn);
+                if (IsWoodBlock(state.getBlock()))
+                {
+                    DestroyWoodBlocks(worldIn,pos, state.getBlock(), new ArrayList<>(),player);
+                }
+                else
+                {
+                    DestroyBlock(worldIn,pos,player);
+                }
             }
         }
         catch(Exception e)
@@ -53,194 +62,113 @@ public class ImprovedAxe extends AxeItem
             System.out.println(e.getStackTrace());
             return false;
         }
+
         return true;
     }
-
-
-    public void DestroyWoodBlocks(BlockPos initialBlockPos, Direction facing, Level world)
-    {
-        //Return a 3x3 area for now
-
-        boolean woodBlockDown = false;
-        boolean woodBlockUp = IsWoodBlockUp(initialBlockPos, facing, world);
-
-        world.destroyBlock(initialBlockPos, true); //Destroy the first block
-
-        BlockPos currentPos = new BlockPos(initialBlockPos.getX(), initialBlockPos.getY(), initialBlockPos.getZ());
-
-
-        while(woodBlockUp)
-        {
-            if(facing == Direction.DOWN || facing == Direction.UP)
-            {
-
-                BlockPos posUp = new BlockPos(currentPos.getX(),currentPos.getY(),currentPos.getZ() + 1);
-
-                BlockState ibsUp = world.getBlockState(posUp);
-                Block blockUp = ibsUp.getBlock();       
-                
-                woodBlockUp = IsWoodBlock(blockUp);
-
-                if(woodBlockUp)
-                {
-                    world.destroyBlock(posUp, true);
-                    currentPos = posUp;
-                }
-            }
-            else if(facing == Direction.NORTH || facing == Direction.SOUTH)
-            {
-                BlockPos posUp = new BlockPos(currentPos.getX(),currentPos.getY() + 1,currentPos.getZ());
-
-                BlockState ibsUp = world.getBlockState(posUp);
-                Block blockUp = ibsUp.getBlock();       
-                
-                woodBlockUp = IsWoodBlock(blockUp);
-
-
-                if(woodBlockUp)
-                {
-                    world.destroyBlock(posUp, true);
-                    currentPos = posUp;
-                }
-            }
-            else
-            {
-                // Z == Y
-                BlockPos posUp = new BlockPos(currentPos.getX(),currentPos.getY() + 1,currentPos.getZ());
-
-                BlockState ibsUp = world.getBlockState(posUp);
-                Block blockUp = ibsUp.getBlock();       
-                
-                woodBlockUp = IsWoodBlock(blockUp);
-
-                if(woodBlockUp)
-                {
-                    world.destroyBlock(posUp, true);
-                    currentPos = posUp;
-                }
-            }
+    private void DestroyWoodBlocks(Level world, BlockPos pos, Block block, ArrayList<BlockPos> list, Player player) {
+        if (world.getBlockState(pos.north()).getBlock() == block) {
+            list.add(pos.north());
         }
-
-        woodBlockUp = false;
-        woodBlockDown = IsWoodBlockDown(initialBlockPos, facing, world);
-
-        while(woodBlockDown)
-        {
-            if(facing == Direction.DOWN || facing == Direction.UP)
+        if (world.getBlockState(pos.north().east()).getBlock() == block) {
+            list.add(pos.north().east());
+        }
+        if (world.getBlockState(pos.north().west()).getBlock() == block) {
+            list.add(pos.north().west());
+        }
+        if (world.getBlockState(pos.north().east().below()).getBlock() == block) {
+            list.add(pos.north().east().below());
+        }
+        if (world.getBlockState(pos.north().west().below()).getBlock() == block) {
+            list.add(pos.north().west().below());
+        }
+        if (world.getBlockState(pos.south()).getBlock() == block) {
+            list.add(pos.south());
+        }
+        if (world.getBlockState(pos.south().east()).getBlock() == block) {
+            list.add(pos.south().east());
+        }
+        if (world.getBlockState(pos.south().west()).getBlock() == block) {
+            list.add(pos.south().west());
+        }
+        if (world.getBlockState(pos.south().east().below()).getBlock() == block) {
+            list.add(pos.south().east().below());
+        }
+        if (world.getBlockState(pos.south().west().below()).getBlock() == block) {
+            list.add(pos.south().west().below());
+        }
+        if (world.getBlockState(pos.east()).getBlock() == block) {
+            list.add(pos.east());
+        }
+        if (world.getBlockState(pos.west()).getBlock() == block) {
+            list.add(pos.west());
+        }
+        if (world.getBlockState(pos.below()).getBlock() == block) {
+            list.add(pos.below());
+        }
+        if (world.getBlockState(pos.below().north()).getBlock() == block) {
+            list.add(pos.below().north());
+        }
+        if (world.getBlockState(pos.below().south()).getBlock() == block) {
+            list.add(pos.below().south());
+        }
+        if (world.getBlockState(pos.below().east()).getBlock() == block) {
+            list.add(pos.below().east());
+        }
+        if (world.getBlockState(pos.below().west()).getBlock() == block) {
+            list.add(pos.below().west());
+        }
+        if (world.getBlockState(pos.north().east().above()).getBlock() == block) {
+            list.add(pos.north().east().above());
+        }
+        if (world.getBlockState(pos.north().west().above()).getBlock() == block) {
+            list.add(pos.north().west().above());
+        }
+        if (world.getBlockState(pos.south().east().above()).getBlock() == block) {
+            list.add(pos.south().east().above());
+        }
+        if (world.getBlockState(pos.south().west().above()).getBlock() == block) {
+            list.add(pos.south().west().above());
+        }
+        if (world.getBlockState(pos.above()).getBlock() == block) {
+            list.add(pos.above());
+        }
+        if (world.getBlockState(pos.above().north()).getBlock() == block) {
+            list.add(pos.above().north());
+        }
+        if (world.getBlockState(pos.above().south()).getBlock() == block) {
+            list.add(pos.above().south());
+        }
+        if (world.getBlockState(pos.above().east()).getBlock() == block) {
+            list.add(pos.above().east());
+        }
+        if (world.getBlockState(pos.above().west()).getBlock() == block) {
+            list.add(pos.above().west());
+        }
+        if (list.size() <= 0 || list == null) {
+            list = null;
+            DestroyBlock(world,pos,player);
+            return;
+        }
+        for (int i = 0; i < list.size(); i++) {
+            BlockPos pos1 = list.get(i);
+            if (IsWoodBlock(world.getBlockState(pos1).getBlock()))
             {
-                BlockPos posDown = new BlockPos(currentPos.getX(),currentPos.getY(),currentPos.getZ() - 1);
-
-                BlockState ibsUp = world.getBlockState(posDown);
-                Block blockUp = ibsUp.getBlock();       
-                
-                woodBlockDown = IsWoodBlock(blockUp);
-
-                if(woodBlockDown)
-                {
-                    world.destroyBlock(posDown, true);
-                    currentPos = posDown;
-                }
-            }
-            else if(facing == Direction.NORTH || facing == Direction.SOUTH)
-            {
-                BlockPos posDown = new BlockPos(currentPos.getX(),currentPos.getY() - 1,currentPos.getZ());
-
-                BlockState ibsUp = world.getBlockState(posDown);
-                Block blockUp = ibsUp.getBlock();       
-                
-                woodBlockDown = IsWoodBlock(blockUp);
-
-                if(woodBlockDown)
-                {
-                    world.destroyBlock(posDown, true);
-                    currentPos = posDown;
-                }
-            }
-            else
-            {
-                BlockPos posDown = new BlockPos(currentPos.getX(),currentPos.getY() - 1,currentPos.getZ());
-
-                BlockState ibsUp = world.getBlockState(posDown);
-                Block blockUp = ibsUp.getBlock();       
-                
-                woodBlockDown = IsWoodBlock(blockUp);
-
-                if(woodBlockDown)
-                {
-                    world.destroyBlock(posDown, true);
-                    currentPos = posDown;
-                }
+                DestroyBlock(world,pos1,player);
+                DestroyWoodBlocks(world, list.get(i), block, new ArrayList<BlockPos>(), player);
             }
         }
     }
 
-
-    boolean IsWoodBlockDown(BlockPos currentPos, Direction facing, Level world)
+    void DestroyBlock(Level world, BlockPos pos, Player player)
     {
-        if(facing == Direction.DOWN || facing == Direction.UP)
+        if (player.getMainHandItem().getDamageValue() < damagePerUse) return;
+
+        world.destroyBlock(pos, true);
+        if (!player.isCreative())
         {
-            BlockPos posDown =  new BlockPos(currentPos.getX(),currentPos.getY(),currentPos.getZ() - 1);   
-            
-            BlockState ibsDown = world.getBlockState(posDown);
-            Block blockDown = ibsDown.getBlock();    
-
-            return IsWoodBlock(blockDown);
+            player.getMainHandItem().setDamageValue(player.getMainHandItem().getDamageValue() + damagePerUse);
         }
-        else if(facing == Direction.NORTH || facing == Direction.SOUTH)
-        {
-            BlockPos posDown =  new BlockPos(currentPos.getX(),currentPos.getY() - 1,currentPos.getZ());     
-            
-            BlockState ibsDown = world.getBlockState(posDown);
-            Block blockDown = ibsDown.getBlock();    
-
-            return IsWoodBlock(blockDown);
-        }
-        else
-        {
-            BlockPos posDown =  new BlockPos(currentPos.getX(),currentPos.getY() - 1,currentPos.getZ());      
-            
-            BlockState ibsDown = world.getBlockState(posDown);
-            Block blockDown = ibsDown.getBlock();    
-
-            return IsWoodBlock(blockDown);
-        }
-
     }
-
-    boolean IsWoodBlockUp(BlockPos currentPos, Direction facing, Level world)
-    {
-        if(facing == Direction.DOWN || facing == Direction.UP)
-        {
-            // Z == Y
-            BlockPos posUp = new BlockPos(currentPos.getX(),currentPos.getY(),currentPos.getZ() + 1);
-
-            BlockState ibsUp = world.getBlockState(posUp);
-            Block blockUp = ibsUp.getBlock();
-
-            return IsWoodBlock(blockUp);
-        }
-        else if(facing == Direction.NORTH || facing == Direction.SOUTH)
-        {
-            BlockPos posUp = new BlockPos(currentPos.getX(),currentPos.getY() + 1,currentPos.getZ());
-
-            BlockState ibsUp = world.getBlockState(posUp);
-            Block blockUp = ibsUp.getBlock();       
-            
-            return IsWoodBlock(blockUp);
-        }
-        else
-        {
-            // Z == Y
-            BlockPos posUp = new BlockPos(currentPos.getX(),currentPos.getY() + 1,currentPos.getZ());
-
-            BlockState ibsUp = world.getBlockState(posUp);
-            Block blockUp = ibsUp.getBlock();       
-            
-            return IsWoodBlock(blockUp);
-        }
-
-    }
-
 
     public boolean IsWoodBlock(Block block)
     {

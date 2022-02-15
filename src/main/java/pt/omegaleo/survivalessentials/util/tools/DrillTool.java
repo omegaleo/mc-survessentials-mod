@@ -8,6 +8,7 @@ import java.util.Random;
 
 import javax.lang.model.util.ElementScanner6;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -207,21 +208,16 @@ public class DrillTool extends PickaxeItem{
             world.destroyBlock(pos, keepDrop);
         }
 
-        stack.setDamageValue(stack.getDamageValue() + 1);
+        if (!player.isCreative())
+        {
+            stack.setDamageValue(stack.getDamageValue() - damagePerUse);
+        }
 
         int expAmount = getExpAmount(block);
-        if(stack.getDamageValue()>0 && hasUpgrade((DrillUpgrade)ModItems.REPAIR.get(), stack))
+        if(stack.getDamageValue() < stack.getMaxDamage() && hasUpgrade((DrillUpgrade)ModItems.REPAIR.get(), stack))
         {
             int amountToRepair = (int) ((damagePerUse * expAmount) * 0.75);
-            if(stack.getDamageValue() - amountToRepair < 0)
-            {
-                amountToRepair -= stack.getDamageValue();
-                stack.setDamageValue(0);
-            }
-            else
-            {
-                stack.setDamageValue(stack.getDamageValue() - amountToRepair);
-            }
+            stack.setDamageValue(stack.getDamageValue() + amountToRepair);
         }
         else
         {
@@ -290,7 +286,6 @@ public class DrillTool extends PickaxeItem{
                     int blockZ = initialPosition.getZ() + z;
                     positions[currentPositionIndex] = new BlockPos(blockX,
                             initialPosition.getY(), blockZ);
-                    System.out.println(positions[currentPositionIndex]);
                     currentPositionIndex++;
                 }
             }
@@ -303,7 +298,6 @@ public class DrillTool extends PickaxeItem{
                     int blockZ = initialPosition.getZ() + z;
                     positions[currentPositionIndex] = new BlockPos(initialPosition.getX(),
                     blockY, blockZ);
-                    System.out.println(positions[currentPositionIndex]);
                     currentPositionIndex++;
                 }
             }
@@ -317,9 +311,9 @@ public class DrillTool extends PickaxeItem{
     {
         if(hasUpgrade((DrillUpgrade)ModItems.REPAIR.get(), stack))
         {
-            if(stack.getDamageValue() > 0)
+            if(stack.getDamageValue() < stack.getMaxDamage())
             {
-                stack.setDamageValue(stack.getDamageValue() - damagePerUse);
+                stack.setDamageValue(stack.getDamageValue() + damagePerUse);
             }
         }
         return super.onEntityItemUpdate(stack, entity);
@@ -353,11 +347,11 @@ public class DrillTool extends PickaxeItem{
 
         if(block == Blocks.DIAMOND_ORE)
         {
-            return new ItemStack(Items.DIAMOND, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
+            return new ItemStack(Items.DIAMOND, getDropAmount(1, 3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.COAL_ORE)
         {
-            return new ItemStack(Items.COAL, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
+            return new ItemStack(Items.COAL, getDropAmount(1, 5, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.REDSTONE_ORE)
         {
@@ -369,7 +363,7 @@ public class DrillTool extends PickaxeItem{
         }
         else if(block == Blocks.NETHER_QUARTZ_ORE)
         {
-            return new ItemStack(Items.QUARTZ, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
+            return new ItemStack(Items.QUARTZ, getDropAmount(1, 3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.NETHER_GOLD_ORE)
         {
@@ -392,23 +386,23 @@ public class DrillTool extends PickaxeItem{
         }
         else if(block == Blocks.GLOWSTONE)
         {
-            return new ItemStack(Items.GLOWSTONE, getDropAmount(2, 4, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
+            return new ItemStack(Items.GLOWSTONE, getDropAmount(2, 8, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.COBWEB)
         {
-            return new ItemStack(Items.STRING, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
+            return new ItemStack(Items.STRING, getDropAmount(1, 3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.BOOKSHELF)
         {
-            return new ItemStack(Items.BOOK, getDropAmount(3, 3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
+            return new ItemStack(Items.BOOK, getDropAmount(3, 7, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.ANCIENT_DEBRIS)
         {
-            return new ItemStack(Items.ANCIENT_DEBRIS, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
+            return new ItemStack(Items.ANCIENT_DEBRIS, getDropAmount(1, 3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.EMERALD_ORE)
         {
-            return new ItemStack(Items.EMERALD, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
+            return new ItemStack(Items.EMERALD, getDropAmount(1, 3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.IRON_ORE)
         {
@@ -418,7 +412,7 @@ public class DrillTool extends PickaxeItem{
             }
             else
             {
-                return new ItemStack(block.asItem(),1);
+                return new ItemStack(block.asItem(),getDropAmount(1,3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
             }
         }
         else if(block == Blocks.GOLD_ORE)
@@ -429,7 +423,7 @@ public class DrillTool extends PickaxeItem{
             }
             else
             {
-                return new ItemStack(block.asItem(),1);
+                return new ItemStack(block.asItem(),getDropAmount(1,3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
             }
         }
         else
@@ -450,11 +444,11 @@ public class DrillTool extends PickaxeItem{
 
         if(block == Blocks.IRON_ORE)
         {
-            return new ItemStack(Items.IRON_INGOT, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
+            return new ItemStack(Items.IRON_INGOT, getDropAmount(1, 3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else if(block == Blocks.GOLD_ORE)
         {
-            return new ItemStack(Items.GOLD_INGOT, getDropAmount(1, 1, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
+            return new ItemStack(Blocks.GOLD_ORE.asItem(), getDropAmount(1, 3, enchantments.containsKey(Enchantments.BLOCK_FORTUNE),BLOCK_FORTUNE));
         }
         else
         {
